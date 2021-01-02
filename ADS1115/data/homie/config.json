@@ -1,0 +1,23 @@
+{
+  "name": "ADS1115 test",
+  "device_id": "ADS1115-01",
+  "device_stats_interval": 60,
+  "wifi": {
+    "ssid": "LOL-AP-01",
+    "password": "WLAN1lrB&bB2!AP1"
+  },
+  "mqtt": {
+    "host": "192.168.2.14",
+    "port": 1883,
+    "base_topic": "plants/"
+  },
+  "settings": {
+    "syslogHost": "192.168.2.14",
+    "syslogPort": 514,
+    "sysLogLevel": 7,
+    "syslogProtocol": 1
+  },
+  "ota": {
+    "enabled": true
+  }
+}
