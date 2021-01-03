@@ -18,7 +18,7 @@ class s_ADS1115{
     uint8_t sensorIndex = 0;
     uint8_t sensors = 0;
     uint16_t sensorSampleInterval = 1000; // Inteval for sensor readings in seconds (1sec)
-    uint16_t sensorSendInterval = 600; // Inteval for sensor readings in seconds (10min)
+    uint16_t sensorSendInterval = 0; // Inteval for sensor readings in seconds (10min)
     float sensorSendThreshold =  0.5;     // if sample differ by this value the sensor will send the value
     float lastReadings[4] = {0,0,0,0};
     float oversamplingSum[4] = {0,0,0,0};

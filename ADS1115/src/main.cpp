@@ -1,3 +1,4 @@
+#include "modules.h"
 #include <Homie.h>
 #include "../../include/config.h"
 #include "utils.h"

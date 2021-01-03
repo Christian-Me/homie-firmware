@@ -9,5 +9,5 @@ graphics/.originals
 include/.backup
 include/credentials.h
 playground
-ADS1115\data\homie\config.json
-data\homie\config.json
+ADS1115/data/homie/config.json
+data/homie/config.json

@@ -17,7 +17,7 @@ As handy as all the great frameworks like ESPEasy, Tasmota ... sooner or later I
 ### sensors
 
 - [X] ADS1115 4ch 16 bit AD converter
-- [ ] BME260 temperature, humidity and pressure sensor
+- [X] BME280 temperature, humidity and pressure sensor
 - [ ] BH1750 light sensor (LUX meter)
 
 ### actuators

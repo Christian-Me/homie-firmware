@@ -4,8 +4,8 @@
 // all configuration should be concentrated here
 
 // general
-const int PIN_LED = 13;     // default on board signal LED
-const int PIN_BUTTON = 0;   // default pushbutton
+const int PIN_LED = LED_BUILTIN;     // default on board signal LED
+const int PIN_BUTTON = 0;            // default pushbutton
 
 // matrix displays
 

@@ -83,8 +83,8 @@ uint8_t scanI2C(uint8_t address){
   // Wire.pins(sdaPin, sclPin);
   Wire.begin();
   Serial.println();
-  Serial.print(F(" Searching for I2C Devices @0x"));
-  Serial.print(address);
+  Serial.print(F("Searching for I2C Devices @0x"));
+  Serial.print(address, HEX);
   Serial.print(F(" SDA: "));
   Serial.print(I2C_PIN_SDA);
   Serial.print(F(" SDL: "));
