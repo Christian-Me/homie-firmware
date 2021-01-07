@@ -3,10 +3,6 @@
 
 // all configuration should be concentrated here
 
-// general
-const int PIN_LED = LED_BUILTIN;     // default on board signal LED
-const int PIN_BUTTON = 0;            // default pushbutton
-
 // matrix displays
 
 // LED BACKLIGHT DIMMING
@@ -23,8 +19,5 @@ const int PIN_BUTTON = 0;            // default pushbutton
 
 // device specific
 
-// I2C
-#define I2C_PIN_SDA  D2
-#define I2C_PIN_SCL  D1
 
 #endif

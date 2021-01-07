@@ -1,8 +1,12 @@
 #ifndef UTILS_H__
 #define UTILS_H__
 
-#include <Wire.h>
+#ifdef USE_I2C
+  #include <Wire.h>
+#endif
 #include "config.h"
+#include <homie.h>
+#include "homieSyslog.h"
 
 template <typename T, size_t N>
 char ( &_ArraySizeHelper( T (&array)[N] ))[N];
@@ -38,7 +42,6 @@ String enumGetIndex(String listString, uint8_t index) {
   int currentIndex = 1;
   //find start
   while (currentIndex!=index || startPos<0) { // loop until index found or end of string
-    Serial.print(".");
     startPos = listString.indexOf(',',startPos+1);
     currentIndex++;
   };
@@ -59,15 +62,7 @@ String enumGetIndex(String listString, uint8_t index) {
   return listString.substring(startPos+1,endPos);
 }
 
-#define LOG_OFF   0
-#define LOG_FATAL 1
-#define LOG_ERROR 2
-#define LOG_WARN  3
-#define LOG_INFO  4
-#define LOG_DEBUG 5
-#define LOG_TRACE 6
-#define LOG_ALL   7
-
+#ifdef USE_I2C
 // scan i2c bus for specific device
 /*!
    @brief    scan i2c bus for specific decvice
@@ -82,13 +77,8 @@ uint8_t scanI2C(uint8_t address){
 
   // Wire.pins(sdaPin, sclPin);
   Wire.begin();
-  Serial.println();
-  Serial.print(F("Searching for I2C Devices @0x"));
-  Serial.print(address, HEX);
-  Serial.print(F(" SDA: "));
-  Serial.print(I2C_PIN_SDA);
-  Serial.print(F(" SDL: "));
-  Serial.println(I2C_PIN_SCL);
+  
+  myLogf(LOG_INFO,F("Searching for I2C Devices @0x%X SDA:%d SCL:%d"),address,I2C_PIN_SDA,I2C_PIN_SCL);
   
   int count=0;
   uint8_t result=0;
@@ -99,17 +89,13 @@ uint8_t scanI2C(uint8_t address){
     Wire.beginTransmission(i);
     result=Wire.endTransmission();
     if (result == 4) {
-      Serial.print(" 0x");
-      Serial.print(i, HEX);
-      Serial.println(F(" unknown error "));
+      myLogf(LOG_ERR,F("0x%X unknown error"),i);
     } else if (result == 0) {
-      Serial.print(" 0x");
-      Serial.print(i, HEX);
       if (i==address) {
-        Serial.println(" found I2C Device!");
+        myLogf(LOG_DEBUG,F("0x%X found I2C Device"),i);
         sensorAddress=i;
       } else {
-        Serial.println(" device ACK.");
+        myLogf(LOG_DEBUG,F("0x%X device ACK"),i);
       }
       count++;
     }
@@ -117,14 +103,13 @@ uint8_t scanI2C(uint8_t address){
   }
 
   if (count==0) {
-    Serial.println(F("no i2c devices found!"));
+    myLog(LOG_ERR,F("no i2c devices found!"));
   } else {
-    Serial.print(count);
-    Serial.println(F(" devices found"));
+    myLogf(LOG_DEBUG,F("%d i2c devices found!"),count);
   }
   return sensorAddress;
 }
-
+#endif
 /**** sort arrays https://github.com/emilv/ArduinoSort/blob/master/ArduinoSort.h ****/
 
 // Sort an array

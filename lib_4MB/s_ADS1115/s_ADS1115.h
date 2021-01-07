@@ -143,7 +143,7 @@ bool s_ADS1115::read()
       }   
       if (dataSent) sendTimeout=millis()+(sensorSendInterval*1000); // always reset send timeout
       initalSample = false;
-      return true;
+      return dataSent;
     }
   } 
   return false;

@@ -12,9 +12,9 @@
     "base_topic": "homie/"
   },
   "settings": {
-    "syslogHost": "192.168.1.1",
+    "syslogServer": "192.168.1.1",
     "syslogPort": 514,
-    "sysLogLevel": 7,
+    "syslogLevel": 7,
     "syslogProtocol": 1
   },
   "ota": {

@@ -75,9 +75,9 @@ bool s_BME280::init(uint16_t minSampleRate=0, uint16_t maxSampleRate=0) {
     Serial.println(sensorAddress, HEX);
     sensor = new Adafruit_BME280(sensorAddress);
     sensor->setSampling(Adafruit_BME280::MODE_FORCED,
-                    Adafruit_BME280::SAMPLING_X16, // temperature
-                    Adafruit_BME280::SAMPLING_X16, // pressure
-                    Adafruit_BME280::SAMPLING_X16, // humidity
+                    Adafruit_BME280::SAMPLING_X1, // temperature
+                    Adafruit_BME280::SAMPLING_X1, // pressure
+                    Adafruit_BME280::SAMPLING_X1, // humidity
                     Adafruit_BME280::FILTER_OFF   );
 
     homieNode = new HomieNode("BME280", "Bosch BME280", "enviornment sensor");
@@ -105,49 +105,47 @@ void s_BME280::setScaler(uint8_t sensor, float scale) {
 
 bool s_BME280::read()
 {
-  if (sampleTimeout<millis()) {
+  if (sampleTimeout<millis() || initalSample) {
     sampleTimeout=millis()+sensorSampleInterval;
     if (isInitialized) {
       float readValue;
-      bool sendValue = true;
       bool dataSent = false;
+      sensor->takeForcedMeasurement();
 
-      readValue=sensor->readTemperature() * scaleFactor[0];
+      readValue=sensor->readTemperature();
+      Serial.printf("Temp %2.2f\n",readValue);
       if (fabs(lastReadings[0]-readValue)>BME280_THRESHOLD_TEMP || (sensorSendInterval>0 && sendTimeout<millis()) || initalSample) {
         homieNode->setProperty("temperature").send(toString(readValue,4));
         Serial.print("send temperature cause:");
         Serial.print((sendTimeout<millis()) ? "time" : (fabs(lastReadings[0]-readValue)>BME280_THRESHOLD_TEMP) ? "diff" : (initalSample) ? "init" : "none");
-        Serial.printf(" last:%4.2f current:%4.2f diff:%.2f",lastReadings[0],readValue,fabs(lastReadings[0]-readValue));
-        Serial.println();
+        Serial.printf(" last:%4.2f current:%4.2f diff:%.2f\n",lastReadings[0],readValue,fabs(lastReadings[0]-readValue));
         lastReadings[0]=readValue;
         dataSent=true;
       }
    
-      readValue=sensor->readHumidity() * scaleFactor[1];
+      readValue=sensor->readHumidity()  / 100.0F;
       if (fabs(lastReadings[1]-readValue)>BME280_THRESHOLD_HUMI || (sensorSendInterval>0 && sendTimeout<millis()) || initalSample) {
         homieNode->setProperty("humidity").send(toString(readValue,4));
         Serial.print("send humidity cause:");
         Serial.print((sendTimeout<millis()) ? "time" : (fabs(lastReadings[1]-readValue)>BME280_THRESHOLD_HUMI) ? "diff" : (initalSample) ? "init" : "none");
-        Serial.printf(" last:%4.2f current:%4.2f diff:%.2f",lastReadings[1],readValue,fabs(lastReadings[1]-readValue));
-        Serial.println();
+        Serial.printf(" last:%4.2f current:%4.2f diff:%.2f\n",lastReadings[1],readValue,fabs(lastReadings[1]-readValue));
         lastReadings[1]=readValue;
         dataSent=true;
       }
 
-      readValue=sensor->readPressure() * scaleFactor[2];
+      readValue=sensor->readPressure();
       if (fabs(lastReadings[2]-readValue)>BME280_THRESHOLD_PRES || (sensorSendInterval>0 && sendTimeout<millis()) || initalSample) {
         homieNode->setProperty("pressure").send(toString(readValue,4));
         Serial.print("send pressure cause:");
         Serial.print((sendTimeout<millis()) ? "time" : (fabs(lastReadings[2]-readValue)>BME280_THRESHOLD_PRES) ? "diff" : (initalSample) ? "init" : "none");
-        Serial.printf(" last:%4.2f current:%4.2f diff:%.2f",lastReadings[2],readValue,fabs(lastReadings[2]-readValue));
-        Serial.println();
+        Serial.printf(" last:%4.2f current:%4.2f diff:%.2f\n",lastReadings[2],readValue,fabs(lastReadings[2]-readValue));
         lastReadings[2]=readValue;
         dataSent=true;
       }
 
       if (dataSent) sendTimeout=millis()+(sensorSendInterval*1000); // always reset send timeout
       initalSample = false;
-      return true;
+      return dataSent;
     }
   } 
   return false;

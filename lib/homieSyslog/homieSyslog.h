@@ -8,18 +8,34 @@
 
 HomieSetting<long> syslogProtocol("syslogProtocol", "Syslog Protocol");
 HomieSetting<const char*> syslogServer("syslogServer", "Syslog Server");
-HomieSetting<long> syslogPort("syslogProtocol", "Syslog Port");
+HomieSetting<long> syslogPort("syslogPort", "Syslog Port");
 HomieSetting<long> syslogLevel("syslogLevel", "Syslog Level");
 
-// Syslog server connection info
+// Default Syslog server connection info
 #define SYSLOG_SERVER "192.168.2.14"
 #define SYSLOG_PORT 514
+
+#define LOG2SERIAL 1
+#define LOG2SYSLOG 2
+#define LOG2MQTT 4
+
+uint8_t logDevice = LOG2SERIAL;
+
+const char level0[] PROGMEM = "EMERG "; // "String 0" etc are strings to store - change to suit.
+const char level1[] PROGMEM = "ALERT ";
+const char level2[] PROGMEM = "CRIT  ";
+const char level3[] PROGMEM = "ERR   ";
+const char level4[] PROGMEM = "WARN  ";
+const char level5[] PROGMEM = "NOTICE";
+const char level6[] PROGMEM = "INFO  ";
+const char level7[] PROGMEM = "DEBUG ";
+const char *const logLevel[] PROGMEM = {level0, level1, level2, level3, level4, level5, level6, level7};
 
 WiFiUDP udpClient;
 
 // Create a new empty syslog instance
 Syslog * syslog;
-
+bool syslogStarted = false;
 
 void mSyslog_setup(uint8_t protocol = SYSLOG_PROTO_IETF) {
 
@@ -38,6 +54,119 @@ void mSyslog_setup(uint8_t protocol = SYSLOG_PROTO_IETF) {
   syslog = new Syslog(udpClient, protocol);
 }
 
+void mySysLog_device(uint8_t device) {
+  Homie.getLogger() << F("Log to device: ") << ((device & LOG2SERIAL) ? "SERIAL " : "") << ((device & LOG2SYSLOG) ? "SYSLOG " : "") << endl;
+  logDevice= device;
+}
+
+bool vmylogf(uint16_t pri, const char *fmt, va_list args) {
+  char *message;
+  size_t initialLen;
+  size_t len;
+  bool result = true;
+
+  initialLen = strlen(fmt);
+
+  message = new char[initialLen + 1];
+
+  len = vsnprintf(message, initialLen + 1, fmt, args);
+  if (len > initialLen) {
+    delete[] message;
+    message = new char[len + 1];
+    vsnprintf(message, len + 1, fmt, args);
+  }
+
+  Homie.getLogger() << "[" << logLevel[pri] << "] " << message <<  endl;
+  delete[] message;
+  return result;
+}
+
+bool vmylogf(uint16_t pri, const __FlashStringHelper *fmt, va_list args) {
+  char *message;
+  size_t initialLen;
+  size_t len;
+  bool result = true;
+
+  initialLen = strlen((const char*) fmt);
+
+  message = new char[initialLen + 1];
+
+  len = vsnprintf(message, initialLen + 1, (const char*) fmt, args);
+  if (len > initialLen) {
+    delete[] message;
+    message = new char[len + 1];
+    vsnprintf(message, len + 1, (const char*) fmt, args);
+  }
+
+  Homie.getLogger() << "[" << logLevel[pri] << "] " << message <<  endl;
+  delete[] message;
+  return result;
+}
+
+bool myLogf(uint16_t pri, const char *fmt, ...) {
+  va_list args;
+  bool result=false;
+  if (logDevice & LOG2SERIAL) {
+    va_start(args,fmt);
+    result = vmylogf(pri, fmt, args);
+    va_end(args);
+  }
+  if (logDevice & LOG2SYSLOG) {
+    if (syslogStarted) {
+      va_start(args,fmt);
+      result = syslog->vlogf(pri,fmt, args);
+      va_end(args);
+    }
+  }
+  return result;
+}
+
+bool myLogf(uint16_t pri, const __FlashStringHelper *fmt, ...) {
+  va_list args;
+  bool result=false;
+  if (logDevice & LOG2SERIAL) {
+    va_start(args,fmt);
+    result = vmylogf(pri, fmt, args);
+    va_end(args);
+  }
+  if (logDevice & LOG2SYSLOG) {
+    if (syslogStarted) {
+      va_start(args,fmt);
+      result = syslog->vlogf(pri,(const char*) fmt, args);
+      va_end(args);
+    }
+  }
+  return result;
+}
+
+bool myLog(uint16_t pri, const char *fmt) {
+  bool result=false;
+  if (logDevice & LOG2SERIAL) {
+    Homie.getLogger() << "[" << logLevel[pri] << "] " << fmt << endl;
+    result=true;
+  }
+  if (logDevice & LOG2SYSLOG) {
+    if (syslogStarted) {
+      result = syslog->log(pri,fmt);
+    }
+  }
+  return result;
+}
+
+bool myLog(uint16_t pri, const __FlashStringHelper *fmt) {
+  bool result=false;
+  if (logDevice & LOG2SERIAL) {
+    Homie.getLogger() << "[" << logLevel[pri] << "] " << fmt << endl;
+    result=true;
+  }
+  if (logDevice & LOG2SYSLOG) {
+    if (syslogStarted) {
+      result = syslog->log(pri,fmt);
+    }
+  }
+  return result;
+}
+
 void mSysLog_start() {
 
   // prepare syslog configuration here (can be anywhere before first call of 
@@ -47,9 +176,24 @@ void mSysLog_start() {
   syslog->appName(Homie.getConfiguration().name);
   syslog->defaultPriority(LOG_KERN);
   syslog->logMask(LOG_UPTO(syslogLevel.get()));
-  syslog->logf(LOG_DEBUG, "syslog: %s:%d",syslogServer.get(),syslogPort.get());
+  syslogStarted=true;
+  myLogf(LOG_DEBUG, "Syslog connected: %s:%ld Host:%s App:%s",syslogServer.get(),syslogPort.get(),Homie.getConfiguration().deviceId,Homie.getConfiguration().name);
 }
 
+bool mySysLog_setDeviceName(const char* deviceName) {
+  if (syslogStarted) syslog->deviceHostname(deviceName);
+  return syslogStarted;
+}
+
+bool mySysLog_setAppName(const char* appName) {
+  if (syslogStarted) syslog->appName(appName);
+  return syslogStarted;
+}
+
+bool mySyslog_resetAppName() {
+  if (syslogStarted) syslog->appName(Homie.getConfiguration().name);
+  return syslogStarted;
+}
 void mSyslog_loop() {
   // nothing to do here
 }
