@@ -41,8 +41,11 @@ the following list shows the planned and implemented devices. Basically all devi
 
 - [X] RGBW addressable LED (Neopixels)
 - [ ] ePaper Display
-- [ ] LCD Matrix display
-- [ ] OLED Display
+- [ ] TFT Matrix display (SPI)
+- [ ] LCD Matrix display (SPI)
+- [ ] LCD Character display (I2C)
+- [ ] OLED Display (I2C)
+
 
 - [X] Push Button
 - [ ] i2c rotary encoder (with RGB led)
