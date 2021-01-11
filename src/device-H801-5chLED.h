@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include "homieSyslog.h"
-#define MAX_DATAPOINTS 5 // define the maximum datapoints per nodehere (of all your nodes)
+#define MAX_DATAPOINTS 5  // define the maximum datapoints per node here (of all your nodes)
 #define MAX_ACTUATORS 10  // define the maximum actuators per node here (of all your nodes)
 #include "../include/datatypes.h"
 
@@ -38,6 +38,6 @@ const ActuatorNode PWMactuatorNode = {"H801","5ch PWM LED Dimmer", "LED Dimmer",
 
 // general
 const int PIN_LED = 5;         // default on board signal LED
-const int PIN_BUTTON = -1;      // no pushbutton
+const int PIN_BUTTON = -1;     // no pushbutton
 
 #endif

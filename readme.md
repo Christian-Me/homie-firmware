@@ -6,6 +6,14 @@ Early alpha of my own firmware for my automation projects.
 
 As handy as all the great frameworks like ESPEasy, Tasmota ... sooner or later I had issues with some details. As I use the homie convention for my communication via MQTT the choices are limited too. After several single task projects I decided to start with a new approach collecting all the bits and pieces into my own modular firmware.
 
+## get started.
+
+### create your on project
+
+- create your project in `platformio.ini` with a unique `build_flag`
+- add your project into `projects.h` and include your `device-yours.h` file
+- edit your `device-yours.h` file. Here is where all your device specific things should happen. Take a look into `device-testbench.h` for reference 
+
 ## platforms
 
 - [X] ESP8266 (minimum 1MB flash)
@@ -35,7 +43,7 @@ the following list shows the planned and implemented devices. Basically all devi
 - [ ] DC Motor actuator
 - [X] LED dimmers, bulbs and strips
 - [ ] RGBW addressable LED
-- [ ] TUYA serial dimmers
+- [ ] TUYA serial mcus
 
 ### human interface devices HID
 
@@ -56,3 +64,4 @@ the following list shows the planned and implemented devices. Basically all devi
 - [ ] RGBW Light Bulb
 - [X] H801 5ch 12-24V constant voltage LED (strip) dimmer
 - [ ] Addressable LED Light Strips (Neopixel)
+- [ ] TUYA serial dimmers

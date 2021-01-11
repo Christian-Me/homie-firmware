@@ -20,16 +20,12 @@ const uint8_t bsec_config_iaq[] = {
 
 class s_BME680{
     Bsec *sensor = nullptr;
-    HomieNode *homieNode = nullptr;
-    bool isInitialized = false;
-    bool initalSample = true;
-    uint8_t sensorIndex = 0;
-    uint16_t sensorSampleInterval = 3000; // Inteval for sensor readings in miliseconds (1sec)
-    float currentReadings[MAX_BME680_DATAPOINTS] = {0,0,0,0,0};
-    float lastReadings[MAX_BME680_DATAPOINTS] = {0,0,0,0,0};
-    float scaleFactor[MAX_BME680_DATAPOINTS] = {1,1,1,1,1};
+    SensorCore core = {0,nullptr,false,true};
+    SenstorData sensorData[MAX_BME680_DATAPOINTS] = {};
+    uint16_t sensorSampleInterval = 1000; // Inteval for sensor readings in seconds (1sec)
+    uint16_t sensorSendInterval = 0; // Inteval for sensor readings in seconds (10min)
     unsigned long sampleTimeout = 0;
-    unsigned long sensorSendTimeout[MAX_BME680_DATAPOINTS] = {0,0,0,0,0};
+    unsigned long sendTimeout = 0;
     String output;
     void loadState(void);
     void updateState(void);
@@ -55,8 +51,8 @@ int64_t GetTimestamp() {
     @returns  result String - empty string is index is out of range
 */
 s_BME680::s_BME680(uint8_t index = 1) {
-  if (index>0 && index<=4) sensorIndex = index-1;
-  isInitialized = false;
+  if (index>0 && index<=2) core.sensorIndex = index-1;
+  core.isInitialized = false;
 }
 
 /*!
@@ -76,7 +72,7 @@ bool s_BME680::init() {
   sensorAddress=scanI2C(BME680_ADDR[sensorIndex]);
 
   if (sensorAddress!=0) {
-    myLogf(LOG_INFO,"BME680 found at 0x%X",sensorAddress);
+    myLogf(LOG_INFO,F("BME680 found at 0x%X"),sensorAddress);
 
     sensor = new Bsec();
     sensor->begin(sensorAddress, Wire);
@@ -107,25 +103,28 @@ bool s_BME680::init() {
     sensor->updateSubscription(sensorList2, 5, BSEC_SAMPLE_RATE_LP);
     checkSensorStatus();
 
-    homieNode = createHomieSensorNode(&BME680sensorNode);
+    core.homieNode = createHomieSensorNode(&BME680sensorNode);
 
     for (uint8_t i=0; i<BME680sensorNode.datapoints; i++) {
-      lastReadings[i]=0;
-      currentReadings[i]=0;
-      scaleFactor[i]=1;
-      sensorSendTimeout[i]=millis()+BME680sensorNode.dataPoint[i].timeout*1000;
+      sensorData[i].last=0;
+      sensorData[i].current=0;
+      sensorData[i].scale=1;
+      sensorData[i].shift=0;
+      sensorData[i].oversamplingSum=0;
+      sensorData[i].toSample=ADS1115sensorNode.dataPoint[i].oversampling;
+      sensorData[i].sendTimeout=millis()+ADS1115sensorNode.dataPoint[i].timeout*1000;
     }
 
-    isInitialized = true;
-    initalSample = true;
+    core.isInitialized = true;
+    core.initalSample = true; 
     myLog(LOG_INFO,F("BME680 initialized sucsessfull"));
   } else {
     myLog(LOG_ERR,F("BME680 not found. Please check wiring."));
-    isInitialized = false;
+    core.isInitialized = false;
   }
-  if (syslogStarted) syslog->appName(Homie.getConfiguration().name);
-  return isInitialized;
+  return core.isInitialized;
 }
+
 /*!
    @brief    set scale factor in case of a voltage devider or calibration
     @param    sensor    number of ADC (1..4)
@@ -133,7 +132,7 @@ bool s_BME680::init() {
 */
 void s_BME680::setScaler(uint8_t sensor, float scale) {
   if (sensor>0 && sensor<=3)
-  scaleFactor[sensor-1]=scale;
+  sensorData[sensor-1].scale=scale;
 }
 
 bool s_BME680::read(bool force=false)
@@ -153,34 +152,10 @@ bool s_BME680::read(bool force=false)
         currentReadings[5]=sensor->staticIaq;
         currentReadings[6]=sensor->staticIaqAccuracy;
 
-        string="";
-        bool timeTrigger=false;
-        bool diffTrigger=false;
-        for (uint8_t i = 0; i<BME680sensorNode.datapoints; i++) {
-          string += BME680sensorNode.dataPoint[i].id;
-          string += ":";
-          string += currentReadings[i];
-          string += BME680sensorNode.dataPoint[i].unit;
-          
-          diffTrigger=(fabs(lastReadings[i]-currentReadings[i])>BME680sensorNode.dataPoint[i].threshold);
-          timeTrigger=(BME680sensorNode.dataPoint[i].timeout>0 && sensorSendTimeout[i]<millis());
-
-          if  ( diffTrigger || timeTrigger || initalSample || force) {
-            homieNode->setProperty(BME680sensorNode.dataPoint[i].id).send(toString(currentReadings[i],4));
-            string += (timeTrigger) ? "[time] " : (diffTrigger) ? "[diff] " : (initalSample) ? "[init] " : " ";
-            lastReadings[i]=currentReadings[i];
-            sensorSendTimeout[i]=millis()+BME680sensorNode.dataPoint[i].timeout*1000;
-            dataSent=true;
-          } else {
-            string += " ";
-          }
-        }
-        myLog(LOG_DEBUG,string.c_str());
+        dataSent= sensor_processReading(0, sensorData, &ADS1115sensorNode, &core);
       } else {
         checkSensorStatus();
       }
-      initalSample = false;
-      mySyslog_resetAppName();
       return dataSent;
     }
   }

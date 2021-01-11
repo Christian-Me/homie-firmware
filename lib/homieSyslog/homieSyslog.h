@@ -19,6 +19,8 @@ HomieSetting<long> syslogLevel("syslogLevel", "Syslog Level");
 #define LOG2SYSLOG 2
 #define LOG2MQTT 4
 
+#define LOG_TRACE 8 // trace level added to be able to filter gradua information
+
 uint8_t logDevice = LOG2SERIAL;
 
 const char level0[] PROGMEM = "EMERG "; // "String 0" etc are strings to store - change to suit.
@@ -29,13 +31,15 @@ const char level4[] PROGMEM = "WARN  ";
 const char level5[] PROGMEM = "NOTICE";
 const char level6[] PROGMEM = "INFO  ";
 const char level7[] PROGMEM = "DEBUG ";
-const char *const logLevel[] PROGMEM = {level0, level1, level2, level3, level4, level5, level6, level7};
+const char level8[] PROGMEM = "TRACE ";
+const char *const logLevel[] PROGMEM = {level0, level1, level2, level3, level4, level5, level6, level7, level8};
 
 WiFiUDP udpClient;
 
 // Create a new empty syslog instance
 Syslog * syslog;
 bool syslogStarted = false;
+uint8_t maxLogLevel = LOG_DEBUG;
 
 void mSyslog_setup(uint8_t protocol = SYSLOG_PROTO_IETF) {
 
@@ -76,7 +80,11 @@ bool vmylogf(uint16_t pri, const char *fmt, va_list args) {
     vsnprintf(message, len + 1, fmt, args);
   }
 
-  Homie.getLogger() << "[" << logLevel[pri] << "] " << message <<  endl;
+  #ifdef HOMIE_DISABLE_LOGGING
+    Serial.printf("[%s] %s\n",logLevel[pri],message) ;
+  #else
+    Homie.getLogger() << "[" << logLevel[pri] << "] " << message <<  endl;
+  #endif
   delete[] message;
   return result;
 }
@@ -97,8 +105,11 @@ bool vmylogf(uint16_t pri, const __FlashStringHelper *fmt, va_list args) {
     message = new char[len + 1];
     vsnprintf(message, len + 1, (const char*) fmt, args);
   }
-
-  Homie.getLogger() << "[" << logLevel[pri] << "] " << message <<  endl;
+  #ifdef HOMIE_DISABLE_LOGGING
+    Serial.printf("[%s] %s\n",logLevel[pri],message) ;
+  #else
+    Homie.getLogger() << "[" << logLevel[pri] << "] " << message <<  endl;
+  #endif
   delete[] message;
   return result;
 }
@@ -106,7 +117,7 @@ bool vmylogf(uint16_t pri, const __FlashStringHelper *fmt, va_list args) {
 bool myLogf(uint16_t pri, const char *fmt, ...) {
   va_list args;
   bool result=false;
-  if (logDevice & LOG2SERIAL) {
+  if ((logDevice & LOG2SERIAL) && (pri <= maxLogLevel)) {
     va_start(args,fmt);
     result = vmylogf(pri, fmt, args);
     va_end(args);
@@ -124,7 +135,7 @@ bool myLogf(uint16_t pri, const char *fmt, ...) {
 bool myLogf(uint16_t pri, const __FlashStringHelper *fmt, ...) {
   va_list args;
   bool result=false;
-  if (logDevice & LOG2SERIAL) {
+  if ((logDevice & LOG2SERIAL) && (pri <= maxLogLevel)) {
     va_start(args,fmt);
     result = vmylogf(pri, fmt, args);
     va_end(args);
@@ -141,8 +152,12 @@ bool myLogf(uint16_t pri, const __FlashStringHelper *fmt, ...) {
 
 bool myLog(uint16_t pri, const char *fmt) {
   bool result=false;
-  if (logDevice & LOG2SERIAL) {
-    Homie.getLogger() << "[" << logLevel[pri] << "] " << fmt << endl;
+  if ((logDevice & LOG2SERIAL) && (pri <= maxLogLevel)) {
+    #ifdef HOMIE_DISABLE_LOGGING
+      Serial.printf("[%s] %s\n",logLevel[pri],fmt) ;
+    #else
+      Homie.getLogger() << "[" << logLevel[pri] << "] " << fmt << endl;
+    #endif
     result=true;
   }
   if (logDevice & LOG2SYSLOG) {
@@ -155,8 +170,12 @@ bool myLog(uint16_t pri, const char *fmt) {
 
 bool myLog(uint16_t pri, const __FlashStringHelper *fmt) {
   bool result=false;
-  if (logDevice & LOG2SERIAL) {
-    Homie.getLogger() << "[" << logLevel[pri] << "] " << fmt << endl;
+  if ((logDevice & LOG2SERIAL) && (pri <= maxLogLevel)) {
+    #ifdef HOMIE_DISABLE_LOGGING
+      Serial.printf("[%s] %s\n",logLevel[pri],(const char*) fmt) ;
+    #else
+      Homie.getLogger() << "[" << logLevel[pri] << "] " << fmt << endl;
+    #endif
     result=true;
   }
   if (logDevice & LOG2SYSLOG) {
@@ -175,7 +194,9 @@ void mSysLog_start() {
   syslog->deviceHostname(Homie.getConfiguration().deviceId);
   syslog->appName(Homie.getConfiguration().name);
   syslog->defaultPriority(LOG_KERN);
-  syslog->logMask(LOG_UPTO(syslogLevel.get()));
+  maxLogLevel =  syslogLevel.get();
+  syslog->logMask(LOG_UPTO(maxLogLevel));
+
   syslogStarted=true;
   myLogf(LOG_DEBUG, "Syslog connected: %s:%ld Host:%s App:%s",syslogServer.get(),syslogPort.get(),Homie.getConfiguration().deviceId,Homie.getConfiguration().name);
 }

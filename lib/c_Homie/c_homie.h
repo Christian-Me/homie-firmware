@@ -6,20 +6,6 @@
 
 bool normalOperation = false;
 
-String getDatatype(DataTypes dataType) {
-  switch(dataType) {
-    case StringT: return "string";
-    case IntegerT: return "integer";
-    case FloatT: return "float";
-    case BooleanT: return "boolean";
-    case EnumT: return "enum";
-    case ColorT: return "color";
-    case DateTimeT: return "datetime";
-    case DurationT: return "duration";
-  }
-  return "";
-}
-
 void onHomieEvent(const HomieEvent& event) {
   mySysLog_setAppName("CORE");
   switch(event.type) {
@@ -40,7 +26,7 @@ void onHomieEvent(const HomieEvent& event) {
         normalOperation = false;
       break;    
       case HomieEventType::SENDING_STATISTICS:
-        myLog(LOG_DEBUG, F("Sending stats"));
+        myLog(LOG_TRACE, F("Sending stats"));
       break;
       case HomieEventType::OTA_STARTED:
         myLog(LOG_INFO, F("OTA started"));
@@ -96,12 +82,12 @@ HomieNode* createHomieSensorNode(const SensorNode* sensorNode) {
   myLogf(LOG_INFO,F("Name     : %s"),sensorNode->name);
   myLogf(LOG_INFO,F("Type     : %s"),sensorNode->type);
 
-  HomieNode static homieNode = HomieNode(sensorNode->id,sensorNode->name, sensorNode->type);
+  HomieNode *homieNode = new HomieNode(sensorNode->id,sensorNode->name, sensorNode->type);
 
   for (uint8_t i=0; i<sensorNode->datapoints; i++) {
     myLogf(LOG_INFO,F("Advertize #%d id=%s name=%s unit=%s datatype=%s format=%s"),i,sensorNode->dataPoint[i].id,sensorNode->dataPoint[i].name,sensorNode->dataPoint[i].unit,sensorNode->dataPoint[i].datatype,sensorNode->dataPoint[i].format);
 
-    homieNode.advertise(sensorNode->dataPoint[i].id)
+    homieNode->advertise(sensorNode->dataPoint[i].id)
       .setName(sensorNode->dataPoint[i].name)
       .setUnit(sensorNode->dataPoint[i].unit)
       .setRetained(sensorNode->dataPoint[i].retained)
@@ -109,7 +95,7 @@ HomieNode* createHomieSensorNode(const SensorNode* sensorNode) {
       .setFormat(sensorNode->dataPoint[i].format);
   }
 
-  return &homieNode;
+  return homieNode;
 }
 
 bool nodeInputHandler(const String& property, const HomieRange& range, const String& value) {
