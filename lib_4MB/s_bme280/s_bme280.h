@@ -17,7 +17,7 @@ const uint8_t BME280_ADDR[] = {0x76,0x77};
 class s_BME280{
     Adafruit_BME280 *sensor = nullptr; /**< pointer to sensor driver */ 
     SensorCore core = {0,nullptr,false,true};
-    SenstorData sensorData[MAX_BME280_DATAPOINTS] = {};
+    PropertyData sensorData[MAX_BME280_DATAPOINTS] = {};
     uint16_t sensorSampleInterval = 1000; // Inteval for sensor readings in seconds (1sec)
     uint16_t sensorSendInterval = 0; // Inteval for sensor readings in seconds (10min)
     unsigned long sampleTimeout = 0;
@@ -71,7 +71,7 @@ bool s_BME280::init(uint16_t minSampleRate=0, uint16_t maxSampleRate=0) {
     sensor = new Adafruit_BME280();
     sensor->begin(sensorAddress, &Wire);
 
-    core.homieNode = createHomieSensorNode(&BME280sensorNode);
+    core.homieNode = createHomieNode(&BME280sensorNode);
     sensor_initDatapoints(&BME280sensorNode,sensorData);
    
     core.isInitialized = true;

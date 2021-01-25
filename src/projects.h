@@ -20,4 +20,8 @@
     #include "device-H801-5chLED.h"
 #endif
 
+#if PLANT_CONTROL
+    #include "device-PLANT-control.h"
+#endif
+
 #endif

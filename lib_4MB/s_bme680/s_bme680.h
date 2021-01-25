@@ -103,7 +103,7 @@ bool s_BME680::init() {
     sensor->updateSubscription(sensorList2, 5, BSEC_SAMPLE_RATE_LP);
     checkSensorStatus();
 
-    core.homieNode = createHomieSensorNode(&BME680sensorNode);
+    core.homieNode = createHomieNode(&BME680sensorNode);
 
     for (uint8_t i=0; i<BME680sensorNode.datapoints; i++) {
       sensorData[i].last=0;

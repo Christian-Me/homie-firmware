@@ -17,7 +17,7 @@
 
 #define S_BME680
 #define MAX_BME680_DATAPOINTS 7
-const SensorNode BME680sensorNode = {"BME680","Bosch BME680", "enviornment sensor", MAX_BME680_DATAPOINTS, {
+const HomieNodeDef BME680sensorNode = {"BME680","Bosch BME680", "enviornment sensor", MAX_BME680_DATAPOINTS, {
     {"temperature","Temperature", "°C", "float", true, "-40:85",0.5,30000,600,0},
     {"humidity","Humidity","%", "float", true, "0:100",1,30000,600,0},
     {"pressure","Pressure","hPa", "float", true, "300:1100",5,30000,600,0},

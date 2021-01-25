@@ -18,7 +18,7 @@ const uint8_t ADS1115_ADDR[] = {0x48,0x49,0x4A,0x4B}; // ADR-> GND, ADR->VDD, AD
 class s_ADS1115{
     Adafruit_ADS1115 *sensor = nullptr; /**< pointer to sensor driver */ 
     SensorCore core = {0,nullptr,false,true};
-    SenstorData sensorData[MAX_ADS1115_DATAPOINTS] = {};
+    PropertyData sensorData[MAX_ADS1115_DATAPOINTS] = {};
     String output;
     void loadState(void);
     void updateState(void);
@@ -61,8 +61,8 @@ bool s_ADS1115::init(uint8_t sensorAddress = 0) {
     sensor = new Adafruit_ADS1115(sensorAddress);
     sensor->setGain(GAIN_TWOTHIRDS);
 
-    core.homieNode = createHomieSensorNode(&ADS1115sensorNode);
-    sensor_initDatapoints(&ADS1115sensorNode,sensorData);
+    // core.homieNode = createHomieNode(&ADS1115sensorNode);
+    // sensor_initDatapoints(&ADS1115sensorNode,sensorData);
     
     core.isInitialized = true;
   } else {

@@ -6,29 +6,19 @@
 #include "../include/datatypes.h"
 #include <homie.h>
 #include "homieSyslog.h"
+#include "c_homie.h"
 
-#define PWM_MAX_CHANNELS 5
-
-class a_PWMdimmer{
-    HomieNode *homieNode = nullptr;
-    uint8_t index = 0;
-    bool isInitialized = false;
-    int currentValue[PWM_MAX_CHANNELS] = {0,0,0,0,0};
-    int targetValue[PWM_MAX_CHANNELS] = {0,0,0,0,0};
-    bool flag[PWM_MAX_CHANNELS] = {false,false,false,false,false};
-    int temp[2] = {0,0};
-    int dimmer[2] = {0,0};
-    unsigned long delay = 0;
-    unsigned long timeout = 0;
+class a_PWMdimmer : public Plugin {
+    const MyHomieNode *_homieNode = NULL;
+    bool _isInitialized = false;
   public:
-    a_PWMdimmer(uint8_t);
+    a_PWMdimmer();
     bool checkStatus(void);
     bool available(void);
-    float readPWM(uint8_t channel);
-    bool writePWM(uint8_t channel, float value, bool log);
-    bool init();
+    float get(uint8_t channel);
+    bool init(const MyHomieNode* homieNode);
     void loop();
-    bool inputHandler(const String& property, const String& value);
+    bool set(uint8_t channel, PropertyData* data);
 };
 
 
@@ -36,35 +26,33 @@ class a_PWMdimmer{
    @brief    PWM PWM "analog" out actuator
     @param    index     index
 */
-a_PWMdimmer::a_PWMdimmer(uint8_t Index = 1) {
-  if (Index>0 && Index<=4) index = Index-1;
-  isInitialized = false;
+a_PWMdimmer::a_PWMdimmer() {
+  _isInitialized = false;
 }
 
 /*!
-   @brief    init BME680 environmental sensor 
-    @param    minSampleRate     sample Rate milli seconds to read data (0=default)
-    @param    maxSampleRate     sample Rate seconds to update Data 0=only send updates (0=default)
+   @brief    init PWM controller 
+    @param    nodeDef           pointer to node definition
     @returns  result boolean - true=success
 */
-bool a_PWMdimmer::init() {
+bool a_PWMdimmer::init(const MyHomieNode* homieNode) {
+  _homieNode = homieNode;
   mySysLog_setAppName("PWM");
   myLog(LOG_INFO,F("PWM Dimmer"));
+  myLogf(LOG_DEBUG,F(" id   : %s"),homieNode->getDef()->id);
+  myLogf(LOG_DEBUG,F(" name : %s"),homieNode->getDef()->name);
 
-  homieNode = createHomieActuatorNode(&PWMactuatorNode);
-
-  for (uint8_t i=0; i<PWM_MAX_CHANNELS; i++) {
-    pinMode(PWMactuatorNode.actuator[i].pin, OUTPUT);
-    analogWrite(PWMactuatorNode.actuator[i].pin,0);
-    currentValue[i]=0;
-    targetValue[i]=0;
+  for (int i=0; i<homieNode->getDef()->datapoints; i++) {
+    myLogf(LOG_DEBUG,F(" id:%s GPIO%u"),homieNode->getDef()->dataPoint[i].id, homieNode->getDef()->dataPoint[i].gpio);
+    pinMode(homieNode->getDef()->dataPoint[i].gpio, OUTPUT);
+    analogWrite(homieNode->getDef()->dataPoint[i].gpio,0);
   }
 
-  isInitialized = true;
+  _isInitialized = true;
   myLog(LOG_INFO,F("PWM initialized sucsessfull"));
   
   mySyslog_resetAppName();
-  return isInitialized;
+  return _isInitialized;
 }
 
 /*!
@@ -72,24 +60,21 @@ bool a_PWMdimmer::init() {
     @param    channel   number of channel to read
     @returns    current value
 */
-float a_PWMdimmer::readPWM(uint8_t channel) {
-  if (channel<PWM_MAX_CHANNELS) {
-    return currentValue[channel];
-  }
+float a_PWMdimmer::get(uint8_t channel) {
   return 0;
 }
 
 /*!
-   @brief write a value to channel
+   @brief  write a value to channel
     @param  channel   number of channel to write to
-    @param  value     value to write
+    @param  data      pointer to property data set
     @returns    true = success
 */
-bool a_PWMdimmer::writePWM(uint8_t channel, float value, bool log = false){
-  if (isInitialized && channel<PWM_MAX_CHANNELS) {
-    currentValue[channel]=floor(value*10.23);
-    if (log) myLogf(LOG_DEBUG,F("analogWrite %d  to %d"), channel, floor(value*10.23));
-    analogWrite(PWMactuatorNode.actuator[channel].pin,floor(value*10.23));
+bool a_PWMdimmer::set(uint8_t channel, PropertyData* data){
+  mySysLog_setAppName("PWM");
+  if (_isInitialized) {
+    myLogf(LOG_DEBUG,F("  analogWrite #%d %.2fx%.2f=%.2f %d"), channel, data->current, data->scale, data->current*data->scale, (int) floor(data->current*data->scale*10.23));
+    analogWrite(_homieNode->getDef()->dataPoint[channel].gpio,(int) floor(data->current*data->scale*10.23));
     return true;
   }
   myLogf(LOG_ERR,F("PWM not initialized!"));
@@ -97,68 +82,27 @@ bool a_PWMdimmer::writePWM(uint8_t channel, float value, bool log = false){
 }
 
 bool a_PWMdimmer::checkStatus(void) {
-  return isInitialized;
-}
-
-bool a_PWMdimmer::inputHandler(const String& property, const String& value) {
-  mySysLog_setAppName("PWM");
-  for (uint8_t i=0; i<PWMactuatorNode.actuators; i++) {
-    if (property.equals(PWMactuatorNode.actuator[i].id)) {
-      if (i < PWM_MAX_CHANNELS) {
-        targetValue[i]=floor(value.toFloat()*10.23);
-        myLogf(LOG_INFO,F ("Set #%d : %s = %s (%d)"), i, PWMactuatorNode.actuator[i].name, value.c_str(), targetValue[i]);
-        if (delay==0) currentValue[i]=targetValue[i];
-        flag[i]=true;
-        timeout=micros()+delay;
-      } else {
-        int dimmerIndex = 0;
-        if (property.equals("delay")) {
-          delay=value.toInt();
-          myLogf(LOG_INFO,F("delay = %d"), delay);
-          homieNode->setProperty(property).send(value);
-        } else if (property.startsWith("temp")) {
-          dimmerIndex = property.substring(property.length()-1,property.length()).toInt()-1;
-          temp[dimmerIndex] = value.toInt();
-          targetValue[1+(dimmerIndex*2)]=(dimmer[dimmerIndex]*10.23) * ((float) temp[dimmerIndex]/100);
-          targetValue[2+(dimmerIndex*2)]=(dimmer[dimmerIndex]*10.23) * ((float) (100-temp[dimmerIndex])/100);
-          myLogf(LOG_INFO,F("set #%d temp=%d (dimmer=%d LED%d=%d LED%d=%d)"), dimmerIndex, temp[dimmerIndex], dimmer[dimmerIndex], 1+(dimmerIndex*2), targetValue[1+(dimmerIndex*2)], 2+(dimmerIndex*2), targetValue[2+(dimmerIndex*2)]);
-          flag[1+(dimmerIndex*2)]=true;
-          flag[2+(dimmerIndex*2)]=true;
-          homieNode->setProperty(property).send(value);
-          timeout=micros()+delay;
-        } else if (property.startsWith("dim")) {
-          dimmerIndex = property.substring(property.length()-1,property.length()).toInt()-1;
-          dimmer[dimmerIndex] = value.toInt();
-          targetValue[1+(dimmerIndex*2)]=(dimmer[dimmerIndex]*10.23) * ((float) temp[dimmerIndex]/100);
-          targetValue[2+(dimmerIndex*2)]=(dimmer[dimmerIndex]*10.23) * ((float) (100-temp[dimmerIndex])/100);
-          myLogf(LOG_INFO,F("set #%d dimmer=%d (temp=%d LED%d=%d LED%d=%d)"), dimmerIndex, dimmer[dimmerIndex], temp[dimmerIndex], 1+(dimmerIndex*2), targetValue[1+(dimmerIndex*2)], 2+(dimmerIndex*2), targetValue[2+(dimmerIndex*2)]);
-          flag[1+(dimmerIndex*2)]=true;
-          flag[2+(dimmerIndex*2)]=true;
-          homieNode->setProperty(property).send(value);
-          timeout=micros()+delay;
-        }
-      }
-    }
-  }
-  return true;
+  return _isInitialized;
 }
 
 void a_PWMdimmer::loop() {
+  /*
   if (micros()>timeout) {
-    for (uint8_t i=0; i<PWM_MAX_CHANNELS; i++) {
+    for (uint8_t i=0; i<_nodeDef->datapoints; i++) {
       if (targetValue[i] != currentValue[i]) {
         if (targetValue[i] > currentValue[i]) currentValue[i]++;
         if (targetValue[i] < currentValue[i]) currentValue[i]--;
-        analogWrite(PWMactuatorNode.actuator[i].pin,currentValue[i]);
+        analogWrite(_nodeDef->dataPoint[i].gpio,currentValue[i]);
       } else if (flag[i]) {
-        analogWrite(PWMactuatorNode.actuator[i].pin,currentValue[i]);
-        homieNode->setProperty(PWMactuatorNode.actuator[i].id).send(String((float) currentValue[i]/10.23,1));
-        myLogf(LOG_DEBUG,F("confirm LED%d=%d (%s)"), i+1, currentValue[i], String((float) currentValue[i]/10.23,1).c_str());
+        analogWrite(_nodeDef->dataPoint[i].gpio,currentValue[i]);
+        homieNode->setProperty(_nodeDef->dataPoint[i].id).send(String((float) currentValue[i]/10.23,1));
+        myLogf(LOG_DEBUG,F("confirm channel #%d=%d (%s)"), i+1, currentValue[i], String((float) currentValue[i]/10.23,1).c_str());
         flag[i]=false;
       }
     }
     timeout=micros()+delay;
   }
+  */
 }
 
 #endif

@@ -9,6 +9,7 @@
 #include "BH1750.h"
 
 #define MAX_BH1750_DATAPOINTS 1
+
 const uint8_t BH1750_ADDR[] = {0x23,0x5C}; 
 
 /**
@@ -18,7 +19,7 @@ const uint8_t BH1750_ADDR[] = {0x23,0x5C};
 class s_BH1750{
     BH1750 *sensor = nullptr; /**< pointer to sensor driver */ 
     SensorCore core = {0,nullptr,false,true};
-    SenstorData sensorData[MAX_BH1750_DATAPOINTS] = {};
+    PropertyData sensorData[MAX_BH1750_DATAPOINTS] = {};
     uint16_t sensorSampleInterval = 1000; // Inteval for sensor readings in seconds (1sec)
     uint16_t sensorSendInterval = 0; // Inteval for sensor readings in seconds (10min)
     unsigned long sampleTimeout = 0;
@@ -72,8 +73,8 @@ bool s_BH1750::init(uint16_t minSampleRate=0, uint16_t maxSampleRate=0) {
     sensor = new BH1750(sensorAddress);
     sensor->begin(BH1750::CONTINUOUS_HIGH_RES_MODE);
 
-    core.homieNode = createHomieSensorNode(&BH1750sensorNode);
-    sensor_initDatapoints(&BH1750sensorNode,sensorData);    
+    // core.homieNode = createHomieNode(&BH1750sensorNode);
+    // sensor_initDatapoints(&BH1750sensorNode,sensorData);    
 
     core.isInitialized = true;
   } else {

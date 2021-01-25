@@ -11,7 +11,7 @@
     @param    sensorData  pointer to sensor data
   @returns  true = success
 */
-bool sensor_beforeRead(DataPoint dataPoint, SenstorData sensorData) {
+bool sensor_beforeRead(HomiePropertyDef dataPoint, PropertyData sensorData) {
   if (dataPoint.beforeRead!=nullptr) {
     dataPoint.beforeRead((char*) dataPoint.id, sensorData);
   }
@@ -24,7 +24,7 @@ bool sensor_beforeRead(DataPoint dataPoint, SenstorData sensorData) {
     @param    sensorData  pointer to sensor data
   @returns  true = success
 */
-bool sensor_afterRead(DataPoint dataPoint, SenstorData sensorData) {
+bool sensor_afterRead(HomiePropertyDef dataPoint, PropertyData sensorData) {
   if (dataPoint.afterRead!=nullptr) {
     dataPoint.afterRead((char*) dataPoint.id, sensorData);
   }
@@ -37,7 +37,7 @@ bool sensor_afterRead(DataPoint dataPoint, SenstorData sensorData) {
     @param    sensorData  pointer to sensor data
   @returns  true = success
 */
-bool sensor_processValue(DataPoint dataPoint, SenstorData sensorData) {
+bool sensor_processValue(HomiePropertyDef dataPoint, PropertyData sensorData) {
   if (dataPoint.processValue!=nullptr) {
     dataPoint.processValue((char*) dataPoint.id, sensorData);
   }
@@ -50,7 +50,7 @@ bool sensor_processValue(DataPoint dataPoint, SenstorData sensorData) {
     @param    sensorData  pointer to sensor data
   @returns  true if success
 */
-bool sensor_initDatapoints(const SensorNode *sensorNode, SenstorData *sensorData) {
+bool sensor_initDatapoints(const HomieNodeDef *sensorNode, PropertyData *sensorData) {
   for (uint8_t i=0; i<sensorNode->datapoints; i++) {
     sensorData[i].last=0;
     sensorData[i].current=0;
@@ -72,7 +72,7 @@ bool sensor_initDatapoints(const SensorNode *sensorNode, SenstorData *sensorData
     @param    sensorNode  pointer to sensor definition
   @returns  true if timeout reached
 */
-void sensor_resetSampleTimer(uint8_t i,  SenstorData *sensorData, const SensorNode *sensorNode) {
+void sensor_resetSampleTimer(uint8_t i,  PropertyData *sensorData, const HomieNodeDef *sensorNode) {
   
   unsigned long pauseTime = (sensorNode->dataPoint[i].oversampling==0) ? 
       sensorNode->dataPoint[i].sampleRate * 1000 : 
@@ -88,7 +88,7 @@ void sensor_resetSampleTimer(uint8_t i,  SenstorData *sensorData, const SensorNo
     @param    sensorNode  pointer to sensor definition
   @returns  true if timeout reached
 */
-void sensor_resetSendTimer(uint8_t i,  SenstorData *sensorData, const SensorNode *sensorNode) {
+void sensor_resetSendTimer(uint8_t i,  PropertyData *sensorData, const HomieNodeDef *sensorNode) {
   
   unsigned long pauseTime = sensorNode->dataPoint[i].timeout * 1000;
   myLogf(LOG_DEBUG,F("datapoint send timer %s in : %.1f sec"),sensorNode->dataPoint[i].id,(float) pauseTime / 1000);
@@ -102,7 +102,7 @@ void sensor_resetSendTimer(uint8_t i,  SenstorData *sensorData, const SensorNode
     @param    sensorNode  pointer to sensor definition
   @returns  true if timeout reached
 */
-bool sensor_datapointTimeout(uint8_t i,  SenstorData *sensorData, const SensorNode *sensorNode) {
+bool sensor_datapointTimeout(uint8_t i,  PropertyData *sensorData, const HomieNodeDef *sensorNode) {
   bool timeout =  false;
   if ((!sensorData[i].initialSample) || ((sensorNode->dataPoint[i].timeout>0) && (sensorData[i].sendTimeout<millis()))) {
     timeout=true;
@@ -119,7 +119,7 @@ bool sensor_datapointTimeout(uint8_t i,  SenstorData *sensorData, const SensorNo
     @param    sensorNode  pointer to sensor definition
   @returns  true if timeout reached
 */
-bool sensor_sensorTimeout(SenstorData *sensorData, const SensorNode *sensorNode) {
+bool sensor_sensorTimeout(PropertyData *sensorData, const HomieNodeDef *sensorNode) {
   bool timeout =  false;
   for (uint8_t i=0; i<sensorNode->datapoints; i++) {
     if (sensor_datapointTimeout(i, sensorData, sensorNode)) {
@@ -137,7 +137,7 @@ bool sensor_sensorTimeout(SenstorData *sensorData, const SensorNode *sensorNode)
     @param    core        pointer to sensor core
   @returns  true value was sent successfully
 */
-bool sensor_processReading(uint8_t i,  SenstorData *sensorData, const SensorNode *sensorNode, SensorCore *core) {
+bool sensor_processReading(uint8_t i,  PropertyData *sensorData, const HomieNodeDef *sensorNode, SensorCore *core) {
   bool timeTrigger=false;
   bool diffTrigger=false;
   bool dataSent=false;
@@ -196,7 +196,7 @@ bool sensor_processReading(uint8_t i,  SenstorData *sensorData, const SensorNode
     @param    core        pointer to sensor core
   @returns  true if minimum one value was sent successfully
 */
-bool sensor_processReadings(SenstorData *sensorData, const SensorNode *sensorNode, SensorCore *core) {
+bool sensor_processReadings(PropertyData *sensorData, const HomieNodeDef *sensorNode, SensorCore *core) {
   bool dataSent=false;
   for (uint8_t i=0; i<sensorNode->datapoints; i++) {
     if (sensor_processReading(i, sensorData, sensorNode, core)) {

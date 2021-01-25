@@ -13,8 +13,6 @@ char ( &_ArraySizeHelper( T (&array)[N] ))[N];
 
 #define countof( array ) (sizeof( _ArraySizeHelper( array ) ))
 
-String string = "";
-
 String toString(float value, uint8_t decimals)
 {
   String sValue = String(value, decimals);
