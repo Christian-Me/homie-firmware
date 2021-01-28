@@ -1,5 +1,6 @@
-#include "homie_property.h"
-#include "homie_node.h"
+#include "homie_property.hpp"
+#include "homie_node.hpp"
+#include <signalLED.h>
 
 MyHomieProperty::MyHomieProperty(const HomiePropertyDef* def) {
   propertyDef = def;
@@ -25,6 +26,7 @@ const HomiePropertyDef* MyHomieProperty::getDef() const {
 };
 
 bool MyHomieProperty::readyToSample() {
+  myLog.printf(LOG_TRACE,F("   %s ready to sample?"), propertyDef->id);
   if (propertyData.sampleTimeout<millis()) {
     propertyData.sampleTimeout= millis() + propertyDef->sampleRate * 1000;
     return true;
@@ -56,12 +58,12 @@ bool MyHomieProperty::inputHandler(const HomieRange& range, const String& value,
 bool MyHomieProperty::setValue (float value) {
   triggerLED();
   propertyData.current = value;
-  myLogf(LOG_TRACE,F("   MyHomieProperty::setValue %.2f : %.2f %p"), value, propertyData.current, &propertyData);
+  myLog.printf(LOG_TRACE,F("   MyHomieProperty::setValue %.2f : %.2f %p"), value, propertyData.current, &propertyData);
   return true;
 };
 
 bool MyHomieProperty::setValue (bool value) {
-  myLogf(LOG_DEBUG,F("   MyHomieProperty::setValue %s %p"), value, (propertyData.current==1) ? "true" : "false", &propertyData);
+  myLog.printf(LOG_DEBUG,F("   MyHomieProperty::setValue %s %p"), value, (propertyData.current==1) ? "true" : "false", &propertyData);
   triggerLED();
   propertyData.current = (value) ? 1 : 0;
   return true;
@@ -70,12 +72,12 @@ bool MyHomieProperty::setValue (bool value) {
 bool MyHomieProperty::setFactor (float value) {
   triggerLED();
   propertyData.scale = value;
-  myLogf(LOG_TRACE,F("   MyHomieProperty::setFactor %.2f : %.2f"), value, propertyData.scale);
+  myLog.printf(LOG_TRACE,F("   MyHomieProperty::setFactor %.2f : %.2f"), value, propertyData.scale);
   return true;
 }
 ;
 float MyHomieProperty::getValue () {
-  myLogf(LOG_TRACE,F("   MyHomieProperty::getValue %.2f %p"), propertyData.current, &propertyData);
+  myLog.printf(LOG_TRACE,F("   MyHomieProperty::getValue %.2f %p"), propertyData.current, &propertyData);
   return propertyData.current;
 };
 
@@ -84,18 +86,18 @@ PropertyData* MyHomieProperty::getData () {
 };
 
 bool MyHomieProperty::defaultPropertyInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
-    myLogf(LOG_INFO,F("defaultNodeHandler received %s"), value.c_str());
+    myLog.printf(LOG_INFO,F("defaultNodeHandler received %s"), value.c_str());
     bool _result = false;
     
     switch (homieProperty->getDef()->datatype) {
       case DATATYPE_FLOAT: {
         float _floatValue = value.toFloat();
-        myLogf(LOG_INFO,F(" float value %s = %.2f"), value.c_str(), _floatValue);
+        myLog.printf(LOG_INFO,F(" float value %s = %.2f"), value.c_str(), _floatValue);
         return homieNode->setValue(homieProperty->getDef()->id,_floatValue);
       };
       case DATATYPE_BOOLEAN: {
         bool _boolValue = (value.equalsIgnoreCase("true")) ? true : false;
-        myLogf(LOG_INFO,F(" boolean value %s = %d"), value.c_str(), _boolValue);
+        myLog.printf(LOG_INFO,F(" boolean value %s = %d"), value.c_str(), _boolValue);
         return homieNode->setValue(homieProperty->getDef()->id,_boolValue);
       };
     };

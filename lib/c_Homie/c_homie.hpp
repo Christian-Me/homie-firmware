@@ -1,5 +1,6 @@
-#ifndef c_HOMIE_H__
-#define c_HOMIE_H__
+#pragma once
+
+#include "Arduino.h"
 #include <Homie.h>
 // #include "homieSyslog.h"
 // #include "datatypes.h"
@@ -10,5 +11,3 @@
 bool globalInputHandler(const HomieNode& node, const HomieRange& range, const String& property, const String& value);
 void onHomieEvent(const HomieEvent& event);
 void homieParameterSet(const __FlashStringHelper *nodeId, const __FlashStringHelper *parameterId, bool state);
-
-#endif

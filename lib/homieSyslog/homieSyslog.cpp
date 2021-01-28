@@ -1,9 +1,9 @@
 
+#include "homieSyslog.h"
 #include <ESP8266WiFi.h>
 #include <Syslog.h>
 #include <WiFiUdp.h>
 #include <Homie.h>
-#include "homieSyslog.h"
 
 HomieSetting<long> syslogProtocol("syslogProtocol", "Syslog Protocol");
 HomieSetting<const char*> syslogServer("syslogServer", "Syslog Server");
@@ -16,7 +16,7 @@ HomieSetting<long> syslogLevel("syslogLevel", "Syslog Level");
 
 uint8_t logDevice = LOG2SERIAL;
 
-const char level0[] PROGMEM = "EMERG "; // "String 0" etc are strings to store - change to suit.
+const char level0[] PROGMEM = "EMERG ";
 const char level1[] PROGMEM = "ALERT ";
 const char level2[] PROGMEM = "CRIT  ";
 const char level3[] PROGMEM = "ERR   ";
@@ -29,13 +29,9 @@ const char *const logLevel[] PROGMEM = {level0, level1, level2, level3, level4, 
 
 WiFiUDP udpClient;
 
-// Create a new empty syslog instance
-Syslog * syslog;
-bool syslogStarted = false;
-uint8_t maxLogLevel = LOG_DEBUG;
+void MyLog::setup(HardwareSerial* serial, uint8_t protocol = SYSLOG_PROTO_IETF) {
 
-void mSyslog_setup(uint8_t protocol) {
-
+  _serial = serial;
   syslogProtocol.setDefaultValue(0).setValidator([] (long candidate) {
     return (candidate >= 0) && (candidate <= 1);
   });
@@ -48,15 +44,15 @@ void mSyslog_setup(uint8_t protocol) {
   syslogLevel.setDefaultValue(LOG_DEBUG).setValidator([] (long candidate) {
     return (candidate >= LOG_EMERG) && (candidate <= LOG_DEBUG);
   });
-  syslog = new Syslog(udpClient, protocol);
+  _syslog = new Syslog(udpClient, protocol);
 }
 
-void mySysLog_device(uint8_t device) {
-  Homie.getLogger() << F("Log to device: ") << ((device & LOG2SERIAL) ? "SERIAL " : "") << ((device & LOG2SYSLOG) ? "SYSLOG " : "") << endl;
+void MyLog::device(uint8_t device) {
+  Homie.getLogger() << F("[INFO  ] Log to device: ") << ((device & LOG2SERIAL) ? "SERIAL " : "") << ((device & LOG2SYSLOG) ? "SYSLOG " : "") << endl;
   logDevice= device;
 }
 
-bool vmylogf(uint16_t pri, const char *fmt, va_list args) {
+bool MyLog::vmylogf(uint16_t pri, const char *fmt, va_list args) {
   char *message;
   size_t initialLen;
   size_t len;
@@ -73,16 +69,12 @@ bool vmylogf(uint16_t pri, const char *fmt, va_list args) {
     vsnprintf(message, len + 1, fmt, args);
   }
 
-  #ifdef HOMIE_DISABLE_LOGGING
-    Serial.printf("[%s] %s\n",logLevel[pri],message) ;
-  #else
-    Homie.getLogger() << "[" << logLevel[pri] << "] " << message <<  endl;
-  #endif
+  _serial->printf("[%s] %s\n",logLevel[pri],message) ;
   delete[] message;
   return result;
 }
 
-bool vmylogf(uint16_t pri, const __FlashStringHelper *fmt, va_list args) {
+bool MyLog::vmylogf(uint16_t pri, const __FlashStringHelper *fmt, va_list args) {
   char *message;
   size_t initialLen;
   size_t len;
@@ -98,116 +90,120 @@ bool vmylogf(uint16_t pri, const __FlashStringHelper *fmt, va_list args) {
     message = new char[len + 1];
     vsnprintf(message, len + 1, (const char*) fmt, args);
   }
-  #ifdef HOMIE_DISABLE_LOGGING
-    Serial.printf("[%s] %s\n",logLevel[pri],message) ;
-  #else
-    Homie.getLogger() << "[" << logLevel[pri] << "] " << message <<  endl;
-  #endif
+  _serial->printf("[%s] %s\n",logLevel[pri],message) ;
   delete[] message;
   return result;
 }
 
-bool myLogf(uint16_t pri, const char *fmt, ...) {
+bool MyLog::printf(uint16_t pri, const char *fmt, ...) {
   va_list args;
   bool result=false;
-  if ((logDevice & LOG2SERIAL) && (pri <= maxLogLevel)) {
+  if ((logDevice & LOG2SERIAL) && (pri <= _maxLogLevel)) {
     va_start(args,fmt);
     result = vmylogf(pri, fmt, args);
     va_end(args);
   }
   if (logDevice & LOG2SYSLOG) {
-    if (syslogStarted) {
+    if (_syslogStarted) {
       va_start(args,fmt);
-      result = syslog->vlogf(pri,fmt, args);
+      result = _syslog->vlogf(pri,fmt, args);
       va_end(args);
     }
   }
   return result;
 }
 
-bool myLogf(uint16_t pri, const __FlashStringHelper *fmt, ...) {
+bool MyLog::printf(uint16_t pri, const __FlashStringHelper *fmt, ...) {
   va_list args;
   bool result=false;
-  if ((logDevice & LOG2SERIAL) && (pri <= maxLogLevel)) {
+  if ((logDevice & LOG2SERIAL) && (pri <= _maxLogLevel)) {
     va_start(args,fmt);
     result = vmylogf(pri, fmt, args);
     va_end(args);
   }
   if (logDevice & LOG2SYSLOG) {
-    if (syslogStarted) {
+    if (_syslogStarted) {
       va_start(args,fmt);
-      result = syslog->vlogf(pri,(const char*) fmt, args);
+      result = _syslog->vlogf(pri,(const char*) fmt, args);
       va_end(args);
     }
   }
   return result;
 }
 
-bool myLog(uint16_t pri, const char *fmt) {
+bool MyLog::print(uint16_t pri, const char *fmt) {
   bool result=false;
-  if ((logDevice & LOG2SERIAL) && (pri <= maxLogLevel)) {
-    #ifdef HOMIE_DISABLE_LOGGING
-      Serial.printf("[%s] %s\n",logLevel[pri],fmt) ;
-    #else
-      Homie.getLogger() << "[" << logLevel[pri] << "] " << fmt << endl;
-    #endif
+  if ((logDevice & LOG2SERIAL) && (pri <= _maxLogLevel)) {
+    _serial->printf("[%s] %s\n",logLevel[pri],fmt) ;
     result=true;
   }
   if (logDevice & LOG2SYSLOG) {
-    if (syslogStarted) {
-      result = syslog->log(pri,fmt);
+    if (_syslogStarted) {
+      result = _syslog->log(pri,fmt);
     }
   }
   return result;
 }
 
-bool myLog(uint16_t pri, const __FlashStringHelper *fmt) {
+bool MyLog::print(uint16_t pri, const __FlashStringHelper *fmt) {
   bool result=false;
-  if ((logDevice & LOG2SERIAL) && (pri <= maxLogLevel)) {
-    #ifdef HOMIE_DISABLE_LOGGING
-      Serial.printf("[%s] %s\n",logLevel[pri],(const char*) fmt) ;
-    #else
-      Homie.getLogger() << "[" << logLevel[pri] << "] " << fmt << endl;
-    #endif
+  if ((logDevice & LOG2SERIAL) && (pri <= _maxLogLevel)) {
+    _serial->printf("[%s] %s\n",logLevel[pri],(const char*) fmt) ;
     result=true;
   }
   if (logDevice & LOG2SYSLOG) {
-    if (syslogStarted) {
-      result = syslog->log(pri,fmt);
+    if (_syslogStarted) {
+      result = _syslog->log(pri,fmt);
     }
   }
   return result;
 }
 
-void mSysLog_start() {
+void MyLog::start() {
 
-  // prepare syslog configuration here (can be anywhere before first call of 
-	// log/logf method)
-  syslog->server(syslogServer.get(), syslogPort.get());
-  syslog->deviceHostname(Homie.getConfiguration().deviceId);
-  syslog->appName(Homie.getConfiguration().name);
-  syslog->defaultPriority(LOG_KERN);
-  maxLogLevel =  syslogLevel.get();
-  syslog->logMask(LOG_UPTO(maxLogLevel));
+  _syslog->server(syslogServer.get(), syslogPort.get());
+  _syslog->deviceHostname(Homie.getConfiguration().deviceId);
+  _syslog->appName(Homie.getConfiguration().name);
+  _syslog->defaultPriority(LOG_KERN);
+  _maxLogLevel =  syslogLevel.get();
+  _syslog->logMask(LOG_UPTO(_maxLogLevel));
 
-  syslogStarted=true;
-  myLogf(LOG_DEBUG, "Syslog connected: %s:%ld Host:%s App:%s",syslogServer.get(),syslogPort.get(),Homie.getConfiguration().deviceId,Homie.getConfiguration().name);
+  _syslogStarted=true;
+  printf(LOG_DEBUG, "Syslog connected: %s:%ld Host:%s App:%s",syslogServer.get(),syslogPort.get(),Homie.getConfiguration().deviceId,Homie.getConfiguration().name);
 }
 
-bool mySysLog_setDeviceName(const char* deviceName) {
-  if (syslogStarted) syslog->deviceHostname(deviceName);
-  return syslogStarted;
+bool MyLog::setDeviceName(const char* deviceName) {
+  if (_syslogStarted) _syslog->deviceHostname(deviceName);
+  return _syslogStarted;
 }
 
-bool mySysLog_setAppName(const char* appName) {
-  if (syslogStarted) syslog->appName(appName);
-  return syslogStarted;
+bool MyLog::setAppName(const char* appName) {
+  if (_syslogStarted) _syslog->appName(appName);
+  return _syslogStarted;
 }
 
-bool mySyslog_resetAppName() {
-  if (syslogStarted) syslog->appName(Homie.getConfiguration().name);
-  return syslogStarted;
+bool MyLog::resetAppName() {
+  if (_syslogStarted) _syslog->appName(Homie.getConfiguration().name);
+  return _syslogStarted;
 }
-void mSyslog_loop() {
-  // nothing to do here
+
+void MyLog::loop() {
+  if (_serial==NULL) return;
+  if (_serial->available()) {
+    _incomingByte = _serial->read();
+    if (_incomingByte>48 && _incomingByte<58) {
+      _maxLogLevel = _incomingByte-48;
+      _serial->printf("[LOGGER] max log level set to #%d %s\n",_maxLogLevel, logLevel[_maxLogLevel]);
+    } else {
+      switch (_incomingByte) {
+        case 109: 
+          printf(LOG_INFO,F("Free Memory: heap %.3fk maxBlock %.3fk fragmentation: %d%%"), (float) ESP.getFreeHeap()/1024, (float) ESP.getMaxFreeBlockSize()/1024, ESP.getHeapFragmentation()); 
+          break;
+        default:
+          printf(LOG_ERR,F("unknown char #%d received! use 1-8,m"),_incomingByte);
+      }
+    }
+  }
 }
+
+MyLog myLog;

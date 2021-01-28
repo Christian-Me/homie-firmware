@@ -1,8 +1,9 @@
 #ifndef PLUGINS_H__
 #define PLUGINS_H__
 
-#include "../../include/datatypes.h"
-#include "homie_node.h"
+#include <Arduino.h>
+// #include "datatypes.h"
+#include <homie_node.hpp>
 
 // sensor Plugins
 #define BH1750_ID 1
@@ -16,21 +17,21 @@
 
 
 class Plugin {
+  private:
+    bool _isInitialized = false;
   protected:
-    const char* id;
   public:
+    virtual const char* id ();
     virtual bool init(const MyHomieNode* homieNode);
+    virtual bool checkStatus(void);
+    virtual bool available(void);
     virtual void loop();
-    virtual bool read();
+    virtual bool read(bool force);                            /*> read values from device */
+    virtual float get(uint8_t channel);                       /*> get value for channel */
     virtual bool set(uint8_t channel, float value);           /*> for datatype = float */
     virtual bool set(uint8_t channel, const String& value);   /*> for datatype = enum,string */
     virtual bool set(uint8_t channel, PropertyData* data);    /*> complete data set */
 };
 
-#ifdef A_PWM
-  #include "a_pwm_dimmer.h"
-#endif
-
-bool pluginInit(MyHomieNode* homieNode, uint8_t pluginId, const HomieNodeDef* homieDef);
 
 #endif

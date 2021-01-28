@@ -1,8 +1,9 @@
-#ifndef HOMIE_PROPERTY_H__
-#define HOMIE_PROPERTY_H__
-#include "signalLED.h"
+#pragma once
+
+// #include "signalLED.h"
+#include <Homie.h>
 // #include "homieSyslog.h"
-#include "../../include/datatypes.h"
+#include "..\..\include\datatypes.h"
 
 class MyHomieNode;
 class MyHomieProperty;
@@ -33,5 +34,3 @@ class MyHomieProperty {
     float getValue ();
     PropertyData* getData ();
 };
-
-#endif

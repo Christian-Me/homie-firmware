@@ -1,7 +1,7 @@
 #ifndef DATATYPES_H__
 #define DATATYPES_H__
 #include <Arduino.h>
-#include <Homie.h>
+// #include <Homie.h>
 #define MAX_DATAPOINTS 3
 
 #define SETTABLE true
@@ -62,13 +62,13 @@ typedef struct {
  * @brief sensor datapoint configuration
  */
 typedef struct {
-    const char* id;                 /*< homie id */
-    const char* name;               /*< homie name */
-    const char* unit;               /*< homie unit */
-    const uint8_t datatype;         /*< homie datatype */
-    const bool retained;            /*< homie retained flag */
-    const char* format;             /*< homie format*/
-    const bool settable;            /*< homie settable SETTABLE or NON_SETTABLE*/
+    const char* id;                 /*< homie property id */
+    const char* name;               /*< homie $name */
+    const char* unit;               /*< homie $unit */
+    const uint8_t datatype;         /*< homie $datatype */
+    const bool retained;            /*< homie $retained flag */
+    const char* format;             /*< homie $format*/
+    const bool settable;            /*< homie $settable SETTABLE or NON_SETTABLE*/
     const float threshold;          /*< minimum difference to trigger a data send */
     const uint16_t sampleRate;      /*< timeout between sampling */
     const uint16_t timeout;         /*< timeout to send data anyways (seconds)*/
@@ -78,10 +78,11 @@ typedef struct {
 
 
 typedef struct {
-    const char* id;
-    const char* name;
-    const char* type;
-    const int datapoints;
+    const char* id;                 /*< homie node id */
+    const char* name;               /*< homie $name */
+    const char* type;               /*< homie $type */
+    const int datapoints;           /*< Number of Datapoints */
+    const uint8_t io;               /*< I2C Addres or CS Pin */
     const HomiePropertyDef dataPoint[MAX_DATAPOINTS];
 } HomieNodeDef;
 

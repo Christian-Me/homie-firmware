@@ -1,10 +1,8 @@
-#ifndef HOMIE_NODE_H__
-#define HOMIE_NODE_H__
-#include "homieSyslog.h"
-#include "homie_property.h"
-#include "../../include/datatypes.h"
-
-class Plugin;
+#pragma once
+#include <homieSyslog.h>
+#include "homie_property.hpp"
+// #include "datatypes.h"
+// #include "plugins.h"
 
 struct PropertyVector {
   struct PropertyItem {
@@ -21,15 +19,12 @@ struct PropertyVector {
     ++length;
     if (first == NULL) {
       first = new PropertyItem(homieProperty);
-      myLogf(LOG_TRACE,F("  push first property %d %d"), length, first);
     } else {
       PropertyItem* seek = first;
       while (seek->next != NULL) {
         seek=seek->next;
       }
       seek->next = new PropertyItem(homieProperty);
-
-      myLogf(LOG_TRACE,F("  push property %d %d"), length, seek->next);
     }
     return homieProperty;
   };
@@ -49,7 +44,6 @@ struct PropertyVector {
     for (int i = 0; i<index; i++) { 
       seek=seek->next;
     }
-    myLogf(LOG_TRACE,F("  get property %d %d"), index, seek);
     return seek->property;
   }
   int getIndex(const char* id) const {
@@ -66,26 +60,32 @@ struct PropertyVector {
   }
 };
 
+class Plugin;
 class MyHomieNode {
     const HomieNodeDef* nodeDef = NULL;
-    uint8_t pluginId = 0;
+    uint8_t _pluginId = 0;
     HomieNode *homieNode = NULL;
     PropertyVector properties;
+    unsigned long _nextEvent = 0;
   public:
     Plugin* plugin = NULL;
-    MyHomieNode(const HomieNodeDef* def);
+    MyHomieNode(const HomieNodeDef* def, uint8_t pluginId = 0);
     void setPulginId(uint8_t id);
+    bool pluginInit(uint8_t pluginId);
     void setDef(const HomieNodeDef *homieNode);
     const char* getId();
     MyHomieProperty* addProperty(const HomiePropertyDef* homieProperty);
     void registerInputHandler(const char* id, InputHandler inputHandler);
-    MyHomieProperty* getProperty (uint8_t index) const;
+    MyHomieProperty* getProperty (int index) const;
     MyHomieProperty* getProperty (const char* id) const;
     uint8_t length() const;
     const HomieNodeDef* getDef() const;
     bool setValue(const char* id, float value);
     bool setValue(const char* id, bool value);
     bool setFactor(const char* id, float value);
+    bool sendValue(MyHomieProperty* homieProperty);
+    bool sendValue(int index);
+    bool sendValue(const char* id);
+    unsigned long getNextEvent();
+    unsigned long loop();
 };
-
-#endif

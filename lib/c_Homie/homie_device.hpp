@@ -1,7 +1,6 @@
-#ifndef HOMIE_DEVICE_H__
-#define HOMIE_DEVICE_H__
-#include "../../include/datatypes.h"
-#include "homie_node.h"
+#pragma once
+// #include "datatypes.h"
+#include "homie_node.hpp"
 
 struct NodeVector {
   struct NodeItem {
@@ -9,7 +8,7 @@ struct NodeVector {
     NodeItem* next = NULL;
     NodeItem(MyHomieNode* homieNode) {
       node = homieNode;
-      myLogf(LOG_INFO,F("  pushed node %d"),node);
+      myLog.printf(LOG_INFO,F("  pushed node %d"),node);
       next = NULL;
     }
   };
@@ -40,7 +39,7 @@ struct NodeVector {
   }
   MyHomieNode* get(uint8_t index) const {
     NodeItem* seek = first;
-    myLogf(LOG_TRACE,F("  get node %d %d"), index, seek);
+    myLog.printf(LOG_TRACE,F("  get node %d %d"), index, seek);
     if (seek==NULL || index>length-1) return NULL;
     for (int i = 0; i<index; i++) { 
       seek=seek->next;
@@ -52,16 +51,16 @@ struct NodeVector {
 class MyHomieDevice {
     const HomieDeviceDef* deviceDef = NULL;
     NodeVector nodes;
+    unsigned long _nextEvent = 0;
   public:
     void init(const HomieDeviceDef *homieDevice);
-    MyHomieNode* addNode(uint8_t sensorId, const HomieNodeDef *homieNode);
+    MyHomieNode* addNode(uint8_t pluginId, const HomieNodeDef *homieNode);
     MyHomieNode* getNode(uint8_t index) const;
     MyHomieNode* getNode(const char* id) const;
     uint8_t length();
     const HomieDeviceDef* getDef();
     bool setValue(const char* nodeId, const char* propertyId, float value) const;
     bool setFactor(const char* nodeId, const char* propertyId, float value) const;
-    MyHomieNode* createHomieNode(uint8_t nodeId, const HomieNodeDef* nodeDef);
+    MyHomieNode* createHomieNode(uint8_t pluginId, const HomieNodeDef* nodeDef);
+    unsigned long loop();
 };
-
-#endif
