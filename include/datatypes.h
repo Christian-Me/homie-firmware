@@ -43,8 +43,8 @@ typedef struct {
     float last;                     /*< last reading sent */
     float scale;                    /*< value scale for calibration */
     float shift;                    /*< value shift for calibration */
-    uint8_t toSample;               /*< number of samples to be averaged  */
-    float oversamplingSum;          /*< number of samples to be averaged  */
+    uint8_t samples;                /*< number of samples in buffer  */
+    uint8_t samplePointer;          /*< pointer to next sample */
     bool initialSample;             /*< initial sample sent  */
 } PropertyData;
 

@@ -27,6 +27,15 @@ const char level7[] PROGMEM = "DEBUG ";
 const char level8[] PROGMEM = "TRACE ";
 const char *const logLevel[] PROGMEM = {level0, level1, level2, level3, level4, level5, level6, level7, level8};
 
+const char wifi0[] PROGMEM = "IDLE";
+const char wifi1[] PROGMEM = "AP unavailable";
+const char wifi2[] PROGMEM = "scan completed";
+const char wifi3[] PROGMEM = "connected";
+const char wifi4[] PROGMEM = "wrong password";
+const char wifi5[] PROGMEM = "lost";
+const char wifi6[] PROGMEM = "disconnected";
+const char *const wifiStatus[] PROGMEM = {wifi0, wifi1, wifi2, wifi3, wifi4, wifi5, wifi6};
+        
 WiFiUDP udpClient;
 
 void MyLog::setup(HardwareSerial* serial, uint8_t protocol = SYSLOG_PROTO_IETF) {
@@ -187,6 +196,22 @@ bool MyLog::resetAppName() {
   return _syslogStarted;
 }
 
+void MyLog::printInfo(uint8_t key) {
+  uint32_t freeMemory = 0;
+  switch (key) {
+    case LOG_MEMORY:
+      freeMemory = ESP.getFreeHeap();
+      printf(LOG_INFO,F("Free Memory: heap %.3fk (%d) maxBlock %.3fk fragmentation: %d%%"), (float) freeMemory/1024, freeMemory-_lastMemory, (float) ESP.getMaxFreeBlockSize()/1024, ESP.getHeapFragmentation()); 
+      _lastMemory = freeMemory;
+      break;
+    case LOG_NETWORK:
+      printf(LOG_INFO,F("Network: IP:%s/%s GW:%s MAC:%s Status: '%s'"), WiFi.localIP().toString().c_str(), WiFi.subnetMask().toString().c_str(), WiFi.gatewayIP().toString().c_str(), WiFi.macAddress().c_str(),wifiStatus[WiFi.status()]);
+      break;
+    default:
+      printf(LOG_ERR,F("unknown key #%d! try: 1-8,m,n"),key);
+  }
+}
+
 void MyLog::loop() {
   if (_serial==NULL) return;
   if (_serial->available()) {
@@ -195,13 +220,7 @@ void MyLog::loop() {
       _maxLogLevel = _incomingByte-48;
       _serial->printf("[LOGGER] max log level set to #%d %s\n",_maxLogLevel, logLevel[_maxLogLevel]);
     } else {
-      switch (_incomingByte) {
-        case 109: 
-          printf(LOG_INFO,F("Free Memory: heap %.3fk maxBlock %.3fk fragmentation: %d%%"), (float) ESP.getFreeHeap()/1024, (float) ESP.getMaxFreeBlockSize()/1024, ESP.getHeapFragmentation()); 
-          break;
-        default:
-          printf(LOG_ERR,F("unknown char #%d received! use 1-8,m"),_incomingByte);
-      }
+      printInfo(_incomingByte);
     }
   }
 }

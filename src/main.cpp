@@ -61,9 +61,10 @@ void onHomieEvent(const HomieEvent& event) {
       case HomieEventType::WIFI_CONNECTED:
         myLog.start();
         myLog.setDeviceName(Homie.getConfiguration().deviceId);
-        myLog.printf(LOG_INFO, "WiFi ready ip: %s", event.ip.toString().c_str());
+        myLog.printInfo(LOG_NETWORK);
       break;
       case HomieEventType::WIFI_DISCONNECTED:
+        myLog.printInfo(LOG_NETWORK);
         normalOperation = false;
       break;    
       case HomieEventType::SENDING_STATISTICS:
@@ -223,6 +224,7 @@ void setup() {
     Homie.setLoggingPrinter(&Serial1);
     myLog.setup(&Serial1,SYSLOG_PROTO_IETF);
   #endif
+  myLog.printInfo(LOG_MEMORY);
   bootflags bootResult = bootmode_detect();
   String string = ESP.getResetInfo();
   myLog.printf(LOG_INFO,F("Reset cause: %d (%s)"),bootResult.raw_rst_cause,string.c_str());
@@ -291,6 +293,7 @@ void setup() {
   Homie.setup();
   string += F("- Setup complete");
   myLog.print(LOG_DEBUG,string.c_str());
+  myLog.printInfo(LOG_MEMORY);
 }
 
 void loop() {

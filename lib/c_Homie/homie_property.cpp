@@ -8,12 +8,13 @@ MyHomieProperty::MyHomieProperty(const HomiePropertyDef* def) {
   propertyData.current=0;
   propertyData.scale=1;
   propertyData.shift=0;
-  propertyData.oversamplingSum=0;
-  propertyData.toSample=propertyDef->oversampling;
+  propertyData.samples=0;
+  propertyData.samplePointer=0;
   propertyData.sendTimeout= millis()+propertyDef->timeout*1000;
   propertyData.sampleTimeout= millis() + propertyDef->sampleRate * 1000;
   propertyData.initialSample= false;
   samples = new float[propertyDef->oversampling];
+  for (uint8_t i = 0; i<propertyDef->oversampling; i++) samples[i]=0;
   _inputHandler = NULL;
 };
 
@@ -36,6 +37,12 @@ bool MyHomieProperty::readyToSample() {
 
 bool MyHomieProperty::readyToSend() {
   if (propertyData.sendTimeout<millis()) {
+    myLog.printf(LOG_TRACE,F("   %s is ready to sample by timer"), propertyDef->id);
+    propertyData.sendTimeout= millis()+propertyDef->timeout*1000;
+    return true;
+  }
+  if (fabs(propertyData.current-propertyData.last)>propertyDef->threshold) {
+    myLog.printf(LOG_DEBUG,F("   %s is ready to sample by threshold %.2f>%.2f"), propertyDef->id, fabs(propertyData.current-propertyData.last), propertyDef->threshold);
     propertyData.sendTimeout= millis()+propertyDef->timeout*1000;
     return true;
   }
@@ -55,9 +62,36 @@ bool MyHomieProperty::inputHandler(const HomieRange& range, const String& value,
   return false;
 };
 
+/*!
+   @brief  add a value to the oversampling array and return the average
+    @param  sample   sample value
+    @returns    average of samples
+*/
+float MyHomieProperty::oversample(float sample){
+  samples[propertyData.samplePointer]=sample;
+  propertyData.samplePointer++;
+  if (propertyData.samplePointer>=propertyDef->oversampling){
+    propertyData.samplePointer=0;
+  }
+  if (propertyData.samples<propertyDef->oversampling) {
+    propertyData.samples++;
+  }
+  float averageSum = 0;
+  for (uint8_t i=0; i<propertyData.samples; i++) {
+    averageSum += samples[i];
+  }
+  myLog.printf(LOG_DEBUG,F("    sampled %d/%d values %.2f~%.2f"),propertyData.samples,propertyDef->oversampling,sample,averageSum/propertyData.samples);
+  return averageSum/propertyData.samples;
+}
+
 bool MyHomieProperty::setValue (float value) {
   triggerLED();
-  propertyData.current = value;
+  propertyData.last=propertyData.current;
+  if (propertyDef->oversampling>0) {
+    propertyData.current = oversample(value);
+  } else {
+    propertyData.current = value;
+  }
   myLog.printf(LOG_TRACE,F("   MyHomieProperty::setValue %.2f : %.2f %p"), value, propertyData.current, &propertyData);
   return true;
 };

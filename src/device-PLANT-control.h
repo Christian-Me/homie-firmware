@@ -25,9 +25,9 @@ const HomieDeviceDef thisDevice PROGMEM = {"GREENHOUSE-02","Greenhouse 2"};
 
 #define BME280_FORCED_MODE false
 const HomieNodeDef BME280sensorNode = {"BME280","Bosch BME280", "enviornment", 3, 0, { // io 0 = autodetect I2C Address
-    {"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0,0}, // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
-    {"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,0,0},
-    {"pressure","Pressure","hPa", DATATYPE_FLOAT, RETAINED, "300:1100",NON_SETTABLE,1,30,6000,0,0},
+    {"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0,0},   // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
+    {"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,5,0},              // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
+    {"pressure","Pressure","hPa", DATATYPE_FLOAT, RETAINED, "300:1100",NON_SETTABLE,10,30,6000,0,0},
 }};
 
 const HomieNodeDef PWMactuatorNode = {"FAN","2ch fan control", "PWM control",2, 0, {

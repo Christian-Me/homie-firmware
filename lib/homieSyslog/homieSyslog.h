@@ -4,11 +4,17 @@
 #include "Arduino.h"
 #include <Syslog.h>
 
+// extra log level
 #define LOG_TRACE 8 // trace level added to be able to filter gradual information
 
+// log devices
 #define LOG2SERIAL 1
 #define LOG2SYSLOG 2
 #define LOG2MQTT 4
+
+// default Log prints
+#define LOG_MEMORY 109    // key 'm'
+#define LOG_NETWORK 110   // key 'n' 
 
 class MyLog {
     bool _isInitialized = false;
@@ -19,6 +25,7 @@ class MyLog {
     Syslog* _syslog;
     HardwareSerial* _serial = NULL;
     uint8_t _incomingByte = 0;
+    uint32_t _lastMemory = 81920;
   public:
     void setup(HardwareSerial* serial, uint8_t protocol);
     void start();
@@ -26,6 +33,7 @@ class MyLog {
     bool setDeviceName(const char* deviceName);
     bool setAppName(const char* appName);
     bool resetAppName();
+    void printInfo(uint8_t key);
     bool print(uint16_t pri, const __FlashStringHelper *fmt);
     bool print(uint16_t pri, const char *fmt);
     bool printf(uint16_t pri, const __FlashStringHelper *fmt, ...);

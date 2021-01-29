@@ -19,6 +19,7 @@ class MyHomieProperty {
     PropertyData propertyData;
     float* samples;
     InputHandler _inputHandler;
+    float oversample(float sample);
   public:
     MyHomieProperty(const HomiePropertyDef* def);
     const char* getId();
