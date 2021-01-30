@@ -3,7 +3,6 @@
 #include "c_homie.h"
 #include "plugins.h"
 
-MyHomieDevice myDevice;
 // select projects
 // define your projects in plaformio.ini (build_flags = )
 

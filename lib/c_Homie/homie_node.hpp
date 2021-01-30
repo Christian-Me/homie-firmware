@@ -76,6 +76,7 @@ class MyHomieNode {
     const char* getId();
     MyHomieProperty* addProperty(const HomiePropertyDef* homieProperty);
     void registerInputHandler(const char* id, InputHandler inputHandler);
+    void registerReadHandler(const char* id, ReadHandler readHandler);
     MyHomieProperty* getProperty (int index) const;
     MyHomieProperty* getProperty (const char* id) const;
     uint8_t length() const;
@@ -86,6 +87,6 @@ class MyHomieNode {
     bool sendValue(MyHomieProperty* homieProperty);
     bool sendValue(int index);
     bool sendValue(const char* id);
-    unsigned long getNextEvent();
-    unsigned long loop();
+    unsigned long getNextEvent(unsigned long timebase);
+    unsigned long loop(unsigned long timebase);
 };

@@ -52,14 +52,22 @@ MyHomieNode* MyHomieDevice::createHomieNode(uint8_t pluginId, const HomieNodeDef
   return node;
 }
 
+
+MyHomieProperty* MyHomieDevice::addHomieParameter(const char* nodeId, const HomiePropertyDef2* propertyDef) {
+  myLog.printf(LOG_INFO,F("Add parameter to node Id:%s parmeter:'%s'"),nodeId,propertyDef->id);
+}
+
 unsigned long MyHomieDevice::loop() {
   if (_nextEvent < millis()) {
+    unsigned long timebase = millis(); // read only once!
     unsigned long nextNodeEvent = -1;
     for (int8_t i=0; i<nodes.length; i++) {
-      nextNodeEvent = minimum(getNode(i)->loop(), nextNodeEvent);
+      nextNodeEvent = minimum(getNode(i)->loop(timebase), nextNodeEvent);
     }
-    _nextEvent = nextNodeEvent + millis();
+    _nextEvent = nextNodeEvent + timebase;
     myLog.printf(LOG_INFO,F("Next device event in %.2fs"),(float) nextNodeEvent / 1000);
   }
   return _nextEvent;
 }
+
+MyHomieDevice myDevice;

@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "playground",
+			"path": "playground"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.bak": "cpp"
+		},
+		"cSpell.words": [
+			"vlogf",
+			"vmylogf"
+		]
+	}
+}

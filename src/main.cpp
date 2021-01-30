@@ -16,16 +16,6 @@ bool normalOperation = false;
   m_neopixel neopixel;
 #endif
 
-#ifdef S_ADS115
-  #include "s_ADS1115.h"
-  s_ADS1115 ADS1115(1); // index 1
-#endif
-
-#ifdef S_BME680
-  #include "s_BME680.h"
-  s_BME680 BME680(2); // index 2 (secondary address)
-#endif
-
 bool resetHandler(const HomieRange& range, const String& value) {
   ESP.reset();
   return true;
@@ -268,13 +258,11 @@ void setup() {
      string += F("BME280 ");
   #endif
 
-  #ifdef S_ADS115
-     ADS1115.init();
+  #ifdef S_ADS1115
      string += F("ADS1115 ");
   #endif
 
   #ifdef S_BME680
-    BME680.init();
     string += F("BME680 ");
   #endif
 

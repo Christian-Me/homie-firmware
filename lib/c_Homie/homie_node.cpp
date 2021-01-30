@@ -3,36 +3,65 @@
 // #include "homieSyslog.h"
 #include "../../include/datatypes.h"
 #include "plugins.h"
-#include "utils.h"
+#include <utils.h>
 
 #ifdef A_PWM
-  #include "a_pwm_dimmer.h"
+  #include <a_pwm_dimmer.h>
 #endif
 #ifdef S_BME280
-  #include "s_bme280.h"
+  #include <s_bme280.h>
+#endif
+#ifdef S_BME680
+  #include <s_BME680.h>
+#endif
+#ifdef S_ADS1115
+  #include <s_ADS1115.h>
+#endif
+#ifdef S_BH1750
+  #include <s_BH1750.h>
+#endif
+#ifdef S_DUMMY
+  #include <s_DUMMY.h>
 #endif
 
 bool MyHomieNode::pluginInit(uint8_t pluginId) {
+  myLog.printf(LOG_DEBUG,F(" Start plugin init for node %s (pluginId:%d) %d"),getDef()->id, pluginId, ADS1115_ID);
+  plugin = NULL;
   switch (pluginId) {
     #ifdef A_PWM
-      case PWM_ID: 
+      case PWM_ID: {
+        myLog.print(LOG_DEBUG,F("  PWM"));
         plugin= new a_PWMdimmer();
-        break;
+        break; }
     #endif
     #ifdef S_BME280
-      case BME280_ID: 
+      case BME280_ID: {
+        myLog.print(LOG_DEBUG,F("  BME280"));
         plugin= new s_BME280(getDef()->io);
-
-        break;
+        break; }
     #endif
-    default:
-      myLog.printf(LOG_INFO,F(" virtual plugin for node %s (pluginId:%d)"),getDef()->id, pluginId);
-      plugin = new Plugin();
+    #ifdef S_BH1750
+      case BH1750_ID: {
+        myLog.print(LOG_DEBUG,F("  BH1750"));
+        plugin= new s_BH1750(getDef()->io);
+        break; }
+    #endif
+    #ifdef S_ADS1115
+      case ADS1115_ID: {
+        myLog.print(LOG_DEBUG,F("  ADS1115"));
+        plugin= new s_ADS1115(getDef()->io);
+        break; }
+    #endif
+    default: {
+      myLog.printf(LOG_INFO,F("  virtual"));
+      plugin = new Plugin(); }
   }
-  myLog.printf(LOG_INFO,F(" registered plugin %s for node %s (pluginId:%d)"),plugin->id(),getDef()->id, pluginId);
   if (plugin != NULL) {
+    myLog.printf(LOG_INFO,F(" registered plugin %s for node %s (pluginId:%d)"),plugin->id(),getDef()->id, pluginId);
     plugin->init(this);
     return true;
+  } else {
+    myLog.printf(LOG_ERR,F(" error initialisation of plugin %s for node %s (pluginId:%d)"),plugin->id(),getDef()->id, pluginId);
   }
   return false;
 }
@@ -41,7 +70,7 @@ MyHomieNode::MyHomieNode(const HomieNodeDef* def, uint8_t pluginId) {
   nodeDef = def;
   _pluginId = pluginId;
   homieNode = new HomieNode(def->id,def->name, def->type);
-  myLog.printf(LOG_INFO, F("Registered Node id:%s name:%s type:%s"), def->id, def->name, def->type);
+  myLog.printf(LOG_INFO, F("Start register Node id:%s name:%s type:%s plugin Id:%d"), def->id, def->name, def->type, _pluginId);
   if (!pluginInit(_pluginId)) {
     myLog.printf(LOG_ERR, " Plugin id=%d reported an error", _pluginId);
   };
@@ -62,6 +91,11 @@ const char* MyHomieNode::getId() {
 void MyHomieNode::registerInputHandler(const char* id, InputHandler inputHandler){
   myLog.printf(LOG_INFO, F("Registered input handler for %s"), id);
   properties.getById(id)->setInputHandler(inputHandler);
+};
+
+void MyHomieNode::registerReadHandler(const char* id, ReadHandler readHandler){
+  myLog.printf(LOG_INFO, F("Registered read handler for %s"), id);
+  properties.getById(id)->setReadHandler(readHandler);
 };
 
 MyHomieProperty* MyHomieNode::getProperty (int index) const {
@@ -152,29 +186,30 @@ MyHomieProperty* MyHomieNode::addProperty(const HomiePropertyDef* def) {
   return homieProperty;
 }
 
-unsigned long MyHomieNode::getNextEvent() {
+unsigned long MyHomieNode::getNextEvent(unsigned long timebase) {
   unsigned long nextEvent = -1;
   for (int8_t i=0; i<properties.length; i++) {
-    for (int8_t i=0; i<properties.length; i++) {
-      if (getProperty(i)->getDef()->sampleRate>0) {
-        nextEvent = minimum(getProperty(i)->getData()->sampleTimeout,nextEvent);
-      }
-      if (getProperty(i)->getDef()->timeout>0) {
-        nextEvent = minimum(getProperty(i)->getData()->sendTimeout,nextEvent);
-      }
+    if (getProperty(i)->getDef()->sampleRate>0) {
+      nextEvent = minimum(getProperty(i)->getData()->sampleTimeout-timebase,nextEvent);
+    }
+    if (getProperty(i)->getDef()->timeout>0) {
+      nextEvent = minimum(getProperty(i)->getData()->sendTimeout-timebase,nextEvent);
     }
   }
   return nextEvent;
 }
 
-unsigned long MyHomieNode::loop() {
-  if (_nextEvent < millis()) {
+unsigned long MyHomieNode::loop(unsigned long timebase) {
+  if (_nextEvent < timebase) {
     myLog.printf(LOG_DEBUG,F(" Node %s timer triggered"), getDef()->id);
-    if (getProperty(0)!=NULL) {
-      if (getProperty(0)->readyToSample()) {
+    MyHomieProperty* property = getProperty(0);
+    if (property!=NULL) {
+      if (property->readyToSample(timebase)) {
           myLog.printf(LOG_DEBUG,F("  Node %s read form plugin %s"),getDef()->id, (plugin!=NULL) ? plugin->id() : "NULL");
           if (plugin!=NULL) {
-            plugin->read(true);
+            if (property->readHandler(TASK_BEFORE_READ,this,property)) {
+              plugin->read(true);
+            }
           } else {
             myLog.print(LOG_DEBUG,F("  no plugin defined"));
           }
@@ -185,7 +220,7 @@ unsigned long MyHomieNode::loop() {
     myLog.print(LOG_TRACE,F("  ready to send?"));
     for (int8_t i=0; i<properties.length; i++) {
       if (getProperty(i)!=NULL) {
-        if (getProperty(i)->readyToSend()) {
+        if (getProperty(i)->readyToSend(timebase)) {
           myLog.printf(LOG_DEBUG,F("  property %s send!"),getProperty(i)->getDef()->id);
           sendValue(i);
         }
@@ -195,7 +230,7 @@ unsigned long MyHomieNode::loop() {
     }
   }
   myLog.print(LOG_TRACE,F("  next Event?"));
-  uint32_t nextEvent = getNextEvent();
+  uint32_t nextEvent = getNextEvent(timebase);
   if (nextEvent<-1) myLog.printf(LOG_INFO,F(" Next Node %s event in %.2fs"), getDef()->id, (float) nextEvent / 1000);
   return nextEvent;
 }

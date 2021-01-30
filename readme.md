@@ -5,6 +5,10 @@ it is based on the great homie-esp8266 library.
 
 It is still a work in progress but I'm happy like it is working now
 
+<a href="https://homieiot.github.io/">
+  <img src="https://homieiot.github.io/img/works-with-homie.png" alt="works with MQTT Homie">
+</a>
+
 ## intro
 
 As handy as all the great frameworks like ESPEasy, Tasmota ... sooner or later I had issues with some details. As I use the homie convention for my communication via MQTT the choices are limited too. After several single task projects I decided to start with a new approach collecting all the bits and pieces into my own modular firmware or perhaps I should call it framework?
@@ -51,7 +55,7 @@ This project is intended to be compiled using [platformIO](https://platformio.or
 
 the following list shows the planned and implemented devices. Basically all devices I used before or planning to use in the near future. Think the list grows quickly. Hopefully the ticks too. 
 
-**Update:** as the API for plugins is still work in progress I had to remove a few. They will be updated soon
+**Update:** as the API for plugins is still work in progress.
 
 ### core
 
@@ -67,10 +71,10 @@ the following list shows the planned and implemented devices. Basically all devi
 
 ### sensors
 
-- [ ] ADS1115 4ch 16 bit AD converter
+- [X] ADS1115 4ch 16 bit AD converter
 - [X] BME280 temperature, humidity and pressure sensor
 - [ ] BME680 air quality (IAQ), temperature, humidity and pressure sensor
-- [ ] BH1750 light sensor (LUX meter)
+- [X] BH1750 light sensor (LUX meter)
 
 ### actuators
 

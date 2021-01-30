@@ -65,9 +65,9 @@ uint8_t scanI2C(const uint8_t addresses[], uint8_t address, uint8_t sdaPin, uint
   Wire.begin();
   myLog.setAppName("I2C");
   if (address == 0) {
-    myLog.printf(LOG_INFO,F(" Autodetecting I2C Device SDA:%d SCL:%d"),address,sdaPin,sclPin);
+    myLog.printf(LOG_INFO,F("  Autodetecting I2C Device SDA:%d SCL:%d"),address,sdaPin,sclPin);
   } else {
-    myLog.printf(LOG_INFO,F(" Searching for I2C Device @0x%X SDA:%d SCL:%d"),address,sdaPin,sclPin);
+    myLog.printf(LOG_INFO,F("  Searching for I2C Device @0x%X SDA:%d SCL:%d"),address,sdaPin,sclPin);
   }
   
   int count=0;
@@ -80,12 +80,12 @@ uint8_t scanI2C(const uint8_t addresses[], uint8_t address, uint8_t sdaPin, uint
     Wire.beginTransmission(i);
     result=Wire.endTransmission();
     if (result == 4) {
-      myLog.printf(LOG_ERR,F("  0x%X unknown error"),i);
+      myLog.printf(LOG_ERR,F("   0x%X unknown error"),i);
     } else if (result == 0) {
       count++;
       if (address!=0) {
         if (i==address) {
-          myLog.printf(LOG_DEBUG,F("  0x%X found specific I2C Device"),i);
+          myLog.printf(LOG_DEBUG,F("   0x%X found specific I2C Device"),i);
           sensorAddress=i;
           break;
         }
@@ -93,22 +93,22 @@ uint8_t scanI2C(const uint8_t addresses[], uint8_t address, uint8_t sdaPin, uint
         j = 0;
         while (addresses[j]!=0) {
           if (i==addresses[j]) {
-            myLog.printf(LOG_DEBUG,F("  0x%X autodetected I2C Device"),i);
+            myLog.printf(LOG_DEBUG,F("   0x%X autodetected I2C Device"),i);
             sensorAddress=i;
             break;
           } 
           j++;        
         }
       }
-      if (sensorAddress==0) myLog.printf(LOG_DEBUG,F("  0x%X device ACK"),i);
+      if (sensorAddress==0) myLog.printf(LOG_DEBUG,F("   0x%X device ACK"),i);
     }
     delay(1);
   }
 
   if (count==0) {
-    myLog.print(LOG_ERR,F(" no i2c devices found!"));
+    myLog.print(LOG_ERR,F("  no i2c devices found!"));
   } else {
-    myLog.printf(LOG_DEBUG,F(" %d i2c devices found!"),count);
+    myLog.printf(LOG_DEBUG,F("  %d total i2c devices found!"),count);
   }
   return sensorAddress;
 }

@@ -6,15 +6,18 @@ const char* Plugin::id() {
 }
 
 bool Plugin::init(const MyHomieNode* homieNode) {
+  _isInitialized = true;
   myLog.print(LOG_TRACE,F("   plugin didn't define init(def)!"));
   return false;
 }
 
 bool Plugin::checkStatus(void) {
+  myLog.print(LOG_TRACE,F("   plugin didn't define checkStatus()!"));
   return _isInitialized;
 }
 
 bool Plugin::available(void) {
+  myLog.print(LOG_TRACE,F("   plugin didn't define available()!"));
   return true;
 }
 

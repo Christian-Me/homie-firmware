@@ -2,7 +2,7 @@
 #define DATATYPES_H__
 #include <Arduino.h>
 // #include <Homie.h>
-#define MAX_DATAPOINTS 3
+// #define MAX_DATAPOINTS 3
 
 #define SETTABLE true
 #define NON_SETTABLE false
@@ -75,6 +75,21 @@ typedef struct {
     const uint8_t oversampling;     /*< number of values to oversample */
     const uint8_t gpio;             /*< number of GPIO channel */
 } HomiePropertyDef;
+
+struct HomiePropertyDef2 {
+    const char* id;                 /*< homie property id */
+    const char* name;               /*< homie $name */
+    const char* unit;               /*< homie $unit */
+    const uint8_t datatype;         /*< homie $datatype */
+    const bool retained;            /*< homie $retained flag */
+    const char* format;             /*< homie $format*/
+    const bool settable;            /*< homie $settable SETTABLE or NON_SETTABLE*/
+    const float threshold;          /*< minimum difference to trigger a data send */
+    const uint16_t sampleRate;      /*< timeout between sampling */
+    const uint16_t timeout;         /*< timeout to send data anyways (seconds)*/
+    const uint8_t oversampling;     /*< number of values to oversample */
+    const uint8_t gpio;             /*< number of GPIO channel */
+};
 
 
 typedef struct {

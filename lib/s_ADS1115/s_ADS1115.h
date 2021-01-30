@@ -1,25 +1,25 @@
-#ifndef S_BME280_H__
-#define S_BME280_H__
+#ifndef S_ADS1115_H__
+#define S_ADS1115_H__
 
 #include <Arduino.h>
-#include <Adafruit_BME280.h>
+#include <Adafruit_ADS1015.h>
 #include <plugins.h>
 
-#define MAX_BME280_DATAPOINTS 3
-const uint8_t BME280_ADDR[] = {0x76,0x77,0}; // must end with a 0 value!
+#define MAX_ADS1115_DATAPOINTS 4
+const uint8_t ADS1115_ADDR[] = {0x48,0x49,0x4A,0x4B,0}; // ADR-> GND, ADR->VDD, ADR->SDA, ADR-SCL must end with a 0 value!
 
 /**
- * @brief BME280 enviornment sensor
+ * @brief ADS1115 analog to digital converter
  */
-class s_BME280 : public Plugin {
+class s_ADS1115 : public Plugin {
   private:
     bool _isInitialized = false;
     const MyHomieNode *_homieNode = NULL;
     int _address = 0;
-    Adafruit_BME280 _sensor;
+    Adafruit_ADS1115 _sensor;
   public:
     const char* id ();                        /*> returns the id string */
-    s_BME280(int port);                       /*> constructor port= I2C address or port=0 autodetect */
+    s_ADS1115(int port);                      /*> constructor port= I2C address or port=0 autodetect */
     bool init(const MyHomieNode* homieNode);  /*> initialize the device */
     bool checkStatus(void);                   /*> check the status of the device */
     bool read(bool force);                    /*> read values from device and write to property database*/
