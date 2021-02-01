@@ -62,14 +62,6 @@ bool s_ADS1115::read(bool force=false)
   myLog.setAppName(id());
   myLog.printf(LOG_TRACE,F("   %s read(%s)"), id(), force ? "true" : false);
 
-  // sensor specific task(s)
-  float sensorValue = 0;
-  for (uint8_t i = 0; i<MAX_ADS1115_DATAPOINTS; i++) {
-    sensorValue = (float) _sensor.readADC_SingleEnded(i) * 0.1875;
-    // write data to homie Property
-    _homieNode->getProperty(i)->setValue(sensorValue);
-  }
-  myLog.printf(LOG_DEBUG,F("   %s measurement (%.1f,%.1f,%.1f,%.1f)"), id(), _homieNode->getProperty(0)->getValue(),_homieNode->getProperty(1)->getValue(),_homieNode->getProperty(2)->getValue(),_homieNode->getProperty(3)->getValue());
   return true;
 }
 
@@ -79,7 +71,14 @@ bool s_ADS1115::read(bool force=false)
     @returns    current value
 */
 float s_ADS1115::get(uint8_t channel) {
-  return _homieNode->getProperty(channel)->getValue();
+  float result = 0;
+  if (channel < _maxDatapoints){
+    result = (float) _sensor.readADC_SingleEnded(channel) * 0.1875,
+    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef()->id, result, _homieNode->getProperty(channel)->getDef()->unit);
+  } else {
+    myLog.printf(LOG_ERR,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
+  }
+  return result;
 }
 
 /*!

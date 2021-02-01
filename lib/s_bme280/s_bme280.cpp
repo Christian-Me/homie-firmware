@@ -63,12 +63,6 @@ bool s_BME280::read(bool force=false)
   // sensor specific task(s)
   _sensor.takeForcedMeasurement();
 
-  // write data to homie Property
-  _homieNode->getProperty(0)->setValue(_sensor.readTemperature());
-  _homieNode->getProperty(1)->setValue(_sensor.readHumidity());
-  _homieNode->getProperty(2)->setValue(_sensor.readPressure() / 100.0F);
-
-  myLog.printf(LOG_DEBUG,F("   %s measurement (%.1f,%.1f,%.1f)"), id(), _homieNode->getProperty(0)->getValue(),_homieNode->getProperty(1)->getValue(),_homieNode->getProperty(2)->getValue());
   return true;
 }
 
@@ -78,11 +72,28 @@ bool s_BME280::read(bool force=false)
     @returns    current value
 */
 float s_BME280::get(uint8_t channel) {
-  return _homieNode->getProperty(channel)->getValue();
+  float result = 0;
+  if (channel < _maxDatapoints){  
+    switch (channel) {
+      case 0: 
+        result = _sensor.readTemperature();
+        break;
+      case 1:
+        result = _sensor.readHumidity();
+        break;
+      case 2:
+        result = _sensor.readPressure() / 100.0F;
+        break;
+    }
+    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef()->id, result, _homieNode->getProperty(channel)->getDef()->unit);
+  } else {
+    myLog.printf(LOG_ERR,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
+  }
+  return result;
 }
 
 /*!
-   @brief    check if device is initialized
+   @brief    check if device is initialized and/or if sensor is in operation
     @returns    true if so
 */
 bool s_BME280::checkStatus(void) {

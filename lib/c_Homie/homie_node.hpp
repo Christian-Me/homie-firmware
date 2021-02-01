@@ -67,6 +67,8 @@ class MyHomieNode {
     HomieNode *homieNode = NULL;
     PropertyVector properties;
     unsigned long _nextEvent = 0;
+    uint16_t _pluginSampleRate = -1;
+    unsigned long _nextSample = 0;
   public:
     Plugin* plugin = NULL;
     MyHomieNode(const HomieNodeDef* def, uint8_t pluginId = 0);
@@ -81,6 +83,7 @@ class MyHomieNode {
     MyHomieProperty* getProperty (const char* id) const;
     uint8_t length() const;
     const HomieNodeDef* getDef() const;
+    bool readyToSample(unsigned long timebase);
     bool setValue(const char* id, float value);
     bool setValue(const char* id, bool value);
     bool setFactor(const char* id, float value);

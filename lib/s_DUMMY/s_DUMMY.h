@@ -17,6 +17,8 @@ class s_DUMMY : public Plugin {
     const MyHomieNode *_homieNode = NULL;
     int _address = 0;
 //    SENSOR_DRIVER *_sensor = nullptr; /**< pointer to sensor driver */ 
+    float _lastSample[MAX_DUMMY_DATAPOINTS];
+    uint8_t _maxDatapoints = MAX_DUMMY_DATAPOINTS;
   public:
     const char* id ();                        /*> returns the id string */
     s_DUMMY(int port);                       /*> constructor port= I2C address or port=0 autodetect */

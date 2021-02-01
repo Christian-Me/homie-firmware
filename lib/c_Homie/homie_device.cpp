@@ -59,13 +59,14 @@ MyHomieProperty* MyHomieDevice::addHomieParameter(const char* nodeId, const Homi
 
 unsigned long MyHomieDevice::loop() {
   if (_nextEvent < millis()) {
+    myLog.print(LOG_DEBUG,F("Device.loop() started"));
     unsigned long timebase = millis(); // read only once!
     unsigned long nextNodeEvent = -1;
     for (int8_t i=0; i<nodes.length; i++) {
       nextNodeEvent = minimum(getNode(i)->loop(timebase), nextNodeEvent);
     }
     _nextEvent = nextNodeEvent + timebase;
-    myLog.printf(LOG_INFO,F("Next device event in %.2fs"),(float) nextNodeEvent / 1000);
+    myLog.printf(LOG_DEBUG,F("Next device event in %.2fs (loop:%dms)"),(float) nextNodeEvent / 1000,millis()-timebase);
   }
   return _nextEvent;
 }

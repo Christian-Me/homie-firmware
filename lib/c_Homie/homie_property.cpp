@@ -1,6 +1,5 @@
 #include "homie_property.hpp"
 #include "homie_node.hpp"
-#include <signalLED.h>
 
 MyHomieProperty::MyHomieProperty(const HomiePropertyDef* def) {
   propertyDef = def;
@@ -28,8 +27,8 @@ const HomiePropertyDef* MyHomieProperty::getDef() const {
 };
 
 bool MyHomieProperty::readyToSample(unsigned long timebase) {
-  myLog.printf(LOG_TRACE,F("   %s ready to sample?"), propertyDef->id);
-  if (propertyData.sampleTimeout<timebase) {
+  if (propertyDef->sampleRate>0 && propertyData.sampleTimeout<timebase) {
+    myLog.printf(LOG_TRACE,F("   %s ready to sample"), propertyDef->id);
     propertyData.sampleTimeout= timebase + propertyDef->sampleRate * 1000;
     return true;
   }
@@ -37,13 +36,13 @@ bool MyHomieProperty::readyToSample(unsigned long timebase) {
 };
 
 bool MyHomieProperty::readyToSend(unsigned long timebase) {
-  if (propertyData.sendTimeout<millis()) {
-    myLog.printf(LOG_TRACE,F("   %s is ready to sample by timer"), propertyDef->id);
+  if (propertyDef->timeout>0 && propertyData.sendTimeout<millis()) {
+    myLog.printf(LOG_TRACE,F("   %s is ready to send by timer"), propertyDef->id);
     propertyData.sendTimeout= timebase+propertyDef->timeout*1000;
     return true;
   }
   if (fabs(propertyData.current-propertyData.last)>propertyDef->threshold) {
-    myLog.printf(LOG_DEBUG,F("   %s is ready to sample by threshold %.2f>%.2f"), propertyDef->id, fabs(propertyData.current-propertyData.last), propertyDef->threshold);
+    myLog.printf(LOG_DEBUG,F("   %s is ready to send by threshold %.2f>%.2f"), propertyDef->id, fabs(propertyData.current-propertyData.last), propertyDef->threshold);
     propertyData.sendTimeout= timebase+propertyDef->timeout*1000;
     return true;
   }
@@ -94,14 +93,12 @@ float MyHomieProperty::oversample(float sample){
   for (uint8_t i=0; i<propertyData.samples; i++) {
     averageSum += samples[i];
   }
-  myLog.printf(LOG_DEBUG,F("    sampled %d/%d values %.2f~%.2f"),propertyData.samples,propertyDef->oversampling,sample,averageSum/propertyData.samples);
+  myLog.printf(LOG_TRACE,F("   sampled %d/%d values %.2f~%.2f"),propertyData.samples,propertyDef->oversampling,sample,averageSum/propertyData.samples);
   return averageSum/propertyData.samples;
 }
 
 bool MyHomieProperty::setValue (float value) {
-  triggerLED();
-  propertyData.last=propertyData.current;
-  if (propertyDef->oversampling>0) {
+   if (propertyDef->oversampling>0) {
     propertyData.current = oversample(value);
   } else {
     propertyData.current = value;
@@ -112,13 +109,11 @@ bool MyHomieProperty::setValue (float value) {
 
 bool MyHomieProperty::setValue (bool value) {
   myLog.printf(LOG_DEBUG,F("   MyHomieProperty::setValue %s %p"), value, (propertyData.current==1) ? "true" : "false", &propertyData);
-  triggerLED();
   propertyData.current = (value) ? 1 : 0;
   return true;
 };
 
 bool MyHomieProperty::setFactor (float value) {
-  triggerLED();
   propertyData.scale = value;
   myLog.printf(LOG_TRACE,F("   MyHomieProperty::setFactor %.2f : %.2f"), value, propertyData.scale);
   return true;
@@ -154,21 +149,30 @@ bool MyHomieProperty::defaultPropertyInputHandler(const HomieRange& range, const
 };
 
 bool MyHomieProperty::defaultPropertyReadHandler(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
-    bool _result = false;
+    bool _result = true;
     switch (task) {
-      case TASK_BEFORE_READ: {
-        myLog.print(LOG_DEBUG,F(" default before read task"));
-        _result = true;
+      case TASK_BEFORE_SAMPLE: {
+//        myLog.print(LOG_TRACE,F("   default before sample task"));
         break;
       };
-      case TASK_ACTUAL_READ: {
-        myLog.print(LOG_DEBUG,F(" default actual read task"));
-        _result = true;
+      case TASK_AFTER_SAMPLE: {
+//        myLog.print(LOG_TRACE,F("   default actual sample task"));
+        break;
+      };
+      case TASK_BEFORE_READ: {
+//        myLog.print(LOG_TRACE,F("   default before read task"));
         break;
       };
       case TASK_AFTER_READ: {
-        myLog.print(LOG_DEBUG,F(" default after read task"));
-        _result = true;
+//        myLog.print(LOG_TRACE,F("   default actual read task"));
+        break;
+      };
+      case TASK_BEFORE_SEND: {
+//        myLog.print(LOG_TRACE,F("   default before send task"));
+        break;
+      };
+      case TASK_AFTER_SEND: {
+//        myLog.print(LOG_TRACE,F("   default after send task"));
         break;
       };
     };

@@ -61,11 +61,7 @@ bool s_DUMMY::read(bool force=false)
   myLog.printf(LOG_TRACE,F("   %s read(%s)"), id(), force ? "true" : false);
 
   // sensor specific task(s)
-  // if (_sensor->measurementReady()) {
-  //   _homieNode->getProperty(0)->setValue(_sensor->readLightLevel());
-  //   myLog.printf(LOG_DEBUG,F("   %s measurement (%.1f)"), id(), _homieNode->getProperty(0)->getValue());
-  //   return true;
-  // }
+  // initiate measurement and / or read values and store them in _lastSample[]
 
   return false;
 }
@@ -76,7 +72,18 @@ bool s_DUMMY::read(bool force=false)
     @returns    current value
 */
 float s_DUMMY::get(uint8_t channel) {
-  return _homieNode->getProperty(channel)->getValue();
+  float result = 0;
+  if (channel < _maxDatapoints){  
+    switch (channel) {
+      case 0: 
+        result = 1; // _sensor.read(); or _lastSample[channel];
+        break;
+    }
+    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef()->id, result, _homieNode->getProperty(channel)->getDef()->unit);
+  } else {
+    myLog.printf(LOG_ERR,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
+  }
+  return result;
 }
 
 /*!

@@ -5,9 +5,12 @@
 // #include "homieSyslog.h"
 #include "..\..\include\datatypes.h"
 
-#define TASK_BEFORE_READ 1
-#define TASK_ACTUAL_READ 2
-#define TASK_AFTER_READ 3
+#define TASK_BEFORE_SAMPLE 1    // before data is read from hardware
+#define TASK_AFTER_SAMPLE 2     // before data is read from hardware
+#define TASK_BEFORE_READ 3      // before reading individual property
+#define TASK_AFTER_READ 4       // after reading individual property
+#define TASK_BEFORE_SEND 5      // befor sending to mqtt server
+#define TASK_AFTER_SEND 6       // after sending to mqtt server
 
 class MyHomieNode;
 class MyHomieProperty;

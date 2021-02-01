@@ -4,6 +4,7 @@
 #include "../../include/datatypes.h"
 #include "plugins.h"
 #include <utils.h>
+#include <signalLED.h>
 
 #ifdef A_PWM
   #include <a_pwm_dimmer.h>
@@ -69,6 +70,7 @@ bool MyHomieNode::pluginInit(uint8_t pluginId) {
 MyHomieNode::MyHomieNode(const HomieNodeDef* def, uint8_t pluginId) {
   nodeDef = def;
   _pluginId = pluginId;
+  _nextSample = 0;
   homieNode = new HomieNode(def->id,def->name, def->type);
   myLog.printf(LOG_INFO, F("Start register Node id:%s name:%s type:%s plugin Id:%d"), def->id, def->name, def->type, _pluginId);
   if (!pluginInit(_pluginId)) {
@@ -118,12 +120,24 @@ const HomieNodeDef* MyHomieNode::getDef() const {
 bool MyHomieNode::sendValue(MyHomieProperty* homieProperty) {
   switch (homieProperty->getDef()->datatype) {
     case DATATYPE_FLOAT: {
-      myLog.printf(LOG_DEBUG,F("  MyHomieNode::sendValue(%s) %.2f %s"),homieProperty->getDef()->id,homieProperty->getValue(), homieProperty->getId());
+      myLog.printf(LOG_TRACE,F("  MyHomieNode::sendValue(%s) %.2f %s"),homieProperty->getDef()->id,homieProperty->getValue(), homieProperty->getId());
       homieNode->setProperty(homieProperty->getDef()->id).send(String(homieProperty->getValue())); // send homie feedback
+      homieProperty->getData()->last=homieProperty->getData()->current;
     }
   }
+  triggerLED();
+
   return true;
 }
+
+bool MyHomieNode::readyToSample(unsigned long timebase) {
+  if (_nextSample<timebase) {
+    myLog.printf(LOG_TRACE,F("   Node %s ready to sample! (next: %ds)"), nodeDef->id, _pluginSampleRate);
+    _nextSample= timebase + _pluginSampleRate * 1000;
+    return true;
+  }
+  return false;
+};
 
 bool MyHomieNode::sendValue(const char* id) {
   return sendValue(getProperty(id));
@@ -143,7 +157,7 @@ bool MyHomieNode::setValue(const char* id, float value) {
 }
 
 bool MyHomieNode::setValue(const char* id, bool value) {
-  myLog.printf(LOG_DEBUG,F("  MyHomieNode::setValue(%s,(bool) %s)"),id,(value) ? "true" : "false");
+  myLog.printf(LOG_TRACE,F("  MyHomieNode::setValue(%s,(bool) %s)"),id,(value) ? "true" : "false");
   if (getProperty(id)!=NULL) {
     getProperty(id)->setValue(value);
     // if (plugin!=NULL) plugin->set(properties.getIndex(id),getProperty(id)->getData()); // trigger the plugin to do it's bussiness
@@ -166,7 +180,7 @@ MyHomieProperty* MyHomieNode::addProperty(const HomiePropertyDef* def) {
 
   MyHomieProperty* homieProperty = properties.push(new MyHomieProperty(def));
   if (homieProperty==NULL) return NULL;
-
+  _pluginSampleRate = minimum(def->sampleRate, _pluginSampleRate);
   if(def->settable == NON_SETTABLE) {
     homieNode->advertise(def->id)
       .setName(def->name)
@@ -200,37 +214,54 @@ unsigned long MyHomieNode::getNextEvent(unsigned long timebase) {
 }
 
 unsigned long MyHomieNode::loop(unsigned long timebase) {
+  bool eventOccurred = false;
+  bool proceed = true;
+  float sampleValue = 0;
   if (_nextEvent < timebase) {
-    myLog.printf(LOG_DEBUG,F(" Node %s timer triggered"), getDef()->id);
-    MyHomieProperty* property = getProperty(0);
-    if (property!=NULL) {
-      if (property->readyToSample(timebase)) {
-          myLog.printf(LOG_DEBUG,F("  Node %s read form plugin %s"),getDef()->id, (plugin!=NULL) ? plugin->id() : "NULL");
-          if (plugin!=NULL) {
-            if (property->readHandler(TASK_BEFORE_READ,this,property)) {
-              plugin->read(true);
-            }
-          } else {
-            myLog.print(LOG_DEBUG,F("  no plugin defined"));
-          }
+    MyHomieProperty* property = NULL;
+    myLog.printf(LOG_TRACE,F(" sample rate %ds"), _pluginSampleRate);
+    if (plugin!=NULL && readyToSample(timebase)) {
+      myLog.printf(LOG_TRACE,F(" Node %s timer triggered"), getDef()->id);
+      property = getProperty(0);
+      if (property->readHandler(TASK_BEFORE_SAMPLE,this,property)) {
+        if (_pluginId<100) myLog.printf(LOG_DEBUG,F("  Node %s read form plugin %s"),getDef()->id, (plugin!=NULL) ? plugin->id() : "NULL");
+        plugin->read(true);
+        eventOccurred = true;
+        proceed = property->readHandler(TASK_AFTER_SAMPLE,this,property);
       }
-    } else {
-      myLog.print(LOG_ERR,F("  no property #0 defined!"));
+      if (proceed) {
+        for (int8_t i=0; i<properties.length; i++) {
+          property = getProperty(i);
+          if (property->readyToSample(timebase)) {
+            sampleValue = plugin->get(i);
+            myLog.printf(LOG_DEBUG,F("   sample %s = %.2f"), property->getId(), sampleValue);
+            if (property->readHandler(TASK_BEFORE_READ,this,property)) {
+              property->setValue(sampleValue);
+              eventOccurred = true;
+            }
+            proceed = property->readHandler(TASK_AFTER_READ,this,property);
+          }
+        }
+      }
     }
-    myLog.print(LOG_TRACE,F("  ready to send?"));
     for (int8_t i=0; i<properties.length; i++) {
       if (getProperty(i)!=NULL) {
         if (getProperty(i)->readyToSend(timebase)) {
-          myLog.printf(LOG_DEBUG,F("  property %s send!"),getProperty(i)->getDef()->id);
-          sendValue(i);
+          myLog.printf(LOG_TRACE,F("  %s ready to send?"),getProperty(i)->getId());
+          property = getProperty(i);
+          if (property->readHandler(TASK_BEFORE_SEND,this,property)) {
+            myLog.printf(LOG_INFO,F(" Node %s property %s send!"), getDef()->id ,getProperty(i)->getDef()->id);
+            sendValue(i);
+            eventOccurred = true;
+          }
+          proceed = property->readHandler(TASK_AFTER_SEND,this,property);
         }
       } else {
         myLog.printf(LOG_ERR,F("  property #%d not defined!"), i);
       }
     }
   }
-  myLog.print(LOG_TRACE,F("  next Event?"));
-  uint32_t nextEvent = getNextEvent(timebase);
-  if (nextEvent<-1) myLog.printf(LOG_INFO,F(" Next Node %s event in %.2fs"), getDef()->id, (float) nextEvent / 1000);
+  unsigned long nextEvent = getNextEvent(timebase);
+  if (eventOccurred) myLog.printf(LOG_DEBUG,F("  Next Node %s event in %.2fs"), getDef()->id, (float) nextEvent / 1000);
   return nextEvent;
 }

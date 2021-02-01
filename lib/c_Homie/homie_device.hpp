@@ -8,7 +8,7 @@ struct NodeVector {
     NodeItem* next = NULL;
     NodeItem(MyHomieNode* homieNode) {
       node = homieNode;
-      myLog.printf(LOG_INFO,F("  pushed node %d"),node);
+      myLog.printf(LOG_TRACE,F("  pushed node %d"),node);
       next = NULL;
     }
   };
@@ -39,7 +39,6 @@ struct NodeVector {
   }
   MyHomieNode* get(uint8_t index) const {
     NodeItem* seek = first;
-    myLog.printf(LOG_TRACE,F("  get node %d %d"), index, seek);
     if (seek==NULL || index>length-1) return NULL;
     for (int i = 0; i<index; i++) { 
       seek=seek->next;

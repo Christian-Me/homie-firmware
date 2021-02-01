@@ -39,7 +39,7 @@ This project is intended to be compiled using [platformIO](https://platformio.or
 
 - create your project in `platformio.ini` with a unique `build_flag`
 - add your project into `projects.h` and include your `device-yours.h` file
-- edit your `device-yours.h` file. Here is where all your device specific things should happen. Take a look into `device-testbench.h` for reference (Update: use `device-PLANT-control.h` because the API had changed. I will update the testbench soon.)
+- edit your `device-yours.h` file. Here is where all your device specific things should happen. Take a look into `device-testbench.h` for reference (Update: use `device-PLANT-control.h` because the API had changed. I will update the test bench soon.)
 - edit your own `config.json` with your device configuration (see example)
 - upload your `config.json` via usb or flash the initial-upload build to use the config web interface or upload your config using curl
 - flash your firmware via usb/serial or OTA if you have flashed the initial-upload build

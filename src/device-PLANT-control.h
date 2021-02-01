@@ -31,23 +31,23 @@ const HomieNodeDef BME280sensorNode = {"BME280","Bosch BME280", "enviornment", 3
 }};
 
 const HomieNodeDef PWMactuatorNode = {"FAN","2ch fan control", "PWM control",2, 0, {
-    {"fan1","lower fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,0,0,0,15}, // 0.1 fade step, delay per step, unused, GPIO
-    {"fan2","upper fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,0,0,0,13} // 0.1 fade step, delay per step, unused, GPIO
+    {"fan1","lower fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,0,6000,0,15}, // 0.1 fade step, delay per step, unused, GPIO
+    {"fan2","upper fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,0,6000,0,13} // 0.1 fade step, delay per step, unused, GPIO
 }};
 
 const HomieNodeDef BH1750sensorNode = {"BH1750","BH1750 Light Sensor", "enviornment", 1, 0,{
-    {"illumination","Light Amount", "lx", DATATYPE_FLOAT, RETAINED, "0:65528", NON_SETTABLE,5,30,6000,5,0},
+    {"illumination","Light Amount", "lx", DATATYPE_FLOAT, RETAINED, "0:65528", NON_SETTABLE,20,30,6000,5,0},
 }};
 
 const HomieNodeDef ADS1115sensorNode = {"ADS1115","TI ADS1115 a/d converter", "ad converter", 4, 0, {
-    {"SOIL-C","Capacitive Soil", "mV", DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,10,10,3600,5,0},
+    {"SOIL-C","Capacitive Soil", "mV", DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,100,3600,5,0},
     {"POT-1","Potentiometer", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,5,1,6000,0,0},
-    {"SOIL-R","Resistive Soil", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,10,600,3600,0,0},  // sample minute. Send if value change by 2 or a hour had passed. No oversampling. Switch on sensor before reding
+    {"SOIL-R","Resistive Soil", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,600,3600,0,0},  // sample minute. Send if value change by 2 or a hour had passed. No oversampling. Switch on sensor before reding
     {"VCC","VCC", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,2,10,600,0,0}
   }
 };
 const HomieNodeDef virtualDevice = {"CONTROL","main Controls", "virtual device",1, 0, {
-    {"fans","Fan switch", "", DATATYPE_BOOLEAN, RETAINED, "0:1",SETTABLE,0.1,0,0,0,0} // 0.1 fade step, delay per step, unused, GPIO
+    {"fans","Fan switch", "", DATATYPE_BOOLEAN, RETAINED, "0:1",SETTABLE,0.1,0,6000,0,0} // 0.1 fade step, delay per step, unused, GPIO
 }};
 
 
@@ -90,21 +90,17 @@ bool fansInputHandler(const HomieRange& range, const String& value, MyHomieNode*
 };
 
 bool ADS1115readHandler(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
-    bool _result = false;
+    bool _result = true;
+    myLog.printf(LOG_INFO,F(" Node %s Property %s Task %d"),homieNode->getDef()->id, homieProperty->getDef()->id);
     switch (task) {
-      case TASK_BEFORE_READ: {
-        myLog.print(LOG_DEBUG,F(" default before read task"));
-        _result = true;
-        break;
-      };
-      case TASK_ACTUAL_READ: {
-        myLog.print(LOG_DEBUG,F(" default actual read task"));
-        _result = true;
+      case TASK_BEFORE_SAMPLE: {
+        // switch on resistive soil sensor for measurement
+        digitalWrite(D8,HIGH);
         break;
       };
       case TASK_AFTER_READ: {
-        myLog.print(LOG_DEBUG,F(" default after read task"));
-        _result = true;
+        // switch off resistive soil sensor to avoid corrosion
+        digitalWrite(D8,LOW);
         break;
       };
     };
@@ -112,6 +108,9 @@ bool ADS1115readHandler(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* h
     return _result;
 };
 bool deviceSetup(void) {
+    // switch off resistive soil sensor to avoid corrosion
+    pinMode(D8,OUTPUT);
+    digitalWrite(D8,LOW);
     myDevice.init(&thisDevice);
 
     //BME280 temperature, humidity and pressure sensor
@@ -127,7 +126,7 @@ bool deviceSetup(void) {
 
     //ADS1115 ADC for soil moisture monitoring
     myDevice.createHomieNode(ADS1115_ID, &ADS1115sensorNode);
-    // myDevice.getNode("ADS1115")->registerReadHandler("SOIL-R",&ADS1115readHandler);
+    myDevice.getNode("ADS1115")->registerReadHandler("SOIL-R",&ADS1115readHandler);
 
     //special controls
     myDevice.createHomieNode(0, &virtualDevice)->registerInputHandler("fans",fansInputHandler);

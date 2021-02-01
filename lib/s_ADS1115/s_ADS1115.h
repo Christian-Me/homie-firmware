@@ -17,13 +17,14 @@ class s_ADS1115 : public Plugin {
     const MyHomieNode *_homieNode = NULL;
     int _address = 0;
     Adafruit_ADS1115 _sensor;
+    uint8_t _maxDatapoints = MAX_ADS1115_DATAPOINTS;
   public:
     const char* id ();                        /*> returns the id string */
     s_ADS1115(int port);                      /*> constructor port= I2C address or port=0 autodetect */
     bool init(const MyHomieNode* homieNode);  /*> initialize the device */
     bool checkStatus(void);                   /*> check the status of the device */
-    bool read(bool force);                    /*> read values from device and write to property database*/
-    float get(uint8_t channel);               /*> read value from one device channel or from database */
+    bool read(bool force);                    /*> read values from device and write to lastsample[]*/
+    float get(uint8_t channel);               /*> read value from one device channel*/
 };
 
 #endif

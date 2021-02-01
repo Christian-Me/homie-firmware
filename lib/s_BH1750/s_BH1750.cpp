@@ -62,8 +62,8 @@ bool s_BH1750::read(bool force=false)
 
   // sensor specific task(s)
   if (_sensor->measurementReady()) {
-    _homieNode->getProperty(0)->setValue(_sensor->readLightLevel());
-    myLog.printf(LOG_DEBUG,F("   %s measurement (%.1f)"), id(), _homieNode->getProperty(0)->getValue());
+    _lastSample[0] = _sensor->readLightLevel();
+    myLog.printf(LOG_DEBUG,F("   %s measurement (%.1f%s)"), id(), _lastSample[0], _homieNode->getProperty(0)->getDef()->unit);
     return true;
   }
 
@@ -76,7 +76,14 @@ bool s_BH1750::read(bool force=false)
     @returns    current value
 */
 float s_BH1750::get(uint8_t channel) {
-  return _homieNode->getProperty(channel)->getValue();
+  float result = 0;
+  if (channel < _maxDatapoints){
+     result = _lastSample[channel];
+     myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef()->id, result, _homieNode->getProperty(channel)->getDef()->unit);
+  } else {
+    myLog.printf(LOG_ERR,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
+  }
+  return result;
 }
 
 /*!

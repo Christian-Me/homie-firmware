@@ -101,63 +101,6 @@ void loopHandler() {
   updateLED();
   myLog.loop();
   myDevice.loop();
-  if (normalOperation) {
-    /*
-    MyHomieNode* node = NULL;
-    MyHomieProperty* property = NULL;
-    for (int i=0; i<myDevice.length(); i++) {
-      myLog.printf(LOG_DEBUG,F("loopHandler node #%d"),i);
-      node = myDevice.getNode(i);
-      myLog.printf(LOG_DEBUG,F(" loopHandler for '%s'"),node->getDef()->id);
-      if (node!=NULL) {
-        myLog.printf(LOG_TRACE,F(" Node %s %d properties"),node->getDef()->id, node->length());
-        for (int j=0; j<node->length(); j++) {
-          property = node->getProperty(j);
-          if (!property->getDef()->settable){
-            myLog.printf(LOG_TRACE,F("  Property %s"),property->getDef()->id);
-            if (property->readyToSample()) {
-              myLog.printf(LOG_DEBUG,F("  Sample %s"),property->getDef()->id);
-            }
-            if (property->readyToSend()) {
-              myLog.printf(LOG_DEBUG,F("  Send %s"),property->getDef()->id);
-            }
-          }
-        }
-        if (node->plugin != NULL) {
-          myLog.printf(LOG_DEBUG,F("  Plugin loop for '%s'"),property->getDef()->id);
-          node->plugin->loop();
-        }
-      } else {
-        myLog.printf(LOG_ERR,F("getNode results NULL! %d"),node);
-      }
-    }
-   
-    #ifdef S_ADS115
-      if (ADS1115.read()) triggerLED();
-    #endif
-
-    #ifdef S_BME280
-      if (BME280.read()) triggerLED();
-    #endif
-    
-    #ifdef S_BME680
-      if (BME680.read()) {
-        triggerLED();
-        #ifdef M_NEOPIXEL
-          neopixel.disable();
-        #endif
-      }
-    #endif
-    
-    #ifdef S_BH1750
-      // if (BH1750.read()) triggerLED();
-    #endif
-
-    #ifdef M_NEOPIXEL // neopixel loop
-      neopixel.loop();
-    #endif
-    */
-  }
 }
 
 struct bootflags
@@ -237,38 +180,11 @@ void setup() {
   Homie.onEvent(onHomieEvent);
   Homie.setLedPin(LED_BUILTIN, LOW).setResetTrigger(PIN_BUTTON, LOW, 5000);
 
-  string=F("Modules: ");
-
   if (deviceSetup()) {
-
+    myLog.print(LOG_INFO,F("Device setup completed."));
   } else {
-    
+    myLog.print(LOG_ERR,F("Device setup unsuccessful!"));
   }
-
-  #ifdef A_PWM
-    string += F("PWM ");
-  #endif
-
-  #ifdef M_NEOPIXEL // using neopixel and setting the brightness value
-    neopixel.init( NEOPIXEL_PIN , "", 1, NEO_RGBW, 5);
-    string += F("NEOPIXEL ");
-  #endif
-
-  #ifdef S_BME280
-     string += F("BME280 ");
-  #endif
-
-  #ifdef S_ADS1115
-     string += F("ADS1115 ");
-  #endif
-
-  #ifdef S_BME680
-    string += F("BME680 ");
-  #endif
-
-  #ifdef S_BH1750
-    string += F("BH1750 ");
-  #endif
 
   #ifdef LOG_DEVICE
     myLog.device(LOG_DEVICE); // LOG2SERIAL|LOG2SYSLOG
@@ -279,8 +195,7 @@ void setup() {
     Homie.disableLogging();
   #endif
   Homie.setup();
-  string += F("- Setup complete");
-  myLog.print(LOG_DEBUG,string.c_str());
+  myLog.print(LOG_DEBUG,F("Homie.setup started"));
   myLog.printInfo(LOG_MEMORY);
 }
 
