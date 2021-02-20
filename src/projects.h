@@ -18,7 +18,7 @@
     #include "device-BME680.h"
 #endif
 
-#if ACTUATOR_H801
+#if H801_LED_DIMMER
     #include "device-H801-5chLED.h"
 #endif
 

@@ -1,10 +1,13 @@
-#ifndef DEVICE_H801_H__
-#define DEVICE_H801_H__
+#ifndef DEVICE_PLANT_CONTROL_H__
+#define DEVICE_PLANT_CONTROL_H__
 
 #define HOMIE_DISABLE_LOGGING // homie internal log output disabled. Comment this to see homie.h logs
-#define MAX_DATAPOINTS 4 // maximum of datapoints per node (ToDo: make this "dynamic")
+#define MAX_DATAPOINTS 5 // maximum of datapoints per node (ToDo: make this "dynamic")
 #include <Arduino.h>
 #include "datatypes.h"
+#include <plugins.h>
+#include <s_BME280.h>         // needed to get options enums 
+#include <calc_functions.h>   // usefull measurement conversions and calculations
 
 // basic configuration
 
@@ -14,25 +17,34 @@ controller for my indoor plant greenhouse
 - two channel PWM fan speed control
 - BME280 environmental sensor
 - BH1750 light sensor
-- ADS1115 dac for soil moisture sensor(s)
+- ADS1115 4x dac for soil moisture sensor(s)
 
 *********************************************************************/
 
-#define FIRMWARE_NAME "PLANT-CONTROLL"
+#define FIRMWARE_NAME "PLANT-CONTROL"
 #define FIRMWARE_VERSION "0.0.1"
 
 const HomieDeviceDef thisDevice PROGMEM = {"GREENHOUSE-02","Greenhouse 2"};
 
-#define BME280_FORCED_MODE false
-const HomieNodeDef BME280sensorNode = {"BME280","Bosch BME280", "enviornment", 3, 0, { // io 0 = autodetect I2C Address
+const HomieNodeDef BME280sensorNode = {"BME280","Bosch BME280", "enviornment", 6, 0, { // io 0 = autodetect I2C Address
     {"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0,0},   // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
     {"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,5,0},              // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
-    {"pressure","Pressure","hPa", DATATYPE_FLOAT, RETAINED, "300:1100",NON_SETTABLE,10,30,6000,0,0}
+    {"pressure","Pressure","hPa", DATATYPE_FLOAT, RETAINED, "300:1100",NON_SETTABLE,10,30,6000,0,0},
+    {"tempCalibration","Temperature calibration","°C", DATATYPE_FLOAT, RETAINED, "-5:5", SETTABLE, 0.1, 600,6000,0,0},
+    {"absoluteHumidity","Absolute Humidity","g/m³", DATATYPE_FLOAT, RETAINED, "0:1500",NON_SETTABLE,1,30,6000,0,0},  // readHandler will calculate and update this value
+    {"drewPoint","Drew Point","°C", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,0,0}                   // readHandler will calculate and update this value
+}};
+
+const HomieNodeDef HDC1080sensorNode = {"HDC1080","TI HDC1080", "enviornment", 4, 0, { // io 0 = autodetect I2C Address
+    {"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0,0},            // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
+    {"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,5,0},                       // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
+    {"absoluteHumidity","Absolute Humidity","g/m³", DATATYPE_FLOAT, RETAINED, "0:1500",NON_SETTABLE,1,30,6000,0,0},  // readHandler will calculate and update this value
+    {"drewPoint","Drew Point","°C", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,0,0}                    // readHandler will calculate and update this value
 }};
 
 const HomieNodeDef PWMactuatorNode = {"FAN","2ch fan control", "PWM control",2, 0, {
-    {"fan1","lower fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,0,6000,0,15}, // 0.1 fade step, delay per step, unused, GPIO
-    {"fan2","upper fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,0,6000,0,13} // 0.1 fade step, delay per step, unused, GPIO
+    {"fan1","lower fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,600,6000,0,15}, // 0.1 fade step, delay per step, unused, GPIO
+    {"fan2","upper fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,600,6000,0,13}  // 0.1 fade step, delay per step, unused, GPIO
 }};
 
 const HomieNodeDef BH1750sensorNode = {"BH1750","BH1750 Light Sensor", "enviornment", 1, 0,{
@@ -40,14 +52,15 @@ const HomieNodeDef BH1750sensorNode = {"BH1750","BH1750 Light Sensor", "enviornm
 }};
 
 const HomieNodeDef ADS1115sensorNode = {"ADS1115","TI ADS1115 a/d converter", "ad converter", 4, 0, {
-    {"SOIL-C","Capacitive Soil", "mV", DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,100,3600,5,0},
-    {"POT-1","Potentiometer", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,5,1,6000,0,0},
+    {"SOIL-C","Capacitive Soil", "mV", DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,600,3600,5,0},
+    {"POT-1","Potentiometer", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,5,100,6000,0,0},
     {"SOIL-R","Resistive Soil", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,600,3600,0,0},  // sample minute. Send if value change by 2 or a hour had passed. No oversampling. Switch on sensor before reding
-    {"VCC","VCC", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,2,10,600,0,0}
+    {"VCC","VCC", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,2,100,600,0,0}
   }
 };
+
 const HomieNodeDef virtualDevice = {"CONTROL","main Controls", "virtual device",1, 0, {
-    {"fans","Fan switch", "", DATATYPE_BOOLEAN, RETAINED, "0:1",SETTABLE,0.1,0,6000,0,0} // 0.1 fade step, delay per step, unused, GPIO
+    {"fans","Fan switch", "", DATATYPE_BOOLEAN, RETAINED, "0:1",SETTABLE,0.1,600,6000,0,0} // 0.1 fade step, delay per step, unused, GPIO
 }};
 
 
@@ -78,35 +91,93 @@ bool fan2InputHandler(const HomieRange& range, const String& value, MyHomieNode*
     return true;
 };
 
+bool tempCalibration(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
+    float _value = value.toFloat();
+    myLog.printf(LOG_INFO,F(" tempCalibration received %s = %.2f"), value.c_str(), _value);
+    homieNode->plugin->setOption(s_BME280::TEMP_CALIBRATION,_value);
+    return true;
+};
+
+// use the build in calibration factor to implement a switch without altering the set values
 bool fansInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
     bool _value = (value.equalsIgnoreCase("true")) ? true : false;
     float _factor = (value.equalsIgnoreCase("true")) ? 1 : 0;
     myLog.printf(LOG_INFO,F(" Fans received %s = %d"), value.c_str(), _value);
-
     myDevice.setFactor("FAN","fan1",_factor);
     myDevice.setFactor("FAN","fan2",_factor);
-    homieNode->setValue("fans",_value); // confirm value
+    if (homieNode!=NULL) {
+      homieNode->setValue("fans",_value); // confirm value
+    } else {
+      myLog.print(LOG_ERR,F(" homieNode undefined!"));
+    }
     return true;
 };
 
+unsigned long timer = 0;
+uint8_t spikeCounter = 0;
+bool firstReading = true;
+
 bool ADS1115readHandler(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
-    bool _result = true;
-    myLog.printf(LOG_INFO,F(" Node %s Property %s Task %d"),homieNode->getDef()->id, homieProperty->getDef()->id);
+    bool result = true;
     switch (task) {
       case TASK_BEFORE_SAMPLE: {
         // switch on resistive soil sensor for measurement
+        timer = millis();
+        myLog.printf(LOG_TRACE,F("  before sample %s/%s (%d)"),homieNode->getId(),homieProperty->getId(),timer);
         digitalWrite(D8,HIGH);
+        delay(500); // not nice! Will find a solution later (extra timer?)
         break;
       };
       case TASK_AFTER_READ: {
         // switch off resistive soil sensor to avoid corrosion
+        myLog.printf(LOG_TRACE,F("  after read %s/%s on for %dms (%d)"),homieNode->getId(),homieProperty->getId(),millis()-timer,timer);
+        //drop first reading
+        if (firstReading) {
+          firstReading = false;
+          result = false;
+        }
+        // check for spikes > 500mV but not on boot where value==0;
+        if (homieProperty->getValue()!=0 && fabs(homieProperty->getReadValue()-homieProperty->getValue()) > 500) {
+          myLog.printf(LOG_INFO,F("   %s/%s spike detected %.2fmv"),homieNode->getId(),homieProperty->getId(),homieProperty->getReadValue()-homieProperty->getValue());
+          result = false;
+          spikeCounter++;
+          if (spikeCounter>2) {
+            result=true;
+            spikeCounter=0;
+          }
+        }
         digitalWrite(D8,LOW);
         break;
       };
     };
-    
-    return _result;
+   
+    return result;
 };
+
+bool readAbsoluteHumidity(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
+    bool continueTasks = true;
+    switch (task) {
+      case TASK_AFTER_READ: {
+        homieProperty->setValue((float) absoluteHumidity(homieNode->getProperty("temperature")->getValue(),homieNode->getProperty("humidity")->getValue()));
+        continueTasks=false;
+        break;
+      }
+    }
+    return continueTasks;
+};
+
+bool readDrewPoint(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
+    bool continueTasks = true;
+    switch (task) {
+      case TASK_AFTER_READ: {
+        homieProperty->setValue((float) drewPoint(homieNode->getProperty("temperature")->getValue(),homieNode->getProperty("humidity")->getValue()));
+        continueTasks=false;
+        break;
+      }
+    }
+    return continueTasks;
+};
+
 bool deviceSetup(void) {
     // switch off resistive soil sensor to avoid corrosion
     pinMode(D8,OUTPUT);
@@ -114,22 +185,34 @@ bool deviceSetup(void) {
     myDevice.init(&thisDevice);
 
     //BME280 temperature, humidity and pressure sensor
-    myDevice.createHomieNode(BME280_ID, &BME280sensorNode);
+    myDevice.createHomieNode(BME280_ID, &BME280sensorNode)
+      ->setPluginOption(s_BME280::MODE, Adafruit_BME280::MODE_FORCED)   // enable forced mode
+      ->registerInputHandler("tempCalibration", tempCalibration)        // set temperature calculation
+      ->registerReadHandler("absoluteHumidity", readAbsoluteHumidity)   // do absolute humidity calculation
+      ->registerReadHandler("drewPoint", readDrewPoint);                // do drew point calculation
 
     // PWM Fan speed control
     myDevice.createHomieNode(PWM_ID, &PWMactuatorNode);
-    myDevice.getNode("FAN")->registerInputHandler("fan1",fan1InputHandler);
-    // myDevice.getNode("FAN")->registerInputHandler("fan2",fan2InputHandler); // commented out to test default handler
+    myDevice.getNode("FAN")->registerInputHandler("fan1", fan1InputHandler); // alternative way to register handlers
+    // myDevice.getNode("FAN")->registerInputHandler("fan2",fan2InputHandler); // not used because default handler does the basic task sending received values unaltered to plugin
 
     //BH1750 ambient light sensor
-    myDevice.createHomieNode(BH1750_ID, &BH1750sensorNode);
+    myDevice.createHomieNode(BH1750_ID, &BH1750sensorNode)
+      ->addProperty2({"illumination","Light Amount", "lx", DATATYPE_FLOAT, RETAINED, "0:65528", NON_SETTABLE,20,30,6000,5,0});
+    
+    //HT1080 temperature, humidity sensor
+    myDevice.createHomieNode(HDC1080_ID, &HDC1080sensorNode)
+      ->registerReadHandler("absoluteHumidity", readAbsoluteHumidity)   // do absolute humidity calculation (Yes, they can be reused as long as the property ids are the same)
+      ->registerReadHandler("drewPoint", readDrewPoint);                // do drew point calculation
 
     //ADS1115 ADC for soil moisture monitoring
-    myDevice.createHomieNode(ADS1115_ID, &ADS1115sensorNode);
-    myDevice.getNode("ADS1115")->registerReadHandler("SOIL-R",&ADS1115readHandler);
+    myDevice.createHomieNode(ADS1115_ID, &ADS1115sensorNode)
+      ->registerReadHandler("SOIL-R", ADS1115readHandler)
+      ->hideLogLevel("POT-1",0b11111101); // do not display debug (avoid spamming messages for fast sample rates)
 
-    //special controls
-    myDevice.createHomieNode(0, &virtualDevice)->registerInputHandler("fans",fansInputHandler);
+    //device controls
+    myDevice.createHomieNode(0, &virtualDevice)
+      ->registerInputHandler("fans", fansInputHandler);
     return true;
 };
 

@@ -38,7 +38,7 @@ const char *const wifiStatus[] PROGMEM = {wifi0, wifi1, wifi2, wifi3, wifi4, wif
         
 WiFiUDP udpClient;
 
-void MyLog::setup(HardwareSerial* serial, uint8_t protocol = SYSLOG_PROTO_IETF) {
+void MyLog::setup(HardwareSerial* serial, uint8_t protocol) {
 
   _serial = serial;
   syslogProtocol.setDefaultValue(0).setValidator([] (long candidate) {
@@ -112,12 +112,10 @@ bool MyLog::printf(uint16_t pri, const char *fmt, ...) {
     result = vmylogf(pri, fmt, args);
     va_end(args);
   }
-  if (logDevice & LOG2SYSLOG) {
-    if (_syslogStarted) {
-      va_start(args,fmt);
-      result = _syslog->vlogf(pri,fmt, args);
-      va_end(args);
-    }
+  if ((logDevice & LOG2SYSLOG) && _syslogStarted && (pri <= _maxLogLevel)) {
+    va_start(args,fmt);
+    result = _syslog->vlogf((pri<8) ? pri : 7,fmt, args);
+    va_end(args);
   }
   return result;
 }
@@ -130,12 +128,10 @@ bool MyLog::printf(uint16_t pri, const __FlashStringHelper *fmt, ...) {
     result = vmylogf(pri, fmt, args);
     va_end(args);
   }
-  if (logDevice & LOG2SYSLOG) {
-    if (_syslogStarted) {
-      va_start(args,fmt);
-      result = _syslog->vlogf(pri,(const char*) fmt, args);
-      va_end(args);
-    }
+  if ((logDevice & LOG2SYSLOG) && _syslogStarted && (pri <= _maxLogLevel)) {
+    va_start(args,fmt);
+    result = _syslog->vlogf((pri<8) ? pri : 7,(const char*) fmt, args);
+    va_end(args);
   }
   return result;
 }
@@ -146,10 +142,8 @@ bool MyLog::print(uint16_t pri, const char *fmt) {
     _serial->printf("[%s] %s\n",logLevel[pri],fmt) ;
     result=true;
   }
-  if (logDevice & LOG2SYSLOG) {
-    if (_syslogStarted) {
-      result = _syslog->log(pri,fmt);
-    }
+  if ((logDevice & LOG2SYSLOG) && _syslogStarted && (pri <= _maxLogLevel)) {
+    result = _syslog->log((pri<8) ? pri : 7,fmt);
   }
   return result;
 }
@@ -160,10 +154,8 @@ bool MyLog::print(uint16_t pri, const __FlashStringHelper *fmt) {
     _serial->printf("[%s] %s\n",logLevel[pri],(const char*) fmt) ;
     result=true;
   }
-  if (logDevice & LOG2SYSLOG) {
-    if (_syslogStarted) {
-      result = _syslog->log(pri,fmt);
-    }
+  if ((logDevice & LOG2SYSLOG) && _syslogStarted && (pri <= _maxLogLevel)) {
+    result = _syslog->log((pri<8) ? pri : 7,fmt);
   }
   return result;
 }
@@ -204,6 +196,9 @@ void MyLog::printInfo(uint8_t key) {
       printf(LOG_INFO,F("Free Memory: heap %.3fk (%d) maxBlock %.3fk fragmentation: %d%%"), (float) freeMemory/1024, freeMemory-_lastMemory, (float) ESP.getMaxFreeBlockSize()/1024, ESP.getHeapFragmentation()); 
       _lastMemory = freeMemory;
       break;
+    case LOG_INFORMATION:
+      printf(LOG_INFO,F("Operation: %s"),(normalOperation) ? "normal" : "idle" );
+      break;
     case LOG_NETWORK:
       printf(LOG_INFO,F("Network: IP:%s/%s GW:%s MAC:%s Status: '%s'"), WiFi.localIP().toString().c_str(), WiFi.subnetMask().toString().c_str(), WiFi.gatewayIP().toString().c_str(), WiFi.macAddress().c_str(),wifiStatus[WiFi.status()]);
       break;
@@ -218,6 +213,7 @@ void MyLog::loop() {
     _incomingByte = _serial->read();
     if (_incomingByte>48 && _incomingByte<58) {
       _maxLogLevel = _incomingByte-48;
+      _syslog->logMask(LOG_UPTO((_maxLogLevel<LOG_TRACE) ? _maxLogLevel : LOG_DEBUG));
       _serial->printf("[LOGGER] max log level set to #%d %s\n",_maxLogLevel, logLevel[_maxLogLevel]);
     } else {
       printInfo(_incomingByte);

@@ -23,17 +23,21 @@ typedef bool (*ReadHandler)(uint8_t, MyHomieNode*, MyHomieProperty*);
  */
 class MyHomieProperty {
     const HomiePropertyDef* propertyDef = NULL;
+    const HomieNode *_parentNode = NULL;
     PropertyData propertyData;
     float* samples;
     InputHandler _inputHandler;
     ReadHandler _readHandler;
     float oversample(float sample);
   public:
-    MyHomieProperty(const HomiePropertyDef* def);
+    uint8_t hideLog = 0b11111111; // all logs visible
+    MyHomieProperty(const HomieNode* parentNode, const HomiePropertyDef* def);
     const char* getId();
     const HomiePropertyDef* getDef() const;
     bool readyToSample(unsigned long timebase);
     bool readyToSend(unsigned long timebase);
+    bool sendValue();
+    bool sendValue(float value);
     bool inputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
     bool defaultPropertyInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
     void setInputHandler(InputHandler inputHandler);
@@ -41,9 +45,12 @@ class MyHomieProperty {
     bool defaultPropertyReadHandler(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
     bool defaultReadHandler(uint8_t task, MyHomieNode*homieNode, MyHomieProperty* homieProperty);
     void setReadHandler(ReadHandler readHandler);
+    bool setReadValue (float value);
     bool setValue (float value);
     bool setValue (bool value);
     bool setFactor (float value);
+    bool isTarget (const char* id);
+    float getReadValue ();
     float getValue ();
     PropertyData* getData ();
 };

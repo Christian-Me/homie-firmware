@@ -4,6 +4,8 @@
 #include "Arduino.h"
 #include <Syslog.h>
 
+extern bool normalOperation;
+
 // extra log level
 #define LOG_TRACE 8 // trace level added to be able to filter gradual information
 
@@ -15,6 +17,7 @@
 // default Log prints
 #define LOG_MEMORY 109    // key 'm'
 #define LOG_NETWORK 110   // key 'n' 
+#define LOG_INFORMATION 105      // key "i"
 
 class MyLog {
     bool _isInitialized = false;
@@ -27,7 +30,7 @@ class MyLog {
     uint8_t _incomingByte = 0;
     uint32_t _lastMemory = 81920;
   public:
-    void setup(HardwareSerial* serial, uint8_t protocol);
+    void setup(HardwareSerial* serial, uint8_t protocol = SYSLOG_PROTO_BSD);
     void start();
     void device(uint8_t device);
     bool setDeviceName(const char* deviceName);

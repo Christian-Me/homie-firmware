@@ -2,14 +2,14 @@
 #include <homieSysLog.h>
 #include <Homie.h>
 #include "../include/datatypes.h"
+#include "../include/globals.h"
 #include <c_homie.h>
+// #include <s_bme280.h>
 #include "projects.h"
 #include <SPI.h>
 // #include "config.h"
 #include <signalLED.h>
 
-
-bool normalOperation = false;
 
 #ifdef M_NEOPIXEL
   #include "m_neopixel.h"
@@ -17,24 +17,27 @@ bool normalOperation = false;
 #endif
 
 bool resetHandler(const HomieRange& range, const String& value) {
+  myLog.print(LOG_TRACE, F("resetting NOW!"));
   ESP.reset();
   return true;
 }
 
 bool globalInputHandler(const HomieNode& node, const HomieRange& range, const String& property, const String& value) {
-  myLog.printf(LOG_INFO,F("[Global] Received for node '%s': %s=%s"),node.getId(),property.c_str(),value.c_str());
+  bool result = false;
+  myLog.printf(LOG_INFO,F("deviceInputHandler %s/%s received = '%s'"),node.getId(),property.c_str(),value.c_str());
   MyHomieNode* homieNode = myDevice.getNode(node.getId());
   if (homieNode != NULL) {
     MyHomieProperty* homieProperty = homieNode->getProperty(property.c_str());
     if (homieProperty != NULL) {
-      return homieProperty->inputHandler(range,value,homieNode, homieProperty);
+      result = homieNode->inputHandler(range,value,homieNode, homieProperty); // ask node property handler first
+      result = homieProperty->inputHandler(range,value,homieNode, homieProperty); // ask property input handler second 
     } else {
-      myLog.printf(LOG_ERR,F(" Property '%s' not found"),property.c_str());
+      myLog.printf(LOG_ERR,F(" property '%s/%s' not found"),node.getId(),property.c_str());
     }
   } else {
     myLog.printf(LOG_ERR,F(" node '%s' not found"),node.getId());
   }
-  return false;
+  return result;
 }
 
 void onHomieEvent(const HomieEvent& event) {
@@ -58,6 +61,7 @@ void onHomieEvent(const HomieEvent& event) {
         normalOperation = false;
       break;    
       case HomieEventType::SENDING_STATISTICS:
+        triggerLED();
         myLog.print(LOG_TRACE, F("Sending stats"));
       break;
       case HomieEventType::OTA_STARTED:
@@ -67,14 +71,14 @@ void onHomieEvent(const HomieEvent& event) {
       case HomieEventType::OTA_PROGRESS:
       break;
       case HomieEventType::OTA_SUCCESSFUL:
-        myLog.print(LOG_INFO, F("OTA success"));
+        myLog.print(LOG_NOTICE, F("OTA success"));
       break;
       case HomieEventType::OTA_FAILED:
         myLog.print(LOG_ERR, F("OTA failed"));
         normalOperation = true;
       break;
       case HomieEventType::ABOUT_TO_RESET:
-        myLog.print(LOG_WARNING, F("OTA success"));
+        myLog.print(LOG_WARNING, F("About to reset"));
         normalOperation = false;
       break;
       case HomieEventType::MQTT_PACKET_ACKNOWLEDGED:
@@ -91,7 +95,7 @@ void onHomieEvent(const HomieEvent& event) {
         normalOperation = true;
       break;
       case HomieEventType::CONFIGURATION_MODE:
-        myLog.print(LOG_INFO, F("Configuration Mode"));
+        myLog.print(LOG_NOTICE, F("Configuration Mode"));
         normalOperation = false;
       break;
   }
@@ -99,8 +103,10 @@ void onHomieEvent(const HomieEvent& event) {
 
 void loopHandler() {
   updateLED();
+  if (normalOperation) {
+    myDevice.loop();
+  }
   myLog.loop();
-  myDevice.loop();
 }
 
 struct bootflags
@@ -150,12 +156,12 @@ void setup() {
   #ifndef USE_SERIAL1
     Serial.begin(115200);
     Serial << endl << endl;
-    myLog.setup(&Serial,SYSLOG_PROTO_IETF);
+    myLog.setup(&Serial);
   #else
     Serial1.begin(115200);
     Serial1 << endl << endl;
     Homie.setLoggingPrinter(&Serial1);
-    myLog.setup(&Serial1,SYSLOG_PROTO_IETF);
+    myLog.setup(&Serial1,SYSLOG_PROTO_BSD);
   #endif
   myLog.printInfo(LOG_MEMORY);
   bootflags bootResult = bootmode_detect();
@@ -179,6 +185,7 @@ void setup() {
   Homie.setLoopFunction(loopHandler);
   Homie.onEvent(onHomieEvent);
   Homie.setLedPin(LED_BUILTIN, LOW).setResetTrigger(PIN_BUTTON, LOW, 5000);
+  // Homie.setLedPin(5 , LOW)
 
   if (deviceSetup()) {
     myLog.print(LOG_INFO,F("Device setup completed."));

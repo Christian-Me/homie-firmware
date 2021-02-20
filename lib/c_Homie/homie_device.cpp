@@ -43,7 +43,8 @@ bool MyHomieDevice::setFactor(const char* nodeId, const char* propertyId, float 
 MyHomieNode* MyHomieDevice::createHomieNode(uint8_t pluginId, const HomieNodeDef* nodeDef) {
 
   MyHomieNode* node = addNode(pluginId, nodeDef);
-  myLog.printf(LOG_INFO,F("created Node Id:%s Name:'%s' Type:'%s' with %d properties. (%p)"),nodeDef->id,nodeDef->name,nodeDef->type, nodeDef->datapoints,node);
+  int lengthOf = sizeof nodeDef->dataPoint / sizeof nodeDef->dataPoint[0];
+  myLog.printf(LOG_INFO,F("created Node Id:%s Name:'%s' Type:'%s' with %d(%d) properties. (%p)"),nodeDef->id,nodeDef->name,nodeDef->type, nodeDef->datapoints, lengthOf, node);
 
   for (uint8_t i=0; i<nodeDef->datapoints; i++) {
     node->addProperty(&nodeDef->dataPoint[i]);
@@ -52,14 +53,10 @@ MyHomieNode* MyHomieDevice::createHomieNode(uint8_t pluginId, const HomieNodeDef
   return node;
 }
 
-
-MyHomieProperty* MyHomieDevice::addHomieParameter(const char* nodeId, const HomiePropertyDef2* propertyDef) {
-  myLog.printf(LOG_INFO,F("Add parameter to node Id:%s parmeter:'%s'"),nodeId,propertyDef->id);
-}
-
 unsigned long MyHomieDevice::loop() {
   if (_nextEvent < millis()) {
-    myLog.print(LOG_DEBUG,F("Device.loop() started"));
+    myLog.setAppName("homieDevice");
+    myLog.print(LOG_TRACE,F("Device.loop() started"));
     unsigned long timebase = millis(); // read only once!
     unsigned long nextNodeEvent = -1;
     for (int8_t i=0; i<nodes.length; i++) {
@@ -68,6 +65,10 @@ unsigned long MyHomieDevice::loop() {
     _nextEvent = nextNodeEvent + timebase;
     myLog.printf(LOG_DEBUG,F("Next device event in %.2fs (loop:%dms)"),(float) nextNodeEvent / 1000,millis()-timebase);
   }
+  for (int8_t i=0; i<nodes.length; i++) {
+    getNode(i)->pluginLoop();
+  }
+
   return _nextEvent;
 }
 

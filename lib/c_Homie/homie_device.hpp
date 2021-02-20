@@ -61,7 +61,6 @@ class MyHomieDevice {
     bool setValue(const char* nodeId, const char* propertyId, float value) const;
     bool setFactor(const char* nodeId, const char* propertyId, float value) const;
     MyHomieNode* createHomieNode(uint8_t pluginId, const HomieNodeDef* nodeDef);
-    MyHomieProperty* addHomieParameter(const char* nodeId, const HomiePropertyDef2* propertyDef);
     unsigned long loop();
 };
 

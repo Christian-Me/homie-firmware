@@ -63,22 +63,34 @@ struct PropertyVector {
 class Plugin;
 class MyHomieNode {
     const HomieNodeDef* nodeDef = NULL;
+    HomiePropertyDef2 nodeDef2 = {"","", "", DATATYPE_FLOAT, RETAINED, "0:1", NON_SETTABLE,20,30,6000,5,0};
     uint8_t _pluginId = 0;
     HomieNode *homieNode = NULL;
     PropertyVector properties;
     unsigned long _nextEvent = 0;
+    uint8_t _nextEventIndex = 0;
     uint16_t _pluginSampleRate = -1;
+    uint16_t _customSampleRate = 0;
     unsigned long _nextSample = 0;
+    InputHandler _inputHandler;
+    bool defaultNodeInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
   public:
     Plugin* plugin = NULL;
     MyHomieNode(const HomieNodeDef* def, uint8_t pluginId = 0);
+    MyHomieNode* setPluginOption(uint16_t option, int value);
     void setPulginId(uint8_t id);
     bool pluginInit(uint8_t pluginId);
     void setDef(const HomieNodeDef *homieNode);
+    void setCustomSampleRate(uint16_t rate);
     const char* getId();
+    bool isTarget (const char* id);
     MyHomieProperty* addProperty(const HomiePropertyDef* homieProperty);
-    void registerInputHandler(const char* id, InputHandler inputHandler);
-    void registerReadHandler(const char* id, ReadHandler readHandler);
+    MyHomieNode* addProperty2(HomiePropertyDef2 homieProperty);
+    bool inputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
+    MyHomieNode* registerInputHandler(InputHandler inputHandler);
+    MyHomieNode* registerInputHandler(const char* id, InputHandler inputHandler);
+    MyHomieNode* registerReadHandler(const char* id, ReadHandler readHandler);
+    MyHomieNode* hideLogLevel(const char* id, uint8_t logMask);
     MyHomieProperty* getProperty (int index) const;
     MyHomieProperty* getProperty (const char* id) const;
     uint8_t length() const;
@@ -90,6 +102,8 @@ class MyHomieNode {
     bool sendValue(MyHomieProperty* homieProperty);
     bool sendValue(int index);
     bool sendValue(const char* id);
+    bool sendValue(const char* id, float value);
     unsigned long getNextEvent(unsigned long timebase);
     unsigned long loop(unsigned long timebase);
+    void pluginLoop();
 };

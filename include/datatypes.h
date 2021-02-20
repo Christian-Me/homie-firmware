@@ -4,6 +4,26 @@
 // #include <Homie.h>
 // #define MAX_DATAPOINTS 3
 
+#define VIRTUAL_ID 0
+// sensor Plugins
+#define BH1750_ID 1
+#define BME280_ID 2
+#define BME680_ID 3
+#define ADS1115_ID 4
+#define HDC1080_ID 5
+
+#define DUMMY_ID 99
+
+// actuator Plugins
+// controling the output like LEDs, motors, relays, DACs 
+#define PWM_ID 101
+#define GPIO_ID 102
+
+// input Plugins
+// controling inputs like Buttons, Pot
+#define I_GPIO_ID 201
+#define I_ANALOG_ID 202
+
 #define SETTABLE true
 #define NON_SETTABLE false
 
@@ -40,7 +60,10 @@ typedef struct {
     unsigned long sampleTimeout;    /*< datapoint timeout to sample*/
     unsigned long sendTimeout;      /*< datapoint timeout to send*/
     float current;                  /*< current calibrated reading */
-    float last;                     /*< last reading sent */
+    float read;                     /*< last value raw read form sensor */
+    float last;                     /*< last reading sent out*/
+    float target;                   /*< target value */
+    float temporary;                /*< temporary value */
     float scale;                    /*< value scale for calibration */
     float shift;                    /*< value shift for calibration */
     uint8_t samples;                /*< number of samples in buffer  */
@@ -62,35 +85,40 @@ typedef struct {
  * @brief sensor datapoint configuration
  */
 typedef struct {
-    const char* id;                 /*< homie property id */
-    const char* name;               /*< homie $name */
-    const char* unit;               /*< homie $unit */
-    const uint8_t datatype;         /*< homie $datatype */
-    const bool retained;            /*< homie $retained flag */
-    const char* format;             /*< homie $format*/
-    const bool settable;            /*< homie $settable SETTABLE or NON_SETTABLE*/
-    const float threshold;          /*< minimum difference to trigger a data send */
-    const uint16_t sampleRate;      /*< timeout between sampling */
-    const uint16_t timeout;         /*< timeout to send data anyways (seconds)*/
-    const uint8_t oversampling;     /*< number of values to oversample */
-    const uint8_t gpio;             /*< number of GPIO channel */
+    const char* id;                 //!< homie property id
+    const char* name;               //!< homie $name
+    const char* unit;               //!< homie $unit
+    const uint8_t datatype;         //!< homie $datatype
+    const bool retained;            //!< homie $retained flag
+    const char* format;             //!< homie $format
+    const bool settable;            //!< homie $settable SETTABLE or NON_SETTABLE
+    const float threshold;          //!< minimum difference to trigger a data send
+    const uint16_t sampleRate;      //!< timeout between sampling
+    const uint16_t timeout;         //!< timeout to send data anyways (seconds)
+    const uint8_t oversampling;     //!< number of values to oversample
+    const uint8_t gpio;             //!< number of GPIO channel
 } HomiePropertyDef;
 
 struct HomiePropertyDef2 {
-    const char* id;                 /*< homie property id */
-    const char* name;               /*< homie $name */
-    const char* unit;               /*< homie $unit */
-    const uint8_t datatype;         /*< homie $datatype */
-    const bool retained;            /*< homie $retained flag */
-    const char* format;             /*< homie $format*/
-    const bool settable;            /*< homie $settable SETTABLE or NON_SETTABLE*/
-    const float threshold;          /*< minimum difference to trigger a data send */
-    const uint16_t sampleRate;      /*< timeout between sampling */
-    const uint16_t timeout;         /*< timeout to send data anyways (seconds)*/
-    const uint8_t oversampling;     /*< number of values to oversample */
-    const uint8_t gpio;             /*< number of GPIO channel */
+    /*    
+    HomiePropertyDef2(uint8_t id, const char* name, uint8_t unit) : id(id), name(name), unit(unit) {}
+    uint8_t id;                 //!< homie property id 
+    const char* name;
+    uint8_t unit;               //!< homie $unit
+    */
+    const char* id;             //!< homie property id
+    const char* name;           //!< homie $name
+    const char* unit;           //!< homie $unit
+    uint8_t datatype;           //!< homie $datatype
+    bool retained;              //!< homie $retained flag
+    const char* format;         //!< homie $format
+    bool settable;              //!< homie $settable SETTABLE or NON_SETTABLE
+    float threshold;            //!< minimum difference to trigger a data send
+    uint16_t sampleRate;        //!< timeout between sampling
+    uint16_t timeout;           //!< timeout to send data anyways (seconds)
+    uint8_t oversampling;       //!< number of values to oversample
+    uint8_t gpio;               //!< number of GPIO channel
 };
-
 
 typedef struct {
     const char* id;                 /*< homie node id */
