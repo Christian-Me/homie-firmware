@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "a_pwm_dimmer.h"
-#include "a_pwm_dimmer.hpp"
 #include <homie.h>
 #include "homieSyslog.h"
 #include "c_homie.h"
@@ -22,20 +21,18 @@ a_PWMdimmer::a_PWMdimmer() {
     @param    nodeDef           pointer to node definition
     @returns  result boolean - true=success
 */
-bool a_PWMdimmer::init(MyHomieNode* homieNode) {
-  _homieNode = homieNode;
+bool a_PWMdimmer::init(MyHomieProperty* homieProperty, uint8_t gpio) {
+  _homieProperty = homieProperty;
+  _gpio = gpio;
   myLog.setAppName(id());
-  myLog.printf(LOG_INFO,F("PWM Dimmer id: %s name: %s"),homieNode->getDef()->id,homieNode->getDef()->name);
+  myLog.printf(LOG_INFO,F("PWM Dimmer id: %s GPIO%d"),homieProperty->getDef().id, _gpio);
 
-  for (int i=0; i<homieNode->getDef()->datapoints; i++) {
-    myLog.printf(LOG_DEBUG,F(" id:%s GPIO%u"),homieNode->getDef()->dataPoint[i].id, homieNode->getDef()->dataPoint[i].gpio);
-    pinMode(homieNode->getDef()->dataPoint[i].gpio, OUTPUT);
-    analogWrite(homieNode->getDef()->dataPoint[i].gpio,0);
-    _increment[i]=1;
-    _target[i]=0;
-    _current[i]=-1;
-    _duration[i]=0;
-  }
+  pinMode(_gpio, OUTPUT);
+  analogWrite(_gpio, 0);
+  _increment=1;
+  _target=0;
+  _current=-1;
+  _duration=0;
   _delay=1000;
 
   _isInitialized = true;  
@@ -62,7 +59,6 @@ bool a_PWMdimmer::setOption(uint16_t option, int value) {
       myLog.printf(LOG_INFO,F("  PWM sample delay = %d"), value);
       if (value>=0 && value<100000) {
         _delay = value;
-        _homieNode->setCustomSampleRate(value);
         success = true;
       }
       break;
@@ -76,21 +72,21 @@ bool a_PWMdimmer::setOption(uint16_t option, int value) {
     @param    value     (float) option value
     @returns  true if option set successfull
 */
-bool a_PWMdimmer::setOption(uint16_t option, uint8_t channel, float value) {
+bool a_PWMdimmer::setOption(uint16_t option, float value) {
   bool success = false;
   myLog.setAppName(id());
   switch (option) {
     case PWM_FADE_INCREMENT:
-      myLog.printf(LOG_INFO,F("  PWM fade resolution #%d = %.2f"), channel, value);
+      myLog.printf(LOG_INFO,F("  PWM GPIO%d fade resolution %.2f"), _gpio, value);
       if (value>0 && value<1023) {
-        _increment[channel] = value;
+        _increment = value;
         success = true;
       }
       break;
     case PWM_FADE_DURATION:
       if (value>=0 && value<=3600) {
-        _duration[channel] = (uint16_t) floor(value);
-        myLog.printf(LOG_INFO,F("  PWM fade duration #%d = %ds"), channel, _duration[channel]);
+        _duration = (uint16_t) floor(value);
+        myLog.printf(LOG_INFO,F("  PWM GPIO%d fade duration %ds"), _gpio, _duration);
         success = true;
       }
       break;
@@ -102,8 +98,8 @@ bool a_PWMdimmer::setOption(uint16_t option, uint8_t channel, float value) {
     @param    channel   number of channel to read
     @returns    current value
 */
-float a_PWMdimmer::get(uint8_t channel) {
-  return _current[channel];
+float a_PWMdimmer::get() {
+  return _current;
 }
 
 /*!
@@ -112,19 +108,19 @@ float a_PWMdimmer::get(uint8_t channel) {
     @param  channel   number of channel to write to
     @returns    true = achnkoleged new value
 */
-bool a_PWMdimmer::set(uint8_t channel, PropertyData* data){
+bool a_PWMdimmer::set(PropertyData* data){
   myLog.setAppName(id());
   if (_isInitialized) {
-    if (_current[channel]<0 || _duration[channel]==0) { // on initialisation or no fading = direct control
-      _current[channel]=data->current;
-      _target[channel]=data->current;
-      analogWrite(_homieNode->getDef()->dataPoint[channel].gpio,floor(_current[channel] * 10.23));
-      myLog.printf(LOG_INFO,F("  PWM #%d set to %.2f"), channel, _target[channel]);
+    if (_current<0 || _duration==0) { // on initialisation or no fading = direct control
+      _current=data->current;
+      _target=data->current;
+      analogWrite(_gpio, floor(_current * 10.23));
+      myLog.printf(LOG_INFO,F("  PWM GPIO%d set to %.2f"), _gpio, _target);
       return true;
     } else {
-      _target[channel] = data->current;
-      _increment[channel]=(_target[channel] - _current[channel]) / (_duration[channel] * 1000 / _delay);
-      myLog.printf(LOG_INFO,F("  PWM #%d set to %.2f from %.2f in %ds (%.2f per %dms)"), channel, _target[channel], _current[channel], _duration[channel], _increment[channel], _delay);
+      _target = data->current;
+      _increment=(_target - _current) / (_duration * 1000 / _delay);
+      myLog.printf(LOG_INFO,F("  PWM GPIO%d set to %.2f from %.2f in %ds (%.2f per %dms)"), _gpio, _target, _current, _duration, _increment, _delay);
       _timer = millis()+_delay;
       return false; // do not achnkoleged jet. Will be done by timer or threshold
     }
@@ -151,22 +147,20 @@ bool a_PWMdimmer::available(void) {
 void a_PWMdimmer::loop() {
   if (_timer > 0 && _timer<millis()) {
     _timer = millis()+_delay;
-    for (uint8_t channel=0; channel<MAX_DATAPOINTS; channel++) {
-      if (_target[channel]!=_current[channel]) {
-        myLog.setAppName(id());
-        if (_duration[channel]>1) {
-          _current[channel] += _increment[channel];
-          if (_current[channel] < 0) _current[channel] = 0; // too low
-          if (_current[channel] > 100) _current[channel] = 100; // too big
-          if (fabs(_target[channel]-_current[channel])<=_increment[channel]) { // too close
-            _current[channel] = _target[channel];
-          }
-        } else {
-          _current[channel] = _target[channel];
+    if (_target!=_current) {
+      myLog.setAppName(id());
+      if (_duration>1) {
+        _current += _increment;
+        if (_current < 0) _current = 0; // too low
+        if (_current > 100) _current = 100; // too big
+        if (fabs(_target-_current)<=_increment) { // too close
+          _current = _target;
         }
-        myLog.printf(LOG_TRACE,F("  analogWrite #%d %.2f=%d (Target %.2f Duration %ds)"), channel, _current[channel], (int) floor(_current[channel] * 10.23), _target[channel], _duration[channel]);
-        analogWrite(_homieNode->getDef()->dataPoint[channel].gpio,(int) floor(_current[channel] * 10.23));
+      } else {
+        _current = _target;
       }
+      myLog.printf(LOG_TRACE,F("  analogWrite GPIO%d %.2f=%d (Target %.2f Duration %ds)"), _gpio, _current, (int) floor(_current * 10.23), _target, _duration);
+      analogWrite(_gpio,(int) floor(_current * 10.23));
     }
   }
 }

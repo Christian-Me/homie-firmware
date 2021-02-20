@@ -116,7 +116,7 @@ float s_DUMMY::get(uint8_t channel) {
         result = 1; // _sensor.read(); or _lastSample[channel];
         break;
     }
-    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef()->id, result, _homieNode->getProperty(channel)->getDef()->unit);
+    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef().id, result, _homieNode->getProperty(channel)->getDef().unit);
   } else {
     myLog.printf(LOG_ERR,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
   }

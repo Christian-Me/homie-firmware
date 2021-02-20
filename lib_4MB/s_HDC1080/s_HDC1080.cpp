@@ -145,7 +145,7 @@ float s_HDC1080::get(uint8_t channel) {
   float result = 0;
   if (channel < _maxDatapoints){  
     result = (float) _lastSample[channel];
-    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef()->id, _lastSample[channel], _homieNode->getProperty(channel)->getDef()->unit);
+    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef().id, _lastSample[channel], _homieNode->getProperty(channel)->getDef().unit);
   } else {
     myLog.printf(LOG_ERR,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
   }

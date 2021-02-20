@@ -11,7 +11,13 @@ const uint8_t Plugin::getDatapoints() {
 
 bool Plugin::init(MyHomieNode* homieNode) {
   _isInitialized = true;
-  myLog.print(LOG_NOTICE,F("   plugin didn't define init(def)!"));
+  myLog.print(LOG_NOTICE,F("   plugin didn't define init(homieNode)!"));
+  return false;
+}
+
+bool Plugin::init(MyHomieProperty* homieNode, uint8_t gpio) {
+  _isInitialized = true;
+  myLog.print(LOG_NOTICE,F("   plugin didn't define init(homieNode, gpio)!"));
   return false;
 }
 

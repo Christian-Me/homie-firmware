@@ -16,7 +16,8 @@ class Plugin {
   public:
     virtual const char* id ();                                              //!< returns the id string
     virtual const uint8_t getDatapoints();                                  //!< returns maxDatapoints
-    virtual bool init(MyHomieNode* homieNode);                              //!< initialize the device
+    virtual bool init(MyHomieNode* homieNode);                              //!< initialize node plugin
+    virtual bool init(MyHomieProperty* homieNode, uint8_t gpio);            //!< initialize property plugin
     virtual bool checkStatus(void);                                         //!< check the status of the device
 
     virtual bool setOption(uint16_t option, int value);                     //!< set individual plugin option (int)

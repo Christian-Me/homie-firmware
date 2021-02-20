@@ -4,16 +4,20 @@
 
 bool pluginInit(MyHomieNode* homieNode, uint8_t actuatorId, const HomieNodeDef* homieDef) ;
 
-void MyHomieDevice::init(const HomieDeviceDef *homieDevice) {
-  myLog.setAppName("SETUP");
-  myLog.printf(LOG_INFO, "Setup Device [%s]", homieDevice->id);
+void MyHomieDevice::init(HomieDeviceDef homieDevice) {
+  myLog.setAppName("DEVICE");
+  myLog.printf(LOG_INFO, "Setup Device [%s]", homieDevice.id);
   deviceDef = homieDevice;
 };
 
-MyHomieNode* MyHomieDevice::addNode(uint8_t pluginId, const HomieNodeDef* nodeDef) {
+MyHomieNode* MyHomieDevice::addNode(uint8_t pluginId, HomieNodeDef nodeDef) {
+  myLog.setAppName("DEVICE");
   MyHomieNode* homieNode = new MyHomieNode(nodeDef, pluginId);
-  if (homieNode==NULL) return NULL;
-  myLog.printf(LOG_INFO, "Setup plugin for node [%s/%s] %p(%d)", deviceDef->id, nodeDef->id, nodeDef, sizeof(*homieNode));
+  if (homieNode==NULL) {
+    myLog.printf(LOG_EMERG,F("  MyHomieDevice::addNode could not store node '%s'!"),nodeDef.id);
+    return NULL;
+  }
+  myLog.printf(LOG_INFO, "Setup plugin for node [%s/%s] %p(%d)", deviceDef.id, nodeDef.id, nodeDef, sizeof(*homieNode));
   return nodes.push(homieNode);
 };
 
@@ -26,31 +30,20 @@ MyHomieNode* MyHomieDevice::getNode(const char* id) const {
 uint8_t MyHomieDevice::length() {
   return nodes.length;
 }
-const HomieDeviceDef* MyHomieDevice::getDef() {
+const HomieDeviceDef MyHomieDevice::getDef() {
   return deviceDef;
 }
 bool MyHomieDevice::setValue(const char* nodeId, const char* propertyId, float value) const {
+  myLog.setAppName("DEVICE");
   myLog.printf(LOG_TRACE,F("  MyHomieDevice::setValue(%s, %s, %.2f)"),nodeId,propertyId,value);
   getNode(nodeId)->setValue(propertyId,value);
   return true;
 }
 bool MyHomieDevice::setFactor(const char* nodeId, const char* propertyId, float value) const {
+  myLog.setAppName("DEVICE");
   myLog.printf(LOG_TRACE,F("  MyHomieDevice::setFactor(%s, %s, %.2f)"),nodeId,propertyId,value);
   getNode(nodeId)->setFactor(propertyId,value);
   return true;
-}
-
-MyHomieNode* MyHomieDevice::createHomieNode(uint8_t pluginId, const HomieNodeDef* nodeDef) {
-
-  MyHomieNode* node = addNode(pluginId, nodeDef);
-  int lengthOf = sizeof nodeDef->dataPoint / sizeof nodeDef->dataPoint[0];
-  myLog.printf(LOG_INFO,F("created Node Id:%s Name:'%s' Type:'%s' with %d(%d) properties. (%p)"),nodeDef->id,nodeDef->name,nodeDef->type, nodeDef->datapoints, lengthOf, node);
-
-  for (uint8_t i=0; i<nodeDef->datapoints; i++) {
-    node->addProperty(&nodeDef->dataPoint[i]);
-  }
-
-  return node;
 }
 
 unsigned long MyHomieDevice::loop() {

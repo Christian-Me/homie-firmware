@@ -2,9 +2,9 @@
 #define DATATYPES_H__
 #include <Arduino.h>
 // #include <Homie.h>
-// #define MAX_DATAPOINTS 3
 
 #define VIRTUAL_ID 0
+
 // sensor Plugins
 #define BH1750_ID 1
 #define BME280_ID 2
@@ -54,7 +54,7 @@ const char *const homieDatatypes[] PROGMEM = {datatype0, datatype1, datatype2, d
 const char *const homieDatatypes[] = {"none","string","integer","float","boolean","enum","color","datetime","duration"};
 
 /**
- * @brief Structure holding the core sensor data
+ * @brief Structure holding the datapoint information
  */
 typedef struct {
     unsigned long sampleTimeout;    /*< datapoint timeout to sample*/
@@ -71,41 +71,10 @@ typedef struct {
     bool initialSample;             /*< initial sample sent  */
 } PropertyData;
 
-// classes
-
-// class MyHomieProperty;
-// class MyHomieNode;
-
-// callback functions
-
-// typedef bool (*InputHandler)(const HomieRange&, const String&, MyHomieNode*, MyHomieProperty*);
-
-// sensor node
 /**
- * @brief sensor datapoint configuration
+ * @brief homie property configuration, scheduler and sampling definitions
  */
-typedef struct {
-    const char* id;                 //!< homie property id
-    const char* name;               //!< homie $name
-    const char* unit;               //!< homie $unit
-    const uint8_t datatype;         //!< homie $datatype
-    const bool retained;            //!< homie $retained flag
-    const char* format;             //!< homie $format
-    const bool settable;            //!< homie $settable SETTABLE or NON_SETTABLE
-    const float threshold;          //!< minimum difference to trigger a data send
-    const uint16_t sampleRate;      //!< timeout between sampling
-    const uint16_t timeout;         //!< timeout to send data anyways (seconds)
-    const uint8_t oversampling;     //!< number of values to oversample
-    const uint8_t gpio;             //!< number of GPIO channel
-} HomiePropertyDef;
-
-struct HomiePropertyDef2 {
-    /*    
-    HomiePropertyDef2(uint8_t id, const char* name, uint8_t unit) : id(id), name(name), unit(unit) {}
-    uint8_t id;                 //!< homie property id 
-    const char* name;
-    uint8_t unit;               //!< homie $unit
-    */
+struct HomiePropertyDef {
     const char* id;             //!< homie property id
     const char* name;           //!< homie $name
     const char* unit;           //!< homie $unit
@@ -117,21 +86,22 @@ struct HomiePropertyDef2 {
     uint16_t sampleRate;        //!< timeout between sampling
     uint16_t timeout;           //!< timeout to send data anyways (seconds)
     uint8_t oversampling;       //!< number of values to oversample
-    uint8_t gpio;               //!< number of GPIO channel
 };
-
-typedef struct {
-    const char* id;                 /*< homie node id */
-    const char* name;               /*< homie $name */
-    const char* type;               /*< homie $type */
-    const int datapoints;           /*< Number of Datapoints */
-    const uint8_t io;               /*< I2C Addres or CS Pin */
-    const HomiePropertyDef dataPoint[MAX_DATAPOINTS];
-} HomieNodeDef;
-
-typedef struct {
-    const char* id;
-    const char* name;
-} HomieDeviceDef;
+/**
+ * @brief homie node configuration
+ */
+struct HomieNodeDef {
+    const char* id;              //!< homie node id
+    const char* name;            //!< homie $name
+    const char* type;            //!< homie $type
+    uint8_t io;                  //!< GPIO, I2C Addres or CS Pin
+};
+/**
+ * @brief homie device configuration
+ */
+struct HomieDeviceDef {
+    const char* id;         //!< homie device id
+    const char* name;       //!< homie $name
+};
 
 #endif

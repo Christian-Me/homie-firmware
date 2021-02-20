@@ -77,7 +77,7 @@ float s_ADS1115::get(uint8_t channel) {
   float result = 0;
   if (channel < _maxDatapoints){
     result = (float) _sensor.readADC_SingleEnded(channel) * 0.1875,
-    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef()->id, result, _homieNode->getProperty(channel)->getDef()->unit);
+    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef().id, result, _homieNode->getProperty(channel)->getDef().unit);
   } else {
     myLog.printf(LOG_ERR,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
   }

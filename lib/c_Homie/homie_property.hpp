@@ -14,6 +14,7 @@
 
 class MyHomieNode;
 class MyHomieProperty;
+class Plugin;
 typedef bool (*InputHandler)(const HomieRange&, const String&, MyHomieNode*, MyHomieProperty*);
 typedef bool (*ReadHandler)(uint8_t, MyHomieNode*, MyHomieProperty*);
 
@@ -22,18 +23,22 @@ typedef bool (*ReadHandler)(uint8_t, MyHomieNode*, MyHomieProperty*);
  * 
  */
 class MyHomieProperty {
-    const HomiePropertyDef* propertyDef = NULL;
+    HomiePropertyDef _propertyDef = {"","", "", DATATYPE_FLOAT, RETAINED, "0:1", NON_SETTABLE,0,0,0,0};
     const HomieNode *_parentNode = NULL;
     PropertyData propertyData;
+    Plugin* _plugin = NULL;
+    uint8_t _pluginId = 0;
     float* samples;
     InputHandler _inputHandler;
     ReadHandler _readHandler;
     float oversample(float sample);
   public:
     uint8_t hideLog = 0b11111111; // all logs visible
-    MyHomieProperty(const HomieNode* parentNode, const HomiePropertyDef* def);
+    MyHomieProperty(const HomieNode* parentNode, HomiePropertyDef def);
     const char* getId();
-    const HomiePropertyDef* getDef() const;
+    const HomiePropertyDef getDef();
+    bool addPlugin(uint8_t pluginId, uint8_t gpio);
+    Plugin* getPlugin();
     bool readyToSample(unsigned long timebase);
     bool readyToSend(unsigned long timebase);
     bool sendValue();

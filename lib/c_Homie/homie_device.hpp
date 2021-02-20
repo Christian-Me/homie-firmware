@@ -48,19 +48,18 @@ struct NodeVector {
 };
 
 class MyHomieDevice {
-    const HomieDeviceDef* deviceDef = NULL;
+    HomieDeviceDef deviceDef = {"",""};
     NodeVector nodes;
     unsigned long _nextEvent = 0;
   public:
-    void init(const HomieDeviceDef *homieDevice);
-    MyHomieNode* addNode(uint8_t pluginId, const HomieNodeDef *homieNode);
+    void init(HomieDeviceDef homieDevice);
+    MyHomieNode* addNode(uint8_t pluginId, HomieNodeDef nodeDef);
     MyHomieNode* getNode(uint8_t index) const;
     MyHomieNode* getNode(const char* id) const;
     uint8_t length();
-    const HomieDeviceDef* getDef();
+    const HomieDeviceDef getDef();
     bool setValue(const char* nodeId, const char* propertyId, float value) const;
     bool setFactor(const char* nodeId, const char* propertyId, float value) const;
-    MyHomieNode* createHomieNode(uint8_t pluginId, const HomieNodeDef* nodeDef);
     unsigned long loop();
 };
 
