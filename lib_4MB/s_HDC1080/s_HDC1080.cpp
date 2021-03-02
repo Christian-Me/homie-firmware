@@ -82,6 +82,7 @@ bool s_HDC1080::setOption(uint16_t option, bool value) {
     @returns  result boolean - true=success
 */
 bool s_HDC1080::setOption(uint16_t option, int value) {
+  if (!_isInitialized) return false;
   bool success = true;
   switch (option) {
     case HUMIDITY_RESOLUTION: 
@@ -105,14 +106,14 @@ bool s_HDC1080::setOption(uint16_t option, int value) {
    @brief    check if device is initialized and/or if sensor is in operation
     @returns    true if so
 */
-bool s_HDC1080::checkStatus(void) {
+bool s_HDC1080::checkStatus() {
   return _isInitialized;
 }
 /*!
    @brief    check if new data is available
     @returns    true if so
 */
-bool s_HDC1080::available(void) {
+bool s_HDC1080::available() {
   return true;
 }
 /*!
@@ -142,6 +143,7 @@ bool s_HDC1080::read()
     @returns    current value
 */
 float s_HDC1080::get(uint8_t channel) {
+  if (!_isInitialized) return 0;
   float result = 0;
   if (channel < _maxDatapoints){  
     result = (float) _lastSample[channel];

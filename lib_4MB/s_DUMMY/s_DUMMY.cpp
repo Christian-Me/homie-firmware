@@ -70,14 +70,14 @@ bool s_DUMMY::setOption(uint16_t option, int value) {
    @brief    check if device is initialized and/or if sensor is in operation
     @returns    true if so
 */
-bool s_DUMMY::checkStatus(void) {
+bool s_DUMMY::checkStatus() {
   return _isInitialized;
 }
 /*!
    @brief    check if new data is available
     @returns    true if so
 */
-bool s_DUMMY::available(void) {
+bool s_DUMMY::available() {
   return true;
 }
 /*!

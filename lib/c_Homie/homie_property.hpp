@@ -43,6 +43,7 @@ class MyHomieProperty {
     bool readyToSend(unsigned long timebase);
     bool sendValue();
     bool sendValue(float value);
+    bool sendValue(const char* string);
     bool inputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
     bool defaultPropertyInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
     void setInputHandler(InputHandler inputHandler);

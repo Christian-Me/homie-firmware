@@ -89,6 +89,7 @@ void onHomieEvent(const HomieEvent& event) {
       break;
       case HomieEventType::READY_TO_SLEEP:
         myLog.print(LOG_WARNING, F("Ready to Sleep"));
+        Homie.doDeepSleep();
       break;
       case HomieEventType::STANDALONE_MODE:
         myLog.print(LOG_INFO, F("Standalaone Mode"));
@@ -101,12 +102,22 @@ void onHomieEvent(const HomieEvent& event) {
   }
 }
 
+const unsigned long sampleDuration = 60000;
+unsigned long deviceTime = 0;
+unsigned long loopTimer = 0;
+
 void loopHandler() {
   updateLED();
   if (normalOperation) {
-    myDevice.loop();
+    deviceTime += myDevice.loop();
   }
+  deviceLoop();
   myLog.loop();
+  if (loopTimer < millis()) {
+    myLog.printf(LOG_INFO,F("Utilization %.1f%%"),(float) deviceTime/sampleDuration * 100);
+    deviceTime = 0;
+    loopTimer = sampleDuration + millis();
+  }
 }
 
 struct bootflags
@@ -201,9 +212,9 @@ void setup() {
   #ifdef HOMIE_DISABLE_LOGGING
     Homie.disableLogging();
   #endif
+  myLog.printInfo(LOG_MEMORY);
   Homie.setup();
   myLog.print(LOG_DEBUG,F("Homie.setup started"));
-  myLog.printInfo(LOG_MEMORY);
 }
 
 void loop() {

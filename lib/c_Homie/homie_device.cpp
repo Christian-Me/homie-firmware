@@ -47,22 +47,21 @@ bool MyHomieDevice::setFactor(const char* nodeId, const char* propertyId, float 
 }
 
 unsigned long MyHomieDevice::loop() {
+  unsigned long timebase = millis(); // read only once!
   if (_nextEvent < millis()) {
     myLog.setAppName("homieDevice");
-    myLog.print(LOG_TRACE,F("Device.loop() started"));
-    unsigned long timebase = millis(); // read only once!
     unsigned long nextNodeEvent = -1;
     for (int8_t i=0; i<nodes.length; i++) {
       nextNodeEvent = minimum(getNode(i)->loop(timebase), nextNodeEvent);
     }
     _nextEvent = nextNodeEvent + timebase;
-    myLog.printf(LOG_DEBUG,F("Next device event in %.2fs (loop:%dms)"),(float) nextNodeEvent / 1000,millis()-timebase);
+    myLog.printf(LOG_DEBUG,F("Next device event in %.2fs (took:%dms)"),(float) nextNodeEvent / 1000,millis()-timebase);
   }
   for (int8_t i=0; i<nodes.length; i++) {
     getNode(i)->pluginLoop();
   }
 
-  return _nextEvent;
+  return millis()-timebase;
 }
 
 MyHomieDevice myDevice;

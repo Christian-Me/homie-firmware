@@ -74,6 +74,7 @@ bool s_ADS1115::read(bool force=false)
     @returns    current value
 */
 float s_ADS1115::get(uint8_t channel) {
+  if (!_isInitialized) return 0;
   float result = 0;
   if (channel < _maxDatapoints){
     result = (float) _sensor.readADC_SingleEnded(channel) * 0.1875,
@@ -88,7 +89,7 @@ float s_ADS1115::get(uint8_t channel) {
    @brief    check if device is initialized
     @returns    true if so
 */
-bool s_ADS1115::checkStatus(void) {
+bool s_ADS1115::checkStatus() {
   return _isInitialized;
 }
 

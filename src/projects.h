@@ -26,4 +26,7 @@
     #include "device-PLANT-control.h"
 #endif
 
+#if GREENHOUSE
+    #include "device-GREENHOUSE.h"
+#endif
 #endif

@@ -3,7 +3,10 @@
 #include <homie.h>
 #include "homieSyslog.h"
 #include "c_homie.h"
-
+/*!
+   @brief    get the id string of the plugin
+    @returns    id string (const char*)
+*/
 const char* a_PWMdimmer::id() {
   return "PWM";
 }
@@ -18,14 +21,14 @@ a_PWMdimmer::a_PWMdimmer() {
 
 /*!
    @brief    init PWM controller 
-    @param    nodeDef           pointer to node definition
-    @returns  result boolean - true=success
+    @param    homieProperty    pointer to property definition
+    @returns  (boolean) - true=success
 */
 bool a_PWMdimmer::init(MyHomieProperty* homieProperty, uint8_t gpio) {
   _homieProperty = homieProperty;
   _gpio = gpio;
   myLog.setAppName(id());
-  myLog.printf(LOG_INFO,F("PWM Dimmer id: %s GPIO%d"),homieProperty->getDef().id, _gpio);
+  myLog.printf(LOG_INFO,F("    PWMdimmer::init id: %s GPIO%d"),_homieProperty->getDef().id, _gpio);
 
   pinMode(_gpio, OUTPUT);
   analogWrite(_gpio, 0);
@@ -40,9 +43,9 @@ bool a_PWMdimmer::init(MyHomieProperty* homieProperty, uint8_t gpio) {
 }
 /*!
    @brief    set a plugin option
-    @param    option    (uint16_t) option ID: PWM_FREQUENCY to set the PWM frequency from 100 to 40kHz
-    @param    value     (bool) option value
-    @returns  true if option set successfull
+    @param    option    (uint16_t) option Id
+    @param    value     (int) option value
+    @returns  (boolean) true if option set successfull
 */
 bool a_PWMdimmer::setOption(uint16_t option, int value) {
   bool success = false;
@@ -67,10 +70,9 @@ bool a_PWMdimmer::setOption(uint16_t option, int value) {
 };
 /*!
    @brief    set a channel option
-    @param    option    (uint16_t) option ID: PWM_FREQUENCY to set the PWM frequency from 100 to 40kHz
-    @param    channel   (uint8_t) channel number
+    @param    option    (uint16_t) option Id
     @param    value     (float) option value
-    @returns  true if option set successfull
+    @returns  (boolean) true if option set successfull
 */
 bool a_PWMdimmer::setOption(uint16_t option, float value) {
   bool success = false;
@@ -95,18 +97,16 @@ bool a_PWMdimmer::setOption(uint16_t option, float value) {
 };
 /*!
    @brief    read/update current value
-    @param    channel   number of channel to read
-    @returns    current value
+    @returns    (float) current value
 */
 float a_PWMdimmer::get() {
   return _current;
 }
-
 /*!
    @class  a_PWMdimmer
    @brief  write a value to channel
-    @param  channel   number of channel to write to
-    @returns    true = achnkoleged new value
+    @param  data   pointer to PropertyData
+    @returns    (boolean) true = achnkoleged new value
 */
 bool a_PWMdimmer::set(PropertyData* data){
   myLog.setAppName(id());
@@ -128,12 +128,19 @@ bool a_PWMdimmer::set(PropertyData* data){
   myLog.printf(LOG_ERR,F("PWM not initialized!"));
   return false;
 }
-
+/*!
+   @brief    check the status of the plugin / device
+    @returns    (boolean) true if everthing is OK
+*/
 bool a_PWMdimmer::checkStatus(void) {
+  // myLog.printf(LOG_DEBUG,F("    PWMdimmer::checkStatus %s"),(_isInitialized) ? "true" : "false");
   return _isInitialized;
 }
-
-bool a_PWMdimmer::available(void) {
+/*!
+   @brief    check if data is available
+    @returns    true if (new) data is available
+*/
+bool a_PWMdimmer::available() {
   return true;
 }
 
@@ -141,10 +148,11 @@ bool a_PWMdimmer::available(void) {
    @class  a_PWMdimmer
    @brief  loop function of the PWM dimmer plugin
    @details The PWM Plugin comes with it's own loop and timer for frequent updates during dimming events. 
-    If the timer ist riggers it loops through all channels and in- or decrements the `_current[cannel]` value to reach the `_target[cannel]`
+    If the timer is triggered it loops through all channels and in- or decrements the `_current[cannel]` value to reach the `_target[cannel]`
     The limits are checked and the current value is fine tuned if the target is reached within the `_increment` range
 */
 void a_PWMdimmer::loop() {
+  // myLog.printf(LOG_TRACE,F(" %s loop"), id());
   if (_timer > 0 && _timer<millis()) {
     _timer = millis()+_delay;
     if (_target!=_current) {
@@ -159,7 +167,7 @@ void a_PWMdimmer::loop() {
       } else {
         _current = _target;
       }
-      myLog.printf(LOG_TRACE,F("  analogWrite GPIO%d %.2f=%d (Target %.2f Duration %ds)"), _gpio, _current, (int) floor(_current * 10.23), _target, _duration);
+      myLog.printf(LOG_DEBUG,F("  analogWrite GPIO%d %.2f=%d (Target %.2f Duration %ds)"), _gpio, _current, (int) floor(_current * 10.23), _target, _duration);
       analogWrite(_gpio,(int) floor(_current * 10.23));
     }
   }

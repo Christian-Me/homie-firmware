@@ -74,6 +74,7 @@ bool s_BH1750::read()
     @returns    current value
 */
 float s_BH1750::get(uint8_t channel) {
+  if (!_isInitialized) return 0;
   float result = 0;
   if (channel < _maxDatapoints){
      result = _lastSample[channel];

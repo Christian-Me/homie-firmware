@@ -1,8 +1,6 @@
 #pragma once
 #include <homieSyslog.h>
 #include "homie_property.hpp"
-// #include "datatypes.h"
-// #include "plugins.h"
 
 struct PropertyVector {
   struct PropertyItem {
@@ -85,7 +83,6 @@ class MyHomieNode {
     bool isTarget (const char* id);
     MyHomieNode* addProperty(HomiePropertyDef homieProperty);
     MyHomieNode* addProperty(HomiePropertyDef homieProperty, uint8_t pluginId, uint8_t gpio);
-//     MyHomieNode* addProperty2(HomiePropertyDef2 homieProperty);
     bool inputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
     MyHomieNode* registerInputHandler(InputHandler inputHandler);
     MyHomieNode* registerInputHandler(const char* id, InputHandler inputHandler);
@@ -93,6 +90,7 @@ class MyHomieNode {
     MyHomieNode* hideLogLevel(const char* id, uint8_t logMask);
     MyHomieProperty* getProperty (int index) const;
     MyHomieProperty* getProperty (const char* id) const;
+    Plugin* getPropertyPlugin (const char* id) const;
     uint8_t length() const;
     HomieNodeDef getDef();
     bool readyToSample(unsigned long timebase);

@@ -24,13 +24,7 @@ uint32_t maximum(uint32_t a, uint32_t b) {
     @param    index       index of string to return starting from 0
     @returns  result String - empty string is index is out of range
 */
-String enumGetIndex(String listString, uint8_t index) {
-  #ifdef SERIAL_TRACE
-    Serial.print(" index:");
-    Serial.print(index);
-    Serial.print(" list:");
-    Serial.print(listString);
-  #endif
+String enumGetString(String listString, uint8_t index) {
   if (listString.length()==0) return ""; 
   int startPos = listString.indexOf(',');
   if (index==0) return listString.substring(0,startPos); // 
@@ -46,6 +40,27 @@ String enumGetIndex(String listString, uint8_t index) {
   int endPos = listString.indexOf(',',startPos+1);
   if (endPos<0) endPos = listString.length(); // search @ the end of list
   return listString.substring(startPos+1,endPos);
+}
+/*!
+   @brief    get the index of a comma seperated enum list
+    @param    listString  String with comma seperated values
+    @param    searchSting  String of witch index should be found
+    @returns  index of the given String in list - -1 if search Sting is not included in list
+*/
+int enumGetIndex(String listString, const String& searchString){
+  if (listString.length()==0) return -1; 
+  if (listString.equals(searchString)) return 0;
+  int startPos = 0;
+  int endPos = listString.indexOf(',');
+  int currentIndex = 0;
+  while (!listString.substring(startPos,endPos).equals(searchString)) { // loop until index found or end of string
+    startPos = endPos+1;
+    if (startPos>=listString.length()) return -1;  // end of list reached
+    endPos = listString.indexOf(',',startPos+1); // next member of list
+    if (endPos<0) endPos = listString.length(); // last member of list
+    currentIndex++;
+  };
+  return currentIndex;
 }
 
 #ifdef USE_I2C

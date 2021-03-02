@@ -22,7 +22,14 @@ uint32_t maximum(uint32_t a, uint32_t b);
     @param    index       index of string to return starting from 0
     @returns  result String - empty string is index is out of range
 */
-String enumGetIndex(String listString, uint8_t index);
+String enumGetString(String listString, uint8_t index);
+/*!
+   @brief    get the index of a comma seperated enum list
+    @param    listString  String with comma seperated values
+    @param    searchSting  String of witch index should be found
+    @returns  index of the given String in list - -1 if search Sting is not included in list
+*/
+int enumGetIndex(String listString, const String& searchString);
 
 #ifdef USE_I2C
 // scan i2c bus for specific device

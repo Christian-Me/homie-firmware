@@ -22,7 +22,7 @@ class s_ADS1115 : public Plugin {
     const char* id ();                        /*> returns the id string */
     s_ADS1115(int port);                      /*> constructor port= I2C address or port=0 autodetect */
     bool init(MyHomieNode* homieNode);  /*> initialize the device */
-    bool checkStatus(void);                   /*> check the status of the device */
+    bool checkStatus();                       /*> check the status of the device */
     bool read(bool force);                    /*> read values from device and write to lastsample[]*/
     float get(uint8_t channel);               /*> read value from one device channel*/
 };

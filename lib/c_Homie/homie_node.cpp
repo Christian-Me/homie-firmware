@@ -153,6 +153,10 @@ MyHomieProperty* MyHomieNode::getProperty (const char* id) const {
   return properties.getById(id);
 };
 
+Plugin* MyHomieNode::getPropertyPlugin (const char* id) const {
+  return properties.getById(id)->getPlugin();
+};
+
 uint8_t MyHomieNode::length() const {
   return properties.length;
 };
@@ -163,40 +167,12 @@ HomieNodeDef MyHomieNode::getDef() {
 
 bool MyHomieNode::sendValue(MyHomieProperty* homieProperty) {
   return homieProperty->sendValue();
-  /*
-  float valueFloat = 0;
-  switch (homieProperty->getDef().datatype) {
-    case DATATYPE_FLOAT: {
-      if (!homieProperty->getDef().retained || (homieProperty->getDef().retained && homieProperty->getData()->last!=homieProperty->getData()->current)) {
-        myLog.printf(LOG_INFO,F("  MyHomieNode::sendValue(%s) %s=%.2f"),getId(), homieProperty->getId(), homieProperty->getValue());
-        homieNode->setProperty(homieProperty->getDef().id).send(String(homieProperty->getValue())); // send homie feedback
-        homieProperty->getData()->last=homieProperty->getData()->current;
-        triggerLED();
-        return true;
-      }
-      break;
-    }
-    case DATATYPE_BOOLEAN: {
-      valueFloat = homieProperty->getValue();
-      if (valueFloat == 0) {
-        myLog.printf(LOG_INFO,F("  MyHomieNode::sendValue(%s) %s='false'"),getId(), homieProperty->getId());
-        homieNode->setProperty(homieProperty->getDef().id).send(String("false")); // send homie feedback
-      } else {
-        myLog.printf(LOG_INFO,F("  MyHomieNode::sendValue(%s) %s='true'"),getId(), homieProperty->getId());
-        homieNode->setProperty(homieProperty->getDef().id).send(String("true")); // send homie feedback
-      }
-      homieProperty->getData()->last=homieProperty->getData()->current;
-      triggerLED();
-      return true;
-    }
-  }
-  return false;
-  */
 }
 
 void MyHomieNode::setCustomSampleRate(uint16_t rate){
   _customSampleRate = rate;
 }
+
 bool MyHomieNode::readyToSample(unsigned long timebase) {
   if (_nextSample<timebase) {
     myLog.printf(LOG_TRACE,F("   Node '%s' ready to sample! (next: %ds)"), nodeDef.id, _pluginSampleRate);
@@ -225,15 +201,17 @@ bool MyHomieNode::sendValue(int index) {
 
 bool MyHomieNode::setValue(const char* id, float value) {
   if (getProperty(id)!=NULL) {
-    bool result = false;
+    bool result = true;
     myLog.printf(LOG_TRACE,F("  MyHomieNode::setValue(%s, (float) %.2f) %.2f %s"),id,value,getProperty(id)->getValue(), getProperty(id)->getId());
     getProperty(id)->setValue(value);
-    if (plugin!=NULL) {
+    if (plugin!=NULL) { // node plugin
       result = plugin->set(properties.getIndex(id),getProperty(id)->getData()); // trigger the plugin to do it's bussiness
-      if (result) homieNode->setProperty(id).send(String(value)); // send homie feedback if plugin returns acknowledge
-    } else {
-      homieNode->setProperty(id).send(String(value));
     }
+    Plugin* propertyPlugin = getProperty(id)->getPlugin();
+    if (propertyPlugin!=NULL) { // property plugin
+      result = propertyPlugin->set(getProperty(id)->getData());
+    }
+    if (result) homieNode->setProperty(id).send(String(value)); // send homie feedback if plugin returns acknowledge
     return true;
   }
   myLog.printf(LOG_ERR,F("  MyHomieNode::setValue(%s,(float) %.2f) node unknown"),id,value);
@@ -263,14 +241,7 @@ bool MyHomieNode::setFactor(const char* id, float value) {
   myLog.printf(LOG_ERR,F("  MyHomieNode::setFactor(%s, %.2f) node unknown"),id,value);
   return false;
 }
-/*
-MyHomieNode* MyHomieNode::addProperty2(HomiePropertyDef2 def) {
-  myLog.print(LOG_INFO,F("  add property2"));
-  myLog.printf(LOG_INFO,F("  add property2 id=%s name=%s unit=%s datatype=%s format=%s"),def.id, def.name, def.unit,homieDatatypes[def.datatype],def.format);
-  MyHomieProperty* homieProperty = properties.push(new MyHomieProperty(homieNode, def));
-  return this;
-};
-*/
+
 MyHomieNode* MyHomieNode::addProperty(HomiePropertyDef def) {
   myLog.printf(LOG_INFO,F("  addProperty id=%s name=%s unit=%s datatype=%s format=%s"),def.id, def.name, def.unit,homieDatatypes[def.datatype],def.format);
 
@@ -301,11 +272,12 @@ MyHomieNode* MyHomieNode::addProperty(HomiePropertyDef def) {
 
 MyHomieNode* MyHomieNode::addProperty(HomiePropertyDef homiePropertyDef, uint8_t pluginId, uint8_t gpio) {
   addProperty(homiePropertyDef);
-  myLog.printf(LOG_INFO,F("   addPlugin to '%s' plugin=%d GPIO%d"),homiePropertyDef.id, pluginId, gpio);
+  myLog.printf(LOG_INFO,F("  addPlugin to '%s' plugin=%d GPIO%d"),homiePropertyDef.id, pluginId, gpio);
 
   MyHomieProperty* homieProperty = getProperty(homiePropertyDef.id);
-  homieProperty->addPlugin(pluginId, gpio);
-  _propertyPluginPresent = true;
+  if (homieProperty->addPlugin(pluginId, gpio)) {
+    _propertyPluginPresent = true;
+  };
   return this;
 }
 /*!
@@ -350,7 +322,7 @@ unsigned long MyHomieNode::loop(unsigned long timebase) {
     myLog.setAppName("homieNode");
     MyHomieProperty* property = NULL;
     myLog.printf(LOG_TRACE,F(" sample rate %ds"), _pluginSampleRate);
-    if (plugin!=NULL && readyToSample(timebase)) {
+    if (plugin!=NULL && plugin->checkStatus() && readyToSample(timebase)) {
       myLog.printf(LOG_TRACE,F(" Node %s sample timer triggered"), getDef().id);
       property = getProperty(_nextEventIndex);
       if (property->readHandler(TASK_BEFORE_SAMPLE,this,property)) {
@@ -392,22 +364,28 @@ unsigned long MyHomieNode::loop(unsigned long timebase) {
     }
   }
   unsigned long nextEvent = getNextEvent(timebase);
-  if (eventOccurred) myLog.printf(LOG_DEBUG,F("  Next Node %s event in %.2fs (%d)"), getDef().id, (float) nextEvent / 1000, _nextEventIndex);
+  // if (eventOccurred) 
+  myLog.printf(LOG_DEBUG,F("  Next Node %s event in %.2fs (%d)"), getDef().id, (float) nextEvent / 1000, _nextEventIndex);
   return nextEvent;
 }
 
 void MyHomieNode::pluginLoop() {
   // first node plugin
-  if (plugin!=NULL) {
+  if (plugin!=NULL && plugin->checkStatus()) {
     plugin->loop();
   }
   // second properties plugin
   if (_propertyPluginPresent) {
     MyHomieProperty* property = NULL;
+    Plugin* plugin = NULL;
     for (int8_t i=0; i<properties.length; i++) {
       property = getProperty(i);
-      if (property->getPlugin()!=NULL) {
-       property->getPlugin()->loop();
+      plugin = property->getPlugin();
+      if (plugin!=NULL) {
+        // myLog.printf(LOG_TRACE,"Plugin Loop id:%s plugin:%s (%#x)",property->getId(),plugin->id(),plugin);
+        if (plugin->checkStatus()) {
+          plugin->loop();
+        }
       }
     }
   }

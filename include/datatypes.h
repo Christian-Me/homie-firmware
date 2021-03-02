@@ -17,7 +17,7 @@
 // actuator Plugins
 // controling the output like LEDs, motors, relays, DACs 
 #define PWM_ID 101
-#define GPIO_ID 102
+#define aGPIO_ID 102
 
 // input Plugins
 // controling inputs like Buttons, Pot

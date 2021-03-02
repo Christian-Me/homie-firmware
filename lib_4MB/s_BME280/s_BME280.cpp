@@ -56,6 +56,7 @@ bool s_BME280::init(MyHomieNode* homieNode) {
     @returns  true if option set successfull
 */
 bool s_BME280::setOption(uint16_t option, int value) {
+  if (!_isInitialized) return false;
   myLog.printf(LOG_INFO,F(" BME280::setOption(%d,(int)%d)"),option,value);
   bool success = true;
   switch (option) {
@@ -93,6 +94,7 @@ bool s_BME280::setOption(uint16_t option, int value) {
     @returns  true if option set successfull
 */
 bool s_BME280::setOption(uint16_t option, float value) {
+  if (!_isInitialized) return false;
   myLog.printf(LOG_INFO,F(" BME280::setOption(%d,(float)%.2f)"),option,value);
   bool success = true;
   switch (option) {
@@ -127,6 +129,7 @@ bool s_BME280::read()
     @returns    current value
 */
 float s_BME280::get(uint8_t channel) {
+  if (!_isInitialized) return 0;
   float result = 0;
   if (channel < _maxDatapoints){  
     switch (channel) {
@@ -151,6 +154,6 @@ float s_BME280::get(uint8_t channel) {
    @brief    check if device is initialized and/or if sensor is in operation
     @returns    true if so
 */
-bool s_BME280::checkStatus(void) {
+bool s_BME280::checkStatus() {
   return _isInitialized;
 }

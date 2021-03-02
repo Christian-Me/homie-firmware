@@ -33,10 +33,10 @@ class s_HDC1080 : public Plugin {
     const char* id ();                                //!< returns the id string
     s_HDC1080(int port);                              //!< constructor port= I2C address or port=0 autodetect
     bool init(MyHomieNode* homieNode);                //!< initialize the device
-    bool checkStatus(void);                           //!< check the status of the device
+    bool checkStatus();                               //!< check the status of the device
     bool setOption(uint16_t option, bool value);      //!< set individual plugin option (bool)
     bool setOption(uint16_t option, int value);       //!< set individual plugin option (int)
-    bool available(void);                             //!< true if sensor data is available
+    bool available();                                 //!< true if sensor data is available
     void loop();                                      //!< main loop
     bool read();                                      //!< read values from device and write to property database*/
     float get(uint8_t channel);                       //!< read value from one device channel or from database

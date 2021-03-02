@@ -1,9 +1,13 @@
 #include "homie_property.hpp"
 #include "homie_node.hpp"
 #include <signalLED.h>
+#include <utils.h>
 
 #ifdef A_PWM
   #include <a_pwm_dimmer.h>
+#endif
+#ifdef A_GPIO
+  #include <a_gpio.h>
 #endif
 
 const char taskString1[] PROGMEM = "before sample";
@@ -15,22 +19,27 @@ const char taskString6[] PROGMEM = "after send";
 const char *const taskString[] PROGMEM = {taskString1, taskString2, taskString3, taskString4, taskString5, taskString6};
 
 bool MyHomieProperty::addPlugin(uint8_t pluginId, uint8_t gpio) {
-  myLog.printf(LOG_DEBUG,F(" add plugin for property %s (pluginId:%d) GPIO"),getDef().id, pluginId, gpio);
+  myLog.printf(LOG_DEBUG,F("   add plugin for property %s (pluginId:%d) GPIO"),getDef().id, pluginId, gpio);
   switch (pluginId) {
     #ifdef A_PWM
       case PWM_ID: {
         _plugin= new a_PWMdimmer();
         break; }
     #endif
+    #ifdef A_GPIO
+      case aGPIO_ID: {
+        _plugin= new a_GPIO();
+        break; }
+    #endif
     default: {
       _plugin = new Plugin(); }
   }
   if (_plugin != NULL) {
-    myLog.printf(LOG_INFO,F(" registered plugin '%s' for property '%s' (pluginId:%d)"), _plugin->id(), getDef().id, pluginId);
+    myLog.printf(LOG_INFO,F("   registered plugin '%s' for property '%s' (pluginId:%d %#x)"), _plugin->id(), getDef().id, pluginId, _plugin);
     _plugin->init(this, gpio);
-    return true;
+    return _plugin->checkStatus();
   } else {
-    myLog.printf(LOG_ERR,F(" error initialisation of plugin '%s' for property '%s' (pluginId:%d)"), _plugin->id(), getDef().id, pluginId);
+    myLog.printf(LOG_ERR,F("   error initialisation of plugin '%s' for property '%s' (pluginId:%d)"), _plugin->id(), getDef().id, pluginId);
   }
   return false;
 }
@@ -84,7 +93,7 @@ bool MyHomieProperty::readyToSend(unsigned long timebase) {
     propertyData.sendTimeout= timebase+_propertyDef.timeout*1000;
     return true;
   }
-  if (fabs(propertyData.current-propertyData.last)>_propertyDef.threshold) {
+  if (fabs(propertyData.current-propertyData.last)>=_propertyDef.threshold) {
     myLog.printf(LOG_DEBUG,F("   %s is ready to send by threshold %.2f>%.2f"), _propertyDef.id, fabs(propertyData.current-propertyData.last), _propertyDef.threshold);
     propertyData.sendTimeout= timebase+_propertyDef.timeout*1000;
     return true;
@@ -118,6 +127,12 @@ bool MyHomieProperty::sendValue() {
       triggerLED();
       return true;
     }
+    case DATATYPE_ENUM: {
+      String string = enumGetString(String(_propertyDef.format), propertyData.current);
+      myLog.printf(LOG_INFO,F("  %s/%s::sendValue((enum) &d=%s)"),_parentNode->getId(), getId(), string.c_str());
+      _parentNode->setProperty(getId()).send(string); // send homie feedback 
+      propertyData.last = propertyData.current;     
+    }
   }
   return false;
 }
@@ -125,6 +140,11 @@ bool MyHomieProperty::sendValue() {
 bool MyHomieProperty::sendValue(float value) {
   propertyData.current = value;
   return sendValue();
+}
+
+bool MyHomieProperty::sendValue(const char* string) {
+  _parentNode->setProperty(getId()).send(String(string));
+  return true;
 }
 
 void MyHomieProperty::setInputHandler(InputHandler inputHandler) {
@@ -186,7 +206,7 @@ bool MyHomieProperty::setValue (float value) {
   } else {
     propertyData.current = value;
   }
-  myLog.printf(LOG_TRACE,F("   MyHomieProperty::setValue(float) %.2f : %.2f %p"), value, propertyData.current, &propertyData);
+  myLog.printf(LOG_TRACE,F("   %s/%s setValue(float) %.2f : %.2f %p"), _parentNode->getId(), getId(), value, propertyData.current, &propertyData);
   return true;
 };
 
@@ -197,13 +217,13 @@ bool MyHomieProperty::setReadValue (float value) {
 
 bool MyHomieProperty::setValue (bool value) {
   propertyData.current = (value) ? 1 : 0;
-  myLog.printf(LOG_TRACE,F("   MyHomieProperty::setValue(bool) %d %p"), value, propertyData.current, &propertyData);
+  myLog.printf(LOG_TRACE,F("  %s/%s setValue(bool) %d %p"), _parentNode->getId(), getId(), value, propertyData.current, &propertyData);
   return true;
 };
 
 bool MyHomieProperty::setFactor (float value) {
   propertyData.scale = value;
-  myLog.printf(LOG_TRACE,F("   MyHomieProperty::setFactor(float) %.2f : %.2f"), value, propertyData.scale);
+  myLog.printf(LOG_TRACE,F("   %s/%s setFactor(float) %.2f : %.2f"), _parentNode->getId(), getId(), value, propertyData.scale);
   return true;
 };
 
@@ -212,7 +232,7 @@ float MyHomieProperty::getReadValue () {
 };
 
 float MyHomieProperty::getValue () {
-  myLog.printf(LOG_TRACE,F("   MyHomieProperty::getValue %.2f %p"), propertyData.current, &propertyData);
+  myLog.printf(LOG_TRACE,F("   %s/%s getValue %.2f %p"), _parentNode->getId(), getId(), propertyData.current, &propertyData);
   return propertyData.current;
 };
 
