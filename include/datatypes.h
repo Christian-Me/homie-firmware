@@ -83,7 +83,7 @@ struct HomiePropertyDef {
     const char* format;         //!< homie $format
     bool settable;              //!< homie $settable SETTABLE or NON_SETTABLE
     float threshold;            //!< minimum difference to trigger a data send
-    uint16_t sampleRate;        //!< timeout between sampling
+    uint16_t sampleRate;        //!< perios between sampling (seconds)
     uint16_t timeout;           //!< timeout to send data anyways (seconds)
     uint8_t oversampling;       //!< number of values to oversample
 };

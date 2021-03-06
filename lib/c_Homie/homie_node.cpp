@@ -365,7 +365,7 @@ unsigned long MyHomieNode::loop(unsigned long timebase) {
   }
   unsigned long nextEvent = getNextEvent(timebase);
   // if (eventOccurred) 
-  myLog.printf(LOG_DEBUG,F("  Next Node %s event in %.2fs (%d)"), getDef().id, (float) nextEvent / 1000, _nextEventIndex);
+  myLog.printf(LOG_DEBUG,F("  Next Node %s event in %.2fs (%s)"), getDef().id, (float) nextEvent / 1000, getProperty(_nextEventIndex)->getId());
   return nextEvent;
 }
 

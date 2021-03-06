@@ -71,37 +71,24 @@ bool fansInputHandler(const HomieRange& range, const String& value, MyHomieNode*
     return true;
 };
 
-bool humidifierInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
-  static int lastHumidifierState = 0;
-  int option = enumGetIndex(String(homieProperty->getDef().format),value);
-  myLog.printf(LOG_INFO,F(" humidifierInputHandler received %s = %d"), value.c_str(), option);
-  switch (option)
-  {
-    case 0: // off
-      break;
-    case 1: // on
-      break;
-    case 2: // pulse
-      break;
-    default:
-      break;
-  }
-  return true;
-};
-
-unsigned long timer = 0;
-uint8_t spikeCounter = 0;
-bool firstReading = true;
 
 bool ADS1115readHandler(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
-    bool result = true;
+    static unsigned long timer = 0;
+    static uint8_t spikeCounter = 0;
+    static bool firstReading = true;
+    static bool soilR = false; // flag if resistive soil sensor is on
+    bool proceed = true;
     switch (task) {
       case TASK_BEFORE_SAMPLE: {
         // switch on resistive soil sensor for measurement
-        timer = millis();
-        myLog.printf(LOG_TRACE,F("  before sample %s/%s (%d)"),homieNode->getId(),homieProperty->getId(),timer);
-        digitalWrite(D8,HIGH);
-        delay(500); // not nice! Will find a solution later (extra timer?)
+        if (!soilR) {
+          timer = millis();
+          myLog.printf(LOG_TRACE,F("  before sample %s/%s (%d)"),homieNode->getId(),homieProperty->getId(),timer);
+          digitalWrite(D8,HIGH);
+          homieNode->setCustomSampleRate(5000); // read sample in 5 sec
+          proceed = false;
+          soilR = true;
+        } 
         break;
       };
       case TASK_AFTER_READ: {
@@ -110,24 +97,26 @@ bool ADS1115readHandler(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* h
         //drop first reading
         if (firstReading) {
           firstReading = false;
-          result = false;
+          proceed = false;
         }
         // check for spikes > 500mV but not on boot where value==0;
         if (homieProperty->getValue()!=0 && fabs(homieProperty->getReadValue()-homieProperty->getValue()) > 500) {
           myLog.printf(LOG_INFO,F("   %s/%s spike detected %.2fmv"),homieNode->getId(),homieProperty->getId(),homieProperty->getReadValue()-homieProperty->getValue());
-          result = false;
+          proceed = false;
           spikeCounter++;
           if (spikeCounter>2) {
-            result=true;
+            proceed=true;
             spikeCounter=0;
           }
         }
+        homieNode->setCustomSampleRate(0);
         digitalWrite(D8,LOW);
+        soilR = false;
         break;
       };
     };
    
-    return result;
+    return proceed;
 };
 
 bool readAbsoluteHumidity(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
@@ -201,7 +190,7 @@ bool deviceSetup(void) {
     myDevice.addNode(ADS1115_ID,{"ADS1115","TI ADS1115 a/d converter", "ad converter", 0})
       ->addProperty({"SOIL-C","Capacitive Soil", "mV", DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,600,3600,5})
       ->addProperty({"POT-1","Potentiometer", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,5,100,6000,0})
-      ->addProperty({"SOIL-R","Resistive Soil", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,600,3600,0})  // sample minute. Send if value change by 2 or a hour had passed. No oversampling. Switch on sensor before reding
+      ->addProperty({"SOIL-R","Resistive Soil", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,3600,3600,0})  // sample minute. Send if value change by 2 or a hour had passed. No oversampling. Switch on sensor before reding
       ->addProperty({"VCC","VCC", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,2,100,600,0})
       ->registerReadHandler("SOIL-R", ADS1115readHandler)
       ->hideLogLevel("POT-1",0b11111101); // do not display debug (avoid spamming messages for fast sample rates)
@@ -209,15 +198,12 @@ bool deviceSetup(void) {
     //device controls
     myDevice.addNode(VIRTUAL_ID, {"CONTROL","main Controls", "virtual device", 0})
       ->addProperty({"fans","Fan switch", "", DATATYPE_BOOLEAN, RETAINED, "0:1",SETTABLE,0.1,600,6000,0}) // 0.1 fade step, delay per step, unused, GPIO&virtualDevice)
-      ->registerInputHandler("fans", fansInputHandler)
-      ->addProperty({"humiButton","Humidifier Button", "", DATATYPE_INTEGER, RETAINED, "",SETTABLE,1,600,6000,0},aGPIO_ID,13)
-      ->addProperty({"humiState","Humidifier", "", DATATYPE_ENUM, RETAINED, "off,on,pulse",SETTABLE,1,600,6000,0})
-      ->registerInputHandler("humiState", humidifierInputHandler)
-      ->addProperty({"humiLight","Humidifier Light", "", DATATYPE_ENUM, RETAINED, "off,on,fade",SETTABLE,1,600,6000,0})
-      ->registerInputHandler("humiLight", humidifierInputHandler);
-
+      ->registerInputHandler("fans", fansInputHandler);
 
     return true;
+};
+
+void deviceLoop() {
 };
 
 #endif

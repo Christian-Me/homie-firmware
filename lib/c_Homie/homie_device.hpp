@@ -51,6 +51,10 @@ class MyHomieDevice {
     HomieDeviceDef deviceDef = {"",""};
     NodeVector nodes;
     unsigned long _nextEvent = 0;
+    int _nodeLoopCounter = -1; // inactive
+    int _pluginLoopCounter = 0;
+    unsigned long _timebase = 0;
+    unsigned long _nextNodeEvent = 0;
   public:
     void init(HomieDeviceDef homieDevice);
     MyHomieNode* addNode(uint8_t pluginId, HomieNodeDef nodeDef);

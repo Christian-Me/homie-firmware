@@ -4,10 +4,8 @@
 #include "../include/datatypes.h"
 #include "../include/globals.h"
 #include <c_homie.h>
-// #include <s_bme280.h>
 #include "projects.h"
 #include <SPI.h>
-// #include "config.h"
 #include <signalLED.h>
 
 
@@ -105,18 +103,26 @@ void onHomieEvent(const HomieEvent& event) {
 const unsigned long sampleDuration = 60000;
 unsigned long deviceTime = 0;
 unsigned long loopTimer = 0;
+unsigned long loopStart = 0;
+unsigned long longestLoop = 0;
 
 void loopHandler() {
+  loopStart = millis();
+  
   updateLED();
   if (normalOperation) {
     deviceTime += myDevice.loop();
   }
   deviceLoop();
   myLog.loop();
+
   if (loopTimer < millis()) {
-    myLog.printf(LOG_INFO,F("Utilization %.1f%%"),(float) deviceTime/sampleDuration * 100);
+    myLog.printf(LOG_INFO,F("Utilization %.1f%% longest loop %dms"),(float) deviceTime/sampleDuration * 100,longestLoop);
     deviceTime = 0;
     loopTimer = sampleDuration + millis();
+    longestLoop=0;
+  } else {
+    longestLoop = maximum(millis()-loopStart, longestLoop);
   }
 }
 
@@ -135,7 +141,8 @@ struct bootflags
 };
 
 struct bootflags bootmode_detect(void) {
-    int reset_reason, bootmode;
+    int reset_reason = 0;
+    int bootmode = 0;
     asm (
         "movi %0, 0x60000600\n\t"
         "movi %1, 0x60000200\n\t"

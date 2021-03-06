@@ -10,10 +10,6 @@
     #include "initial-upload.h"
 #endif
 
-#if SENSOR_TESTBENCH
-    #include "device-testbench.h"
-#endif
-
 #if SENSOR_BME680
     #include "device-BME680.h"
 #endif

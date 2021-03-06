@@ -1,6 +1,7 @@
 #include "homie_device.hpp"
 #include "homie_node.hpp"
-#include "utils.h"
+#include <utils.h>
+#include <signalLED.h>
 
 bool pluginInit(MyHomieNode* homieNode, uint8_t actuatorId, const HomieNodeDef* homieDef) ;
 
@@ -47,21 +48,37 @@ bool MyHomieDevice::setFactor(const char* nodeId, const char* propertyId, float 
 }
 
 unsigned long MyHomieDevice::loop() {
-  unsigned long timebase = millis(); // read only once!
-  if (_nextEvent < millis()) {
-    myLog.setAppName("homieDevice");
-    unsigned long nextNodeEvent = -1;
-    for (int8_t i=0; i<nodes.length; i++) {
-      nextNodeEvent = minimum(getNode(i)->loop(timebase), nextNodeEvent);
-    }
-    _nextEvent = nextNodeEvent + timebase;
-    myLog.printf(LOG_DEBUG,F("Next device event in %.2fs (took:%dms)"),(float) nextNodeEvent / 1000,millis()-timebase);
+  uint16_t loopDuration = 0;
+  // start of node loop
+  if (_nodeLoopCounter<0 && _nextEvent < millis()) {
+    triggerLED(512);
+    _nodeLoopCounter=0;
+    _timebase = millis();
+    _nextNodeEvent = -1;
   }
-  for (int8_t i=0; i<nodes.length; i++) {
-    getNode(i)->pluginLoop();
+  // call single node
+  if (_nodeLoopCounter>=0 && _nodeLoopCounter<nodes.length) {
+    myLog.setAppName("homieDevice");
+    _nextNodeEvent = minimum(getNode(_nodeLoopCounter)->loop(_timebase), _nextNodeEvent);
+    _nodeLoopCounter++;
+  }
+  // end of node loop
+  if (_nodeLoopCounter==nodes.length) {
+    _nodeLoopCounter=-1;
+    _nextEvent = _nextNodeEvent + _timebase;
+    loopDuration = millis()-_timebase;
+    myLog.printf(LOG_DEBUG,F("Next device event in %.2fs (took:%dms)"),(float) _nextNodeEvent / 1000, loopDuration);
   }
 
-  return millis()-timebase;
+  // plugin loop runs cuntiously
+  if (_pluginLoopCounter<nodes.length) {
+    getNode(_pluginLoopCounter)->pluginLoop();
+    _pluginLoopCounter++;
+  } else {
+    _pluginLoopCounter=0;
+  }
+
+  return loopDuration;
 }
 
 MyHomieDevice myDevice;

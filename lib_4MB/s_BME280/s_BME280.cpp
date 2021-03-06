@@ -145,7 +145,7 @@ float s_BME280::get(uint8_t channel) {
     }
     myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef().id, result, _homieNode->getProperty(channel)->getDef().unit);
   } else {
-    myLog.printf(LOG_ERR,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
+    myLog.printf(LOG_TRACE,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
   }
   return result;
 }

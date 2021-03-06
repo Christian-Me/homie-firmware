@@ -190,7 +190,7 @@ bool deviceSetup(void) {
     // switch off resistive soil sensor to avoid corrosion
     pinMode(D8,OUTPUT);
     digitalWrite(D8,LOW);
-    myDevice.init({"GREENHOUSE-01","Greenhouse 1"});
+    myDevice.init({"GREENHOUSE-02","Greenhouse 2"});
 
     // PWM Fan speed control
     myDevice.addNode(VIRTUAL_ID, {"FAN","2ch fan control", "PWM control", 0})
@@ -202,13 +202,13 @@ bool deviceSetup(void) {
 
     //BH1750 ambient light sensor
     myDevice.addNode(BH1750_ID, {"BH1750","BH1750 Light Sensor", "enviornment", 0})
-      ->addProperty({"illumination","Light Amount", "lx", DATATYPE_FLOAT, RETAINED, "0:65528", NON_SETTABLE,20,30,6000,5});
+      ->addProperty({"illumination","Light Amount", "lx", DATATYPE_FLOAT, RETAINED, "0:65528", NON_SETTABLE,5,30,6000,0});
     
     //HT1080 temperature, humidity sensor
     myDevice.addNode(HDC1080_ID, {"HDC1080","TI HDC1080", "enviornment", 0})                                                         // io 0 = autodetect I2C Address
-      ->addProperty({"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,5})            // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
-      ->addProperty({"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,5})                       // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
-      ->addProperty({"absoluteHumidity","Absolute Humidity","g/m³", DATATYPE_FLOAT, RETAINED, "0:1500",NON_SETTABLE,10,30,6000,5})  // readHandler will calculate and update this value
+      ->addProperty({"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0})            // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
+      ->addProperty({"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,0})                       // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
+      ->addProperty({"absoluteHumidity","Absolute Humidity","g/m³", DATATYPE_FLOAT, RETAINED, "0:1500",NON_SETTABLE,10,30,6000,0})  // readHandler will calculate and update this value
       ->addProperty({"drewPoint","Drew Point","°C", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,0.5,30,6000,0})                   // readHandler will calculate and update this value&HDC1080sensorNode)
     
       ->registerReadHandler("absoluteHumidity", readAbsoluteHumidity)   // do absolute humidity calculation (Yes, they can be reused as long as the property ids are the same)
