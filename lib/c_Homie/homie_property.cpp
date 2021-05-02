@@ -2,12 +2,16 @@
 #include "homie_node.hpp"
 #include <signalLED.h>
 #include <utils.h>
+#include <homie_device.hpp>
 
 #ifdef A_PWM
   #include <a_pwm_dimmer.h>
 #endif
 #ifdef A_GPIO
   #include <a_gpio.h>
+#endif
+#ifdef I_GPIO
+  #include <i_gpio.h>
 #endif
 
 const char taskString1[] PROGMEM = "before sample";
@@ -31,6 +35,11 @@ bool MyHomieProperty::addPlugin(uint8_t pluginId, uint8_t gpio) {
         _plugin= new a_GPIO();
         break; }
     #endif
+    #ifdef I_GPIO
+      case iGPIO_ID: {
+        _plugin= new i_GPIO();
+        break; }
+    #endif
     default: {
       _plugin = new Plugin(); }
   }
@@ -48,9 +57,10 @@ Plugin* MyHomieProperty::getPlugin() {
   return _plugin;
 }
 
-MyHomieProperty::MyHomieProperty(const HomieNode* parentNode, HomiePropertyDef def) {
+MyHomieProperty::MyHomieProperty(const HomieNode* parentNode, HomiePropertyDef def, uint8_t channel) {
   _parentNode = parentNode;
   _propertyDef = def;
+  _channel = channel;
   propertyData.last=0;
   propertyData.current=0;
   propertyData.scale=1;
@@ -74,13 +84,17 @@ const char* MyHomieProperty::getId() {
   return _propertyDef.id;
 };
 
+uint8_t MyHomieProperty::channel() {
+  return _channel;
+}
+
 const HomiePropertyDef MyHomieProperty::getDef() {
   return _propertyDef;
 };
 
 bool MyHomieProperty::readyToSample(unsigned long timebase) {
+  myLog.printf(LOG_TRACE,F("   %s ready to sample? %dms/%dms d=%dms"), _propertyDef.id, propertyData.sampleTimeout, timebase, propertyData.sampleTimeout-timebase);
   if (_propertyDef.sampleRate>0 && propertyData.sampleTimeout<timebase) {
-    myLog.printf(LOG_TRACE,F("   %s ready to sample"), _propertyDef.id);
     propertyData.sampleTimeout= timebase + _propertyDef.sampleRate * 1000;
     return true;
   }
@@ -88,14 +102,15 @@ bool MyHomieProperty::readyToSample(unsigned long timebase) {
 };
 
 bool MyHomieProperty::readyToSend(unsigned long timebase) {
+  myLog.printf(LOG_TRACE,F("   %s/%s ready to send? current:%.2f last:%.2f"),_parentNode->getId(), _propertyDef.id, propertyData.current, propertyData.last);
   if (_propertyDef.timeout>0 && propertyData.sendTimeout<millis()) {
-    myLog.printf(LOG_DEBUG,F("   %s is ready to send by timer"), _propertyDef.id);
-    propertyData.sendTimeout= timebase+_propertyDef.timeout*1000;
+    myLog.printf(LOG_DEBUG,F("   %s/%s is ready to send by timer"),_parentNode->getId() ,_propertyDef.id);
+    propertyData.sendTimeout= timebase + _propertyDef.timeout*1000;
     return true;
   }
   if (fabs(propertyData.current-propertyData.last)>=_propertyDef.threshold) {
-    myLog.printf(LOG_DEBUG,F("   %s is ready to send by threshold %.2f>%.2f"), _propertyDef.id, fabs(propertyData.current-propertyData.last), _propertyDef.threshold);
-    propertyData.sendTimeout= timebase+_propertyDef.timeout*1000;
+    myLog.printf(LOG_DEBUG,F("   %s/%s is ready to send by threshold %.2f>%.2f"),_parentNode->getId() ,_propertyDef.id, fabs(propertyData.current-propertyData.last), _propertyDef.threshold);
+    propertyData.sendTimeout= timebase + _propertyDef.timeout*1000;
     return true;
   }
   return false;
@@ -104,12 +119,22 @@ bool MyHomieProperty::readyToSend(unsigned long timebase) {
 bool MyHomieProperty::sendValue() {
   float valueFloat = 0;
   switch (_propertyDef.datatype) {
+    case DATATYPE_INTEGER: {
+      if (!_propertyDef.retained || (_propertyDef.retained && propertyData.last!=propertyData.current)) {
+        myLog.printf(LOG_INFO,F("  %s/%s::sendValue((int) %d)"),_parentNode->getId(),getId(), (int) floor(propertyData.current));
+        _parentNode->setProperty(getId()).send(String(floor(propertyData.current))); // send homie feedback
+        propertyData.last= propertyData.current;
+        signalLED.trigger();
+        return true;
+      }
+      break;
+    }
     case DATATYPE_FLOAT: {
       if (!_propertyDef.retained || (_propertyDef.retained && propertyData.last!=propertyData.current)) {
         myLog.printf(LOG_INFO,F("  %s/%s::sendValue((float) %.2f)"),_parentNode->getId(),getId(), propertyData.current);
         _parentNode->setProperty(getId()).send(String(propertyData.current)); // send homie feedback
         propertyData.last= propertyData.current;
-        triggerLED();
+        signalLED.trigger();
         return true;
       }
       break;
@@ -124,7 +149,7 @@ bool MyHomieProperty::sendValue() {
         _parentNode->setProperty(getId()).send(String("true")); // send homie feedback
       }
       propertyData.last= propertyData.current;
-      triggerLED();
+      signalLED.trigger();
       return true;
     }
     case DATATYPE_ENUM: {
@@ -139,6 +164,11 @@ bool MyHomieProperty::sendValue() {
 
 bool MyHomieProperty::sendValue(float value) {
   propertyData.current = value;
+  return sendValue();
+}
+
+bool MyHomieProperty::sendValue(bool value) {
+  propertyData.current = (value) ? 1 : 0;
   return sendValue();
 }
 
@@ -164,6 +194,10 @@ bool MyHomieProperty::inputHandler(const HomieRange& range, const String& value,
     return defaultPropertyInputHandler(range,value, homieNode, homieProperty);
   }
   return false;
+};
+
+bool MyHomieProperty::hasInputHandler(){
+  return (_inputHandler!=NULL);
 };
 
 bool MyHomieProperty::readHandler(uint8_t task, MyHomieNode*homieNode, MyHomieProperty* homieProperty){
@@ -200,14 +234,24 @@ float MyHomieProperty::oversample(float sample){
   return averageSum/propertyData.samples;
 }
 
-bool MyHomieProperty::setValue (float value) {
+bool MyHomieProperty::updateValue (float value) {
+  bool result = true;
    if (_propertyDef.oversampling>0) {
     propertyData.current = oversample(value);
   } else {
     propertyData.current = value;
   }
-  myLog.printf(LOG_TRACE,F("   %s/%s setValue(float) %.2f : %.2f %p"), _parentNode->getId(), getId(), value, propertyData.current, &propertyData);
-  return true;
+  if (propertyData.last != value) myLog.printf(LOG_TRACE, F("   %s/%s updateValue(float) %.2f : %.2f"), _parentNode->getId(), getId(), value, propertyData.current);
+  return result;
+};
+
+bool MyHomieProperty::setValue (float value) {
+  bool result = updateValue(value);
+  if (result && _plugin!=NULL) { // invoke property plugin
+    result = _plugin->set(getData());
+    if (propertyData.last != value) myLog.printf(LOG_TRACE, F("   %s/%s setValue(float) %.2f : %.2f"), _parentNode->getId(), getId(), value, propertyData.current);
+  }
+  return result;
 };
 
 bool MyHomieProperty::setReadValue (float value) {
@@ -216,8 +260,8 @@ bool MyHomieProperty::setReadValue (float value) {
 };
 
 bool MyHomieProperty::setValue (bool value) {
-  propertyData.current = (value) ? 1 : 0;
-  myLog.printf(LOG_TRACE,F("  %s/%s setValue(bool) %d %p"), _parentNode->getId(), getId(), value, propertyData.current, &propertyData);
+  propertyData.current = (value) ? (float)1 : (float)0;
+  myLog.printf(LOG_TRACE,F("  %s/%s setValue(bool) %d : %.2f"), _parentNode->getId(), getId(), value, propertyData.current);
   return true;
 };
 
@@ -240,6 +284,10 @@ PropertyData* MyHomieProperty::getData () {
   return &propertyData;
 };
 
+float MyHomieProperty::defaultValue () {
+  return propertyData.defaultValue;
+};
+
 bool MyHomieProperty::defaultPropertyInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
     bool _result = false;
     
@@ -254,13 +302,22 @@ bool MyHomieProperty::defaultPropertyInputHandler(const HomieRange& range, const
         myLog.printf(LOG_INFO,F("defaultPropertyHandler %s/%s=(bool)%d"), homieNode->getId(), homieProperty->getId(), _boolValue);
         return homieNode->setValue(homieProperty->getDef().id,_boolValue);
       };
+      case DATATYPE_STRING: {
+        myLog.printf(LOG_INFO,F("defaultPropertyHandler %s/%s=(String)'%s'"), homieNode->getId(), homieProperty->getId(), value.c_str());
+        if (_plugin!=NULL) {
+          myLog.printf(LOG_DEBUG,F(" invoking plugin id %s"), _plugin->id());
+          return _plugin->set(value); // pass string directly to plugin
+        } else {
+          return false;
+        }
+      };
     };
     
     return _result;
 };
 
 bool MyHomieProperty::defaultPropertyReadHandler(uint8_t task, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
-    bool _result = true;
+    bool result = true;
     switch (task) {
       case TASK_BEFORE_SAMPLE: {
 //        myLog.print(LOG_TRACE,F("   default before sample task"));
@@ -288,7 +345,7 @@ bool MyHomieProperty::defaultPropertyReadHandler(uint8_t task, MyHomieNode* homi
       };
     };
     
-    return _result;
+    return result;
 };
 /*!
    @brief    check if property has matches a specific id

@@ -1,34 +1,42 @@
-#ifndef A_GPIO_H__
-#define A_GPIO_H__
+#ifndef I_GPIO_H__
+#define I_GPIO_H__
 
 #include <Arduino.h>
 #include "plugins.h"
 
 /**
- * @class a_gpio a_gpio.h 
+ * @class i_gpio i_gpio.h 
  * @brief gpio actuator plugin
- * @details Handles one gpio output including duration 
+ * @details Handles one gpio input
  */
-class a_GPIO : public Plugin {
+class i_GPIO : public Plugin {
     MyHomieProperty* _homieProperty = NULL;
     uint8_t _gpio = 0;
     bool _isInitialized = false;
     bool _current;
-    uint16_t _duration;
+    bool _lastRead;
+    uint16_t _debounceDelay;
+    uint8_t _mode = BUTTON_RISING;
     unsigned long _timer = 0;
   public:
     enum OPTIONS {
-       GPIO_DURATION = 1,           //!< duration in ms to hold the given state and the invert again
+       DEBOUNCE_TIME = 1,           //!< debounce duration in ms
+       MODE = 2,                    //!< set the gpio mode
+    };
+    enum MODE {
+      BUTTON_RISING = 1,            //!< button send on rising edge
+      BUTTON_FALLING = 2,           //!< button send on falling edge
+      FREQUENCY = 3,                //!< frequency in Hz
+      COUNTER_RISING = 4,           //!< counts rising edges
+      COUNTER_FALLING = 5,          //!< counts falling edges
     };
     const char* id();
-    a_GPIO();
+    i_GPIO();
     bool init(MyHomieProperty* homieProperty, uint8_t gpio);  //!< initialize property plugin
     bool checkStatus(void);                                   //!< check the status of the device returns true if initalized
     bool setOption(uint16_t option, int value);               //!> set plugin option
     float get();                                              //!< get value
     void loop();                                              //!< main loop
-    bool set(PropertyData* data);                             //!< set value for channel (complete data set)
-    bool set(int data);
 };
 
 #endif

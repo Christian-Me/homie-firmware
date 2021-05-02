@@ -1,3 +1,6 @@
+#ifdef S_BH1750 // don't compile if not defined in platformio.ini
+
+#define BH1750_DEBUG
 #include <Arduino.h>
 #include "s_BH1750.h"
 #include <Wire.h>
@@ -33,7 +36,7 @@ bool s_BH1750::init(MyHomieNode* homieNode) {
   _homieNode = homieNode;
   Wire.begin();
   myLog.setAppName(id());
-  myLog.print(LOG_INFO,F(" ROHM BH1750 Light Intensity Meter (LUX)"));
+  myLog.print(LOG_INFO,F(" ROHM BH1750 Light Intensity Meter"));
 
   sensorAddress=scanI2C(BH1750_ADDR, _address);
 
@@ -57,15 +60,7 @@ bool s_BH1750::init(MyHomieNode* homieNode) {
 bool s_BH1750::read()
 {
   if (!_isInitialized || _homieNode==NULL) return false;
-  myLog.setAppName(id());
-  // sensor specific task(s)
-  if (_sensor->measurementReady()) {
-    _lastSample[0] = _sensor->readLightLevel();
-    myLog.printf(LOG_TRACE,F("   %s measurement (%.1f%s)"), id(), _lastSample[0], _homieNode->getProperty(0)->getDef().unit);
-    return true;
-  }
-
-  return false;
+  return true;
 }
 
 /*!
@@ -75,13 +70,21 @@ bool s_BH1750::read()
 */
 float s_BH1750::get(uint8_t channel) {
   if (!_isInitialized) return 0;
+  myLog.setAppName(id());
   float result = 0;
-  if (channel < _maxDatapoints){
-     result = _lastSample[channel];
-     myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef().id, result, _homieNode->getProperty(channel)->getDef().unit);
-  } else {
-    myLog.printf(LOG_TRACE,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
+  switch (channel) {
+    case CHANNEL_ILLUMINATION: 
+      if (_sensor->measurementReady()) {
+        result = _sensor->readLightLevel();
+      } else {
+        myLog.printf(LOG_NOTICE,F("   %s channel %d measurement NOT ready!"), id(), channel);
+      };
+      break;
+    default:
+      myLog.printf(LOG_ERR,F("   %s channel %d unknown!"), id(), channel);
+      return result;
   }
+  myLog.printf(LOG_INFO,F("   %s measurement #%d=%.2f"), id(), channel, result);
   return result;
 }
 
@@ -93,3 +96,4 @@ bool s_BH1750::checkStatus(void) {
   return _isInitialized;
 }
 
+#endif

@@ -1,8 +1,6 @@
 #pragma once
 
-// #include "signalLED.h"
 #include <Homie.h>
-// #include "homieSyslog.h"
 #include "..\..\include\datatypes.h"
 
 #define TASK_BEFORE_SAMPLE 1    // before data is read from hardware
@@ -28,23 +26,27 @@ class MyHomieProperty {
     PropertyData propertyData;
     Plugin* _plugin = NULL;
     uint8_t _pluginId = 0;
+    uint8_t _channel = 0;
     float* samples;
     InputHandler _inputHandler;
     ReadHandler _readHandler;
     float oversample(float sample);
   public:
     uint8_t hideLog = 0b11111111; // all logs visible
-    MyHomieProperty(const HomieNode* parentNode, HomiePropertyDef def);
+    MyHomieProperty(const HomieNode* parentNode, HomiePropertyDef def, uint8_t channel);
     const char* getId();
     const HomiePropertyDef getDef();
     bool addPlugin(uint8_t pluginId, uint8_t gpio);
     Plugin* getPlugin();
+    uint8_t channel();
     bool readyToSample(unsigned long timebase);
     bool readyToSend(unsigned long timebase);
     bool sendValue();
     bool sendValue(float value);
+    bool sendValue(bool value);
     bool sendValue(const char* string);
     bool inputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
+    bool hasInputHandler();
     bool defaultPropertyInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
     void setInputHandler(InputHandler inputHandler);
     bool readHandler(uint8_t task, MyHomieNode*homieNode, MyHomieProperty* homieProperty);
@@ -52,11 +54,13 @@ class MyHomieProperty {
     bool defaultReadHandler(uint8_t task, MyHomieNode*homieNode, MyHomieProperty* homieProperty);
     void setReadHandler(ReadHandler readHandler);
     bool setReadValue (float value);
+    bool updateValue (float value);
     bool setValue (float value);
     bool setValue (bool value);
     bool setFactor (float value);
     bool isTarget (const char* id);
     float getReadValue ();
     float getValue ();
+    float defaultValue();
     PropertyData* getData ();
 };

@@ -25,4 +25,16 @@
 #if GREENHOUSE
     #include "device-GREENHOUSE.h"
 #endif
+
+#if MIFRA_2RELAY_HLW8012
+    #include "device-MIFRA_2RELAY_HLW8012.h"
+#endif
+
+#if LED_6ch10W
+    #include "device-LED_6ch10W.h"
+#endif
+
+#if HOMIE_FIRMWARE_LED_1ch10W
+    #include "HOMIE_FIRMWARE_LED_1ch10W.h"
+#endif
 #endif

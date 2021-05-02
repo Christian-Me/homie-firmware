@@ -1,3 +1,5 @@
+#ifdef HOMIE_FIRMWARE_PLANT_CONTROL
+
 #ifndef DEVICE_PLANT_CONTROL_H__
 #define DEVICE_PLANT_CONTROL_H__
 
@@ -8,6 +10,11 @@
 #include <s_BME280.h>         // needed to get options enums 
 #include <calc_functions.h>   // usefull measurement conversions and calculations
 #include <utils.h>
+
+#include <s_BME280.h>
+#include <s_BH1750.h>
+#include <s_HDC1080.h>
+#include <s_ADS1115.h>
 
 // basic configuration
 
@@ -22,7 +29,7 @@ controller for my indoor plant greenhouse
 *********************************************************************/
 
 #define FIRMWARE_NAME "PLANT-CONTROL"
-#define FIRMWARE_VERSION "0.0.1"
+#define FIRMWARE_VERSION "0.0.2"
 
 // Pin assignmens
 
@@ -150,11 +157,11 @@ bool deviceSetup(void) {
     myDevice.init({"GREENHOUSE-01","Greenhouse 1"});
 
     //BME280 temperature, humidity and pressure sensor
-    myDevice.addNode(BME280_ID, {"BME280","Bosch BME280", "enviornment", 0})
+    myDevice.addNode({"BME280","Bosch BME280", "enviornment"}, BME280_ID, 0)
     // first add the properies
-      ->addProperty({"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0})   // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
-      ->addProperty({"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,5})              // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
-      ->addProperty({"pressure","Pressure","hPa", DATATYPE_FLOAT, RETAINED, "300:1100",NON_SETTABLE,10,30,6000,0})
+      ->addProperty({"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0}, s_BME280::CHANNEL_TEMPERATURE)   // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
+      ->addProperty({"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,5}, s_BME280::CHANNEL_HUMIDITY)              // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
+      ->addProperty({"pressure","Pressure","hPa", DATATYPE_FLOAT, RETAINED, "300:1100",NON_SETTABLE,10,30,6000,0}, s_BME280::CHANNEL_PRESSURE)
       ->addProperty({"tempCalibration","Temperature calibration","°C", DATATYPE_FLOAT, RETAINED, "-5:5", SETTABLE, 0.1, 600,6000,0})
       ->addProperty({"absoluteHumidity","Absolute Humidity","g/m³", DATATYPE_FLOAT, RETAINED, "0:1500",NON_SETTABLE,1,30,6000,0})  // readHandler will calculate and update this value
       ->addProperty({"drewPoint","Drew Point","°C", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,0})                   // readHandler will calculate and update this value
@@ -165,7 +172,7 @@ bool deviceSetup(void) {
       ->registerReadHandler("drewPoint", readDrewPoint);                // do drew point calculation
 
     // PWM Fan speed control
-    myDevice.addNode(VIRTUAL_ID, {"FAN","2ch fan control", "PWM control", 0})
+    myDevice.addNode({"FAN","2ch fan control", "PWM control"})
       ->addProperty({"fan1","lower fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,600,6000,0},PWM_ID,15)    // 0.1 fade step, delay per step, unused, GPIO
       ->addProperty({"fan2","upper fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,600,6000,0},PWM_ID,13);  // 0.1 fade step, delay per step, unused, GPIO&PWMactuatorNode);
     
@@ -173,13 +180,13 @@ bool deviceSetup(void) {
     // myDevice.getNode("FAN")->registerInputHandler("fan2",fan2InputHandler); // not used because default handler does the basic task sending received values unaltered to plugin
 
     //BH1750 ambient light sensor
-    myDevice.addNode(BH1750_ID, {"BH1750","BH1750 Light Sensor", "enviornment", 0})
-      ->addProperty({"illumination","Light Amount", "lx", DATATYPE_FLOAT, RETAINED, "0:65528", NON_SETTABLE,20,30,6000,5});
+    myDevice.addNode({"BH1750","BH1750 Light Sensor", "enviornment"},BH1750_ID, 0)
+      ->addProperty({"illumination","Light Amount", "lx", DATATYPE_FLOAT, RETAINED, "0:65528", NON_SETTABLE,20,30,6000,5},s_BH1750::CHANNEL_ILLUMINATION);
     
     //HT1080 temperature, humidity sensor
-    myDevice.addNode(HDC1080_ID, {"HDC1080","TI HDC1080", "enviornment", 0})                                                         // io 0 = autodetect I2C Address
-      ->addProperty({"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0})            // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
-      ->addProperty({"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,5})                       // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
+    myDevice.addNode({"HDC1080","TI HDC1080", "enviornment"},HDC1080_ID, 0)                                                         // io 0 = autodetect I2C Address
+      ->addProperty({"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0},s_HDC1080::CHANNEL_TEMPERATURE)            // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
+      ->addProperty({"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,5},s_HDC1080::CHANNEL_HUMIDITY)                       // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
       ->addProperty({"absoluteHumidity","Absolute Humidity","g/m³", DATATYPE_FLOAT, RETAINED, "0:1500",NON_SETTABLE,1,30,6000,0})  // readHandler will calculate and update this value
       ->addProperty({"drewPoint","Drew Point","°C", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,0})                   // readHandler will calculate and update this value&HDC1080sensorNode)
     
@@ -187,16 +194,16 @@ bool deviceSetup(void) {
       ->registerReadHandler("drewPoint", readDrewPoint);                // do drew point calculation
 
     //ADS1115 ADC for soil moisture monitoring
-    myDevice.addNode(ADS1115_ID,{"ADS1115","TI ADS1115 a/d converter", "ad converter", 0})
-      ->addProperty({"SOIL-C","Capacitive Soil", "mV", DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,600,3600,5})
-      ->addProperty({"POT-1","Potentiometer", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,5,100,6000,0})
-      ->addProperty({"SOIL-R","Resistive Soil", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,3600,3600,0})  // sample minute. Send if value change by 2 or a hour had passed. No oversampling. Switch on sensor before reding
-      ->addProperty({"VCC","VCC", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,2,100,600,0})
+    myDevice.addNode({"ADS1115","TI ADS1115 a/d converter", "ad converter"}, ADS1115_ID, 0)
+      ->addProperty({"SOIL-C","Capacitive Soil", "mV", DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,600,3600,5}, s_ADS1115::CHANNEL_ADC1)
+      ->addProperty({"POT-1","Potentiometer", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,5,100,6000,0}, s_ADS1115::CHANNEL_ADC2)
+      ->addProperty({"SOIL-R","Resistive Soil", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,50,3600,3600,0}, s_ADS1115::CHANNEL_ADC3)  // sample minute. Send if value change by 2 or a hour had passed. No oversampling. Switch on sensor before reding
+      ->addProperty({"VCC","VCC", "mV",  DATATYPE_FLOAT, RETAINED, "-0.3:3.6",NON_SETTABLE,2,100,600,0}, s_ADS1115::CHANNEL_ADC4)
       ->registerReadHandler("SOIL-R", ADS1115readHandler)
       ->hideLogLevel("POT-1",0b11111101); // do not display debug (avoid spamming messages for fast sample rates)
 
     //device controls
-    myDevice.addNode(VIRTUAL_ID, {"CONTROL","main Controls", "virtual device", 0})
+    myDevice.addNode({"CONTROL","main Controls", "virtual device"})
       ->addProperty({"fans","Fan switch", "", DATATYPE_BOOLEAN, RETAINED, "0:1",SETTABLE,0.1,600,6000,0}) // 0.1 fade step, delay per step, unused, GPIO&virtualDevice)
       ->registerInputHandler("fans", fansInputHandler);
 
@@ -206,4 +213,5 @@ bool deviceSetup(void) {
 void deviceLoop() {
 };
 
+#endif
 #endif

@@ -11,6 +11,7 @@
 #define BME680_ID 3
 #define ADS1115_ID 4
 #define HDC1080_ID 5
+#define HLW8012_ID 5
 
 #define DUMMY_ID 99
 
@@ -21,8 +22,8 @@
 
 // input Plugins
 // controling inputs like Buttons, Pot
-#define I_GPIO_ID 201
-#define I_ANALOG_ID 202
+#define iGPIO_ID 201
+#define iANALOG_ID 202
 
 #define SETTABLE true
 #define NON_SETTABLE false
@@ -66,6 +67,7 @@ typedef struct {
     float temporary;                /*< temporary value */
     float scale;                    /*< value scale for calibration */
     float shift;                    /*< value shift for calibration */
+    float defaultValue;             /*< default value */
     uint8_t samples;                /*< number of samples in buffer  */
     uint8_t samplePointer;          /*< pointer to next sample */
     bool initialSample;             /*< initial sample sent  */
@@ -83,7 +85,7 @@ struct HomiePropertyDef {
     const char* format;         //!< homie $format
     bool settable;              //!< homie $settable SETTABLE or NON_SETTABLE
     float threshold;            //!< minimum difference to trigger a data send
-    uint16_t sampleRate;        //!< perios between sampling (seconds)
+    uint16_t sampleRate;        //!< periods between sampling (seconds)
     uint16_t timeout;           //!< timeout to send data anyways (seconds)
     uint8_t oversampling;       //!< number of values to oversample
 };
@@ -94,7 +96,6 @@ struct HomieNodeDef {
     const char* id;              //!< homie node id
     const char* name;            //!< homie $name
     const char* type;            //!< homie $type
-    uint8_t io;                  //!< GPIO, I2C Addres or CS Pin
 };
 /**
  * @brief homie device configuration
@@ -103,5 +104,9 @@ struct HomieDeviceDef {
     const char* id;         //!< homie device id
     const char* name;       //!< homie $name
 };
+
+class Plugin;
+typedef float (*floatValueFilter)(Plugin*, float);
+typedef int (*intValueFilter)(Plugin*, int);
 
 #endif

@@ -1,6 +1,6 @@
 #ifndef c_HOMIE_H__
 #define c_HOMIE_H__
-#include <Homie.h>
+// #include <Homie.h>
 // #include "homieSyslog.h"
 // #include "datatypes.h"
 #include "homie_property.hpp"

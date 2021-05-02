@@ -1,6 +1,6 @@
 #pragma once
-// #include "datatypes.h"
 #include "homie_node.hpp"
+#include <plugins.h>
 
 struct NodeVector {
   struct NodeItem {
@@ -27,6 +27,12 @@ struct NodeVector {
     }
     return homieNode;
   };
+  NodeItem* getFirst() const {
+    return first;
+  }
+  NodeItem* getNext(NodeItem* item) const {
+    return item->next;
+  }
   MyHomieNode* getById(const char* id) const {
     NodeItem* seek = first;
     while (seek != NULL) {
@@ -35,6 +41,7 @@ struct NodeVector {
       }
       seek=seek->next;
     }
+    myLog.printf(LOG_ALERT,F("Node %s unknown! Returning NULL!"),id);
     return NULL;
   }
   MyHomieNode* get(uint8_t index) const {
@@ -57,11 +64,14 @@ class MyHomieDevice {
     unsigned long _nextNodeEvent = 0;
   public:
     void init(HomieDeviceDef homieDevice);
-    MyHomieNode* addNode(uint8_t pluginId, HomieNodeDef nodeDef);
+    MyHomieNode* addNode(HomieNodeDef nodeDef,uint8_t pluginId = VIRTUAL_ID, uint8_t gpio = 0);
     MyHomieNode* getNode(uint8_t index) const;
     MyHomieNode* getNode(const char* id) const;
     uint8_t length();
     const HomieDeviceDef getDef();
+    bool setOption(const char* nodeId, const char* propertyId, uint16_t option, int value) const;
+    bool setFilter(const char* nodeId, const char* propertyId, floatValueFilter filter) const;
+    bool setFilter(const char* nodeId, const char* propertyId, intValueFilter filter) const;
     bool setValue(const char* nodeId, const char* propertyId, float value) const;
     bool setFactor(const char* nodeId, const char* propertyId, float value) const;
     unsigned long loop();

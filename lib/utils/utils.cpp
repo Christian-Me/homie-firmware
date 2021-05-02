@@ -63,6 +63,58 @@ int enumGetIndex(String listString, const String& searchString){
   return currentIndex;
 }
 
+/*!
+   @brief    round a float value to a give number of decimal places with halfway cases
+    @param    value   value to be rounded      
+    @param    places  number of decimal places
+    @returns  rounded value
+*/
+float roundTo(float value, uint8_t places){
+  return round(value*(places*10.0))/(places*10.0);
+};
+
+
+/*!
+   @brief    Matches a string against a wildcard string such as &quot;*.*&quot; or &quot;bl?h.*&quot; etc. This is good for file globbing or to match hostmasks.
+    @author   Jack Handy - jakkhandy@hotmail.com
+    @link     https://codeproject.com/Articles/1088/Wildcard-string-compare-globbing
+    @param    wild  String including wildcards (? or *)
+    @param    sting  String of to be checked against wildcard
+    @returns  true if string matches the wildcard pattern
+*/
+int wildcmp(const char *wild, const char *string) {
+  const char *cp = NULL, *mp = NULL;
+
+  while ((*string) && (*wild != '*')) {
+    if ((*wild != *string) && (*wild != '?')) {
+      return 0;
+    }
+    wild++;
+    string++;
+  }
+
+  while (*string) {
+    if (*wild == '*') {
+      if (!*++wild) {
+        return 1;
+      }
+      mp = wild;
+      cp = string+1;
+    } else if ((*wild == *string) || (*wild == '?')) {
+      wild++;
+      string++;
+    } else {
+      wild = mp;
+      string = cp++;
+    }
+  }
+
+  while (*wild == '*') {
+    wild++;
+  }
+  return !*wild;
+}
+
 #ifdef USE_I2C
 // scan i2c bus for specific device
 /*!

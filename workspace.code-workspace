@@ -2,10 +2,6 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"name": "playground",
-			"path": "playground"
 		}
 	],
 	"settings": {

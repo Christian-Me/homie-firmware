@@ -10,8 +10,9 @@ bool Sequencer::startSequence(SequenceStep* sequence, SequencerCallback callback
 };
 
 bool Sequencer::startSequence(SequenceStep* sequence, SequencerCallback callback, SequencerDoneCallback doneCallback) {
-  startSequence(sequence, callback);
+  bool success = startSequence(sequence, callback);
   _doneCallback = doneCallback;
+  return success;
 };
 
 unsigned long Sequencer::sequenceStep(uint8_t step){
@@ -34,7 +35,7 @@ void Sequencer::loop() {
   if (_timer>0 && millis()>_timer) {
     _sequenceCounter++;
     _timer = sequenceStep(_sequenceCounter);
-    if (_timer==0 & _doneCallback!=NULL) {
+    if (_timer==0 && _doneCallback!=NULL) {
       _doneCallback();
     } 
   }

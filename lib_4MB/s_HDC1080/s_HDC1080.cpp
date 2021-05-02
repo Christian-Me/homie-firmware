@@ -1,3 +1,5 @@
+#ifdef S_HDC1080 // don't compile if not defined in platformio.ini
+
 #include <Arduino.h>
 #include "s_HDC1080.h"
 #include <Wire.h>
@@ -21,9 +23,6 @@ const char* s_HDC1080::id() {
 s_HDC1080::s_HDC1080(int port) {
   _address = port;
   _isInitialized = false;
-  for (uint8_t i=0; i<MAX_HDC1080_DATAPOINTS; i++) {
-    _lastSample[i]=0;
-  }
 }
 
 /*!
@@ -123,17 +122,12 @@ void s_HDC1080::loop() {
 }
 
 /*!
-   @brief    read the senor value(s)
-    @param    force     if true the sensor is read without any filters
-    @returns  true if minimum one value was sent successfully
+   @brief    initiate senor reading
+    @returns  true if successfull
 */
 bool s_HDC1080::read()
 {
   if (!_isInitialized || _homieNode==NULL) return false;
-  myLog.setAppName(id());
-  _lastSample[0]=_sensor->readTemperature();
-  _lastSample[1]=_sensor->readHumidity();
-  myLog.printf(LOG_TRACE,F("   %s read %.1f°C %.1f%"), id(), _lastSample[0], _lastSample[1]);
   return true;
 }
 
@@ -144,12 +138,21 @@ bool s_HDC1080::read()
 */
 float s_HDC1080::get(uint8_t channel) {
   if (!_isInitialized) return 0;
+  myLog.setAppName(id());
   float result = 0;
-  if (channel < _maxDatapoints){  
-    result = (float) _lastSample[channel];
-    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef().id, _lastSample[channel], _homieNode->getProperty(channel)->getDef().unit);
-  } else {
-    myLog.printf(LOG_TRACE,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
-  }
+  switch (channel) {
+    case CHANNEL_TEMPERATURE: 
+      result = (float) _sensor->readTemperature();
+      break;
+    case CHANNEL_HUMIDITY: 
+      result = (float) _sensor->readHumidity();
+      break;
+    default:
+      myLog.printf(LOG_TRACE,F("   %s channel %d unknown"), id(), channel);
+      return result;
+  } 
+  myLog.printf(LOG_DEBUG,F("   %s measurement #%d=%.2f"), id(), channel, result);
   return result;
 }
+
+#endif

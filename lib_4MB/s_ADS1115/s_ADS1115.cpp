@@ -1,3 +1,5 @@
+#ifdef S_ADS1115 // don't compile if not defined in platformio.ini
+
 #include <Arduino.h>
 #include "s_ADS1115.h"
 #include <Wire.h>
@@ -19,7 +21,6 @@ const char* s_ADS1115::id() {
     @param    port     constructor port= I2C address or port=0 autodetect
 */
 s_ADS1115::s_ADS1115(int port) {
-  myLog.print(LOG_INFO,F("ADS1115 init"));
   _address = port;
   _isInitialized = false;
 }
@@ -34,16 +35,16 @@ bool s_ADS1115::init(MyHomieNode* homieNode) {
   _homieNode = homieNode;
   Wire.begin();
   myLog.setAppName(id());
-  myLog.print(LOG_INFO,F("TI ADS1X15 (4ch 16bit Analog to Digital Converter)"));
+  myLog.print(LOG_INFO,F(" TI ADS1X15 (4ch 16bit Analog to Digital Converter)"));
 
   sensorAddress=scanI2C(ADS1115_ADDR, _address);
 
   if (sensorAddress!=0) {
-    myLog.printf(LOG_INFO,F("ADS1115 found at 0x%X"),sensorAddress);
+    myLog.printf(LOG_INFO,F(" ADS1115 found at 0x%X"),sensorAddress);
     _sensor = Adafruit_ADS1115(sensorAddress);
     _sensor.begin();
     _sensor.setGain(GAIN_TWOTHIRDS);
-    for (uint8_t i=0; i<_maxDatapoints; i++) { // read all datapoints once and discart to get stable state
+    for (uint8_t i=0; i<4; i++) { // read all datapoints once and discart to get stable state
       _sensor.readADC_SingleEnded(i);
     }
     _isInitialized = true;
@@ -62,9 +63,6 @@ bool s_ADS1115::init(MyHomieNode* homieNode) {
 bool s_ADS1115::read(bool force=false)
 {
   if (!_isInitialized || _homieNode==NULL) return false;
-  myLog.setAppName(id());
-  myLog.printf(LOG_TRACE,F("   %s read(%s)"), id(), force ? "true" : false);
-
   return true;
 }
 
@@ -75,13 +73,26 @@ bool s_ADS1115::read(bool force=false)
 */
 float s_ADS1115::get(uint8_t channel) {
   if (!_isInitialized) return 0;
+  myLog.setAppName(id());
   float result = 0;
-  if (channel < _maxDatapoints){
-    result = (float) _sensor.readADC_SingleEnded(channel) * 0.1875,
-    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef().id, result, _homieNode->getProperty(channel)->getDef().unit);
-  } else {
-    myLog.printf(LOG_ERR,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
+  switch (channel) {
+    case CHANNEL_ADC1: 
+      result = (float) _sensor.readADC_SingleEnded(0) * 0.1875;
+      break;
+    case CHANNEL_ADC2: 
+      result = (float) _sensor.readADC_SingleEnded(1) * 0.1875;
+      break;
+    case CHANNEL_ADC3: 
+      result = (float) _sensor.readADC_SingleEnded(2) * 0.1875;
+      break;
+    case CHANNEL_ADC4: 
+      result = (float) _sensor.readADC_SingleEnded(3) * 0.1875;
+      break;
+    default:  
+      myLog.printf(LOG_ERR,F("   %s channel %d exceeds 1-%d"), id(), channel);
+      return 0;
   }
+  myLog.printf(LOG_DEBUG,F("   %s measurement #%d=%.2f"), id(), channel, result);
   return result;
 }
 
@@ -92,4 +103,4 @@ float s_ADS1115::get(uint8_t channel) {
 bool s_ADS1115::checkStatus() {
   return _isInitialized;
 }
-
+#endif

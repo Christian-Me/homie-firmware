@@ -3,19 +3,15 @@
 #include <Homie.h>
 #include "../include/datatypes.h"
 #include "../include/globals.h"
+#include <plugins.h>
 #include <c_homie.h>
-#include "projects.h"
-#include <SPI.h>
+#include USER_INCLUDE
+// #include "projects.h"
 #include <signalLED.h>
-
-
-#ifdef M_NEOPIXEL
-  #include "m_neopixel.h"
-  m_neopixel neopixel;
-#endif
+#include <utils.h>
 
 bool resetHandler(const HomieRange& range, const String& value) {
-  myLog.print(LOG_TRACE, F("resetting NOW!"));
+  myLog.print(LOG_ALERT, F("resetting NOW!"));
   ESP.reset();
   return true;
 }
@@ -27,8 +23,14 @@ bool globalInputHandler(const HomieNode& node, const HomieRange& range, const St
   if (homieNode != NULL) {
     MyHomieProperty* homieProperty = homieNode->getProperty(property.c_str());
     if (homieProperty != NULL) {
-      result = homieNode->inputHandler(range,value,homieNode, homieProperty); // ask node property handler first
-      result = homieProperty->inputHandler(range,value,homieNode, homieProperty); // ask property input handler second 
+      if (homieProperty->hasInputHandler()) {
+        myLog.print(LOG_TRACE,F("invoke property input handler"));
+        result = homieProperty->inputHandler(range,value,homieNode, homieProperty);
+      }
+      if (!result) {
+        myLog.print(LOG_TRACE,F("invoke node input handler"));
+        result = homieNode->inputHandler(range,value,homieNode, homieProperty);
+      }
     } else {
       myLog.printf(LOG_ERR,F(" property '%s/%s' not found"),node.getId(),property.c_str());
     }
@@ -52,14 +54,16 @@ void onHomieEvent(const HomieEvent& event) {
       case HomieEventType::WIFI_CONNECTED:
         myLog.start();
         myLog.setDeviceName(Homie.getConfiguration().deviceId);
+        myLog.print(LOG_INFO, F("WIFI ready!"));
         myLog.printInfo(LOG_NETWORK);
+        myLog.printInfo(LOG_MEMORY);
       break;
       case HomieEventType::WIFI_DISCONNECTED:
         myLog.printInfo(LOG_NETWORK);
         normalOperation = false;
       break;    
       case HomieEventType::SENDING_STATISTICS:
-        triggerLED();
+        signalLED.trigger();
         myLog.print(LOG_TRACE, F("Sending stats"));
       break;
       case HomieEventType::OTA_STARTED:
@@ -109,7 +113,7 @@ unsigned long longestLoop = 0;
 void loopHandler() {
   loopStart = millis();
   
-  updateLED();
+  signalLED.loop();
   if (normalOperation) {
     deviceTime += myDevice.loop();
   }
@@ -221,6 +225,7 @@ void setup() {
   #endif
   myLog.printInfo(LOG_MEMORY);
   Homie.setup();
+  Homie.setIdle(true);
   myLog.print(LOG_DEBUG,F("Homie.setup started"));
 }
 

@@ -77,9 +77,9 @@ float a_GPIO::get() {
     @returns    (boolean) true = achnkoleged new value
 */
 bool a_GPIO::set(int data) {
-  PropertyData propertyData;
-  propertyData.current=floor(data);
-  return set(&propertyData);
+  PropertyData *propertyData = _homieProperty->getData();
+  propertyData->current=floor(data);
+  return set(propertyData);
 };
 /*!
    @class  a_GPIO
@@ -91,8 +91,8 @@ bool a_GPIO::set(PropertyData* data) {
   myLog.setAppName(id());
   if (_isInitialized) {
     _current=(data->current<1) ? false : true;
-     digitalWrite(_gpio, _current);
-    if (_duration==0) { // on initialisation or no fading = direct control
+    digitalWrite(_gpio, _current);
+    if (_duration==0) { // on initialisation or no delay = direct control
       myLog.printf(LOG_INFO,F("  GPIO%d set to %d"), _gpio, _current);
       return true;
     } else {

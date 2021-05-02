@@ -51,7 +51,7 @@ void MyLog::setup(HardwareSerial* serial, uint8_t protocol) {
     return (candidate >= 1) && (candidate <= 65535);
   });
   syslogLevel.setDefaultValue(LOG_DEBUG).setValidator([] (long candidate) {
-    return (candidate >= LOG_EMERG) && (candidate <= LOG_DEBUG);
+    return (candidate >= LOG_EMERG) && (candidate <= LOG_TRACE);
   });
   _syslog = new Syslog(udpClient, protocol);
 }

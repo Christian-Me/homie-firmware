@@ -1,3 +1,5 @@
+#ifdef S_BME280 // don't compile if not defined in platformio.ini
+
 #include <Arduino.h>
 #include "s_BME280.h"
 #include <Wire.h>
@@ -131,22 +133,21 @@ bool s_BME280::read()
 float s_BME280::get(uint8_t channel) {
   if (!_isInitialized) return 0;
   float result = 0;
-  if (channel < _maxDatapoints){  
-    switch (channel) {
-      case 0: 
-        result = _sensor.readTemperature();
-        break;
-      case 1:
-        result = _sensor.readHumidity();
-        break;
-      case 2:
-        result = _sensor.readPressure() / 100.0F;
-        break;
-    }
-    myLog.printf(LOG_DEBUG,F("   %s measurement %s=%.1f%s"), id(), _homieNode->getProperty(channel)->getDef().id, result, _homieNode->getProperty(channel)->getDef().unit);
-  } else {
-    myLog.printf(LOG_TRACE,F("   %s channel %d exceeds 0-%d"), id(), channel, _maxDatapoints-1);
+  switch (channel) {
+    case CHANNEL_TEMPERATURE: 
+      result = _sensor.readTemperature();
+      break;
+    case CHANNEL_HUMIDITY:
+      result = _sensor.readHumidity();
+      break;
+    case CHANNEL_PRESSURE:
+      result = _sensor.readPressure() / 100.0F;
+      break;
+    default:
+      myLog.printf(LOG_TRACE,F("   %s channel %d unknown"), id(), channel);
+      return false;
   }
+  myLog.printf(LOG_DEBUG,F("   %s measurement #%d=%.2f"), id(), channel, result);
   return result;
 }
 
@@ -157,3 +158,5 @@ float s_BME280::get(uint8_t channel) {
 bool s_BME280::checkStatus() {
   return _isInitialized;
 }
+
+#endif

@@ -5,17 +5,17 @@
 #include <homie_node.hpp>
 
 
+// typedef float (*valueFilter)(float);
+
 /**
  * @brief parent plugin object
  */
 class Plugin {
   private:
     bool _isInitialized = false;
-    uint8_t _maxDatapoints = 0;
   protected:
   public:
     virtual const char* id ();                                              //!< returns the id string
-    virtual const uint8_t getDatapoints();                                  //!< returns maxDatapoints
     virtual bool init(MyHomieNode* homieNode);                              //!< initialize node plugin
     virtual bool init(MyHomieProperty* homieNode, uint8_t gpio);            //!< initialize property plugin
     virtual bool checkStatus(void);                                         //!< check the status of the device returns true if initalized
@@ -24,6 +24,12 @@ class Plugin {
     virtual bool setOption(uint16_t option, bool value);                    //!< set individual plugin option (bool)
     virtual bool setOption(uint16_t option, float value);                   //!< set individual plugin option (float)
     virtual bool setOption(uint16_t option, uint8_t channel, float value);  //!< set individual channel option (float)
+
+    virtual bool setFilter(floatValueFilter filter);                        //!< set individual channel option (filter callback function)
+    virtual bool setFilter(intValueFilter filter);                          //!< set individual channel option (filter callback function)
+
+    virtual uint16_t minValue();                                            //!< get the minimum generic value
+    virtual uint16_t maxValue();                                            //!< get the maximum generic value
 
     virtual bool available();                                               //!< true if plugin / sensor data is available
     virtual void loop();                                                    //!< main loop
@@ -35,7 +41,8 @@ class Plugin {
     virtual bool set(uint8_t channel, const String& value);                 //!< set value for channel (String)
     virtual bool set(uint8_t channel, PropertyData* data);                  //!< set value for channel (complete data set)
     virtual bool set(PropertyData* data);                                   //!< set value for channel (complete data set)
-    virtual bool set(int data);                                   //!< set value for channel (complete data set)
+    virtual bool set(int data);                                             //!< set value property (integer)
+    virtual bool set(const String& value);                                  //!< set value property (String)
 };
 
 #endif

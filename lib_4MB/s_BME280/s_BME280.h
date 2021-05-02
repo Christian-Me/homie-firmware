@@ -1,3 +1,5 @@
+#ifdef S_BME280 // don't compile if not defined in platformio.ini
+
 #ifndef S_BME280_H__
 #define S_BME280_H__
 
@@ -5,7 +7,6 @@
 #include <Adafruit_BME280.h>
 #include <plugins.h>
 
-#define MAX_BME280_DATAPOINTS 3
 const uint8_t BME280_ADDR[] = {0x76,0x77,0}; // must end with a 0 value!
 
 /**
@@ -17,8 +18,6 @@ class s_BME280 : public Plugin {
     const MyHomieNode *_homieNode = NULL;
     int _address = 0;
     Adafruit_BME280 _sensor;
-    float _lastSample[MAX_BME280_DATAPOINTS];
-    uint8_t _maxDatapoints = MAX_BME280_DATAPOINTS;
     Adafruit_BME280::sensor_mode _mode = Adafruit_BME280::MODE_FORCED;
     Adafruit_BME280::sensor_sampling _tempSampling = Adafruit_BME280::SAMPLING_X1;
     Adafruit_BME280::sensor_sampling _humiditySampling = Adafruit_BME280::SAMPLING_X1;
@@ -38,6 +37,11 @@ class s_BME280 : public Plugin {
       DURATION = 206,          // STANDBY_MS_0_5, STANDBY_MS_20, STANDBY_MS_62_5, STANDBY_MS_125, STANDBY_MS_250, STANDBY_MS_500, STANDBY_MS_1000
       TEMP_CALIBRATION = 207   // As the BME280 is known to have an offset by 1-2°C you can adjust your sensor  
     };
+    enum BME280_Channels {
+      CHANNEL_TEMPERATURE = 1,
+      CHANNEL_HUMIDITY = 2,
+      CHANNEL_PRESSURE = 3,
+    };
     const char* id ();                                      /*> returns the id string */
     s_BME280(int port);                                     /*> constructor port= I2C address or port=0 autodetect */
     bool init(MyHomieNode* homieNode);                      /*> initialize the device */
@@ -48,4 +52,5 @@ class s_BME280 : public Plugin {
     float get(uint8_t channel);                             /*> read value from one device channel or from database */
 };
 
+#endif
 #endif

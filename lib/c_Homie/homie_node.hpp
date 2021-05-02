@@ -36,6 +36,12 @@ struct PropertyVector {
     }
     return NULL;
   }
+  PropertyItem* getFirst() const {
+    return first;
+  }
+  PropertyItem* getNext(PropertyItem* item) const {
+    return item->next;
+  }
   MyHomieProperty* get(uint8_t index) const {
     PropertyItem* seek = first;
     if (seek==NULL || index>length-1) return NULL;
@@ -58,10 +64,10 @@ struct PropertyVector {
   }
 };
 
-class Plugin;
 class MyHomieNode {
-    HomieNodeDef nodeDef = {"", "", "", 0};
+    HomieNodeDef nodeDef = {"", "", ""};
     uint8_t _pluginId = 0;
+    uint8_t _gpio = 0;
     bool _propertyPluginPresent = false;
     HomieNode *homieNode = NULL;
     PropertyVector properties;
@@ -74,15 +80,19 @@ class MyHomieNode {
     bool defaultNodeInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
   public:
     Plugin* plugin = NULL;
-    MyHomieNode(HomieNodeDef def, uint8_t pluginId = 0);
+    MyHomieNode(HomieNodeDef def, uint8_t pluginId = 0, uint8_t gpio = 0);
     MyHomieNode* setPluginOption(uint16_t option, int value);
+    bool setOption(const char* propertyId, uint16_t option, int value) const;
+    bool setFilter(const char* propertyId, floatValueFilter filter) const;
+    bool setFilter(const char* propertyId, intValueFilter filter) const;
+    
     void setPulginId(uint8_t id);
-    bool pluginInit(uint8_t pluginId);
+    bool pluginInit(uint8_t pluginId, uint8_t gpio);
     void setCustomSampleRate(uint16_t rate);
-    const char* getId();
+    const char* getId() const;
     bool isTarget (const char* id);
-    MyHomieNode* addProperty(HomiePropertyDef homieProperty);
-    MyHomieNode* addProperty(HomiePropertyDef homieProperty, uint8_t pluginId, uint8_t gpio);
+    MyHomieNode* addProperty(HomiePropertyDef homieProperty, uint8_t channel = 0);
+    MyHomieNode* addProperty(HomiePropertyDef homieProperty, uint8_t pluginId, uint8_t gpio, float defaultValue = 0);
     bool inputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty);
     MyHomieNode* registerInputHandler(InputHandler inputHandler);
     MyHomieNode* registerInputHandler(const char* id, InputHandler inputHandler);
