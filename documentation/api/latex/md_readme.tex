@@ -1,0 +1,99 @@
+{\bfseries{Work in progress update \#1}}
+
+Early alpha of my own firmware for my automation projects on ESP8266 and ESP32 platform it is based on the great homie-\/esp8266 library.
+
+It is still a work in progress but I\textquotesingle{}m happy like it is working now {\bfseries{next\+:}} design of the display api
+
+\href{https://homieiot.github.io/}{\texttt{  }}\hypertarget{md_readme_autotoc_md23}{}\doxysection{intro}\label{md_readme_autotoc_md23}
+As handy as all the great frameworks like ESPEasy, Tasmota ... sooner or later I had issues with some details. As I use the homie convention for my communication via MQTT the choices are limited too. After several single task projects I decided to start with a new approach collecting all the bits and pieces into my own modular firmware or perhaps I should call it framework?
+
+Perhaps I\textquotesingle{}m reinventing the wheel here. But why not?
+
+{\bfseries{Any ideas, comments, issues, help or contributions are welcome.}}\hypertarget{md_readme_autotoc_md24}{}\doxysection{features}\label{md_readme_autotoc_md24}
+
+\begin{DoxyItemize}
+\item small footprint 400k with 3 plugins (OTA should be possible even on 1MB flash). Will be reduced by removing a lot of debugging log messages.
+\item around 40k free RAM using 3 Nodes with 6 parameters (plenty of headroom for own code). Thy to use {\ttfamily PROGMEM} wherever possible and useful.
+\item plugins linked on demand (only used plugins go into binary)
+\item build in sample timer per property
+\item threshold value to send data if a property changed
+\item build in timer to send data regardless of a change
+\item oversampling (rolling average to remove noise)
+\item write your own code using c and not a limited scripting interpreter
+\item OTA via MQTT upload thanks to the homie-\/\+ESP8266 library (you can use DHCP for your devices)
+\item crash detection (to be improved) to enable OTA even when your code causes an exception resulting in a boot loop
+\item logging to console and syslog. Console logging can switch log level (1..8) and extra info (i,m) by key press.
+\end{DoxyItemize}\hypertarget{md_readme_autotoc_md25}{}\doxysection{get started.}\label{md_readme_autotoc_md25}
+This project is intended to be compiled using \href{https://platformio.org/}{\texttt{ platform\+IO}}. I highly recommend using vs-\/code as your IDE not only because this is the official IDE for platform\+IO but it is a great tool for beginners and advanced users\hypertarget{md_readme_autotoc_md26}{}\doxysubsection{create your on project}\label{md_readme_autotoc_md26}
+
+\begin{DoxyItemize}
+\item create your project in {\ttfamily platformio.\+ini} with a unique {\ttfamily build\+\_\+flag}
+\item add your project into {\ttfamily device-\/xxx.\+h} and include it to your section in the {\ttfamily platform.\+ini} file
+\item edit your {\ttfamily device-\/xxx.\+h} file. Here is where all your device specific things should happen.
+\item edit your own {\ttfamily config.\+json} with your device configuration (see example)
+\item upload your {\ttfamily config.\+json} via usb or flash the initial-\/upload build to use the config web interface or upload your config using curl
+\item flash your firmware via usb/serial or OTA if you have flashed the initial-\/upload build
+\item use the serial console or syslog for debugging
+\end{DoxyItemize}\hypertarget{md_readme_autotoc_md27}{}\doxysection{platforms}\label{md_readme_autotoc_md27}
+
+\begin{DoxyItemize}
+\item \mbox{[}X\mbox{]} ESP8266 (minimum 1MB flash)
+\item \mbox{[}X\mbox{]} ESP8285 (used in many of the shelf devices, 1MB flash)
+\item \mbox{[} \mbox{]} ESP32
+\end{DoxyItemize}\hypertarget{md_readme_autotoc_md28}{}\doxysection{modules}\label{md_readme_autotoc_md28}
+the following list shows the planned and implemented devices. Basically all devices I used before or planning to use in the near future. Think the list grows quickly. Hopefully the ticks too.
+
+{\bfseries{Update\+:}}
+\begin{DoxyItemize}
+\item the API for plugins is more developed.
+\item scheduler works better
+\item device-\/xxx api is getting stable
+\item log period pwm fading
+\end{DoxyItemize}\hypertarget{md_readme_autotoc_md29}{}\doxysubsection{core}\label{md_readme_autotoc_md29}
+
+\begin{DoxyItemize}
+\item \mbox{[}X\mbox{]} MQTT communication following the homie convention
+\item \mbox{[}X\mbox{]} OTA updates over MQTT with crash detection
+\item \mbox{[}X\mbox{]} unified console logging with dynamic log levels
+\item \mbox{[}X\mbox{]} Syslog event logging for remote logging
+\item \mbox{[}X\mbox{]} two timers per property (sample data and send data)
+\item \mbox{[}X\mbox{]} dynamic data transmission per value threshold. Configurable per property.
+\item \mbox{[}X\mbox{]} data averaging to limit sensor noise. Configurable per property.
+\item \mbox{[} \mbox{]} auto sleep / deep sleep based on the timer settings
+\end{DoxyItemize}\hypertarget{md_readme_autotoc_md30}{}\doxysubsection{sensors}\label{md_readme_autotoc_md30}
+
+\begin{DoxyItemize}
+\item \mbox{[}X\mbox{]} ADS1115 4ch 16 bit AD converter
+\item \mbox{[}X\mbox{]} BME280 temperature, humidity and pressure sensor
+\item \mbox{[}X\mbox{]} HDC1080 temperature, humidity sensor
+\item \mbox{[} \mbox{]} BME680 air quality (IAQ), temperature, humidity and pressure sensor
+\item \mbox{[}X\mbox{]} BH1750 light sensor (LUX meter)
+\item \mbox{[} \mbox{]} HLW8012 mains power sensor
+\end{DoxyItemize}\hypertarget{md_readme_autotoc_md31}{}\doxysubsection{actuators}\label{md_readme_autotoc_md31}
+
+\begin{DoxyItemize}
+\item \mbox{[}X\mbox{]} RELAY / MOSFET switch (GPIO)
+\item \mbox{[}X\mbox{]} DC Motor actuator
+\item \mbox{[}X\mbox{]} LED dimmers, bulbs and strips (PWM)
+\item \mbox{[} \mbox{]} RGBW addressable LED
+\item \mbox{[} \mbox{]} TUYA serial mcus
+\end{DoxyItemize}\hypertarget{md_readme_autotoc_md32}{}\doxysubsection{human interface devices HID}\label{md_readme_autotoc_md32}
+
+\begin{DoxyItemize}
+\item \mbox{[} \mbox{]} RGBW addressable LED (Neopixels)
+\item \mbox{[} \mbox{]} e\+Paper Display
+\item \mbox{[} \mbox{]} TFT Matrix display (SPI)
+\item \mbox{[} \mbox{]} LCD Matrix display (SPI)
+\item \mbox{[} \mbox{]} LCD Character display (I2C)
+\item \mbox{[} \mbox{]} OLED Display (I2C)
+\item \mbox{[}X\mbox{]} Push Button
+\item \mbox{[} \mbox{]} i2c rotary encoder (with RGB led)
+\end{DoxyItemize}\hypertarget{md_readme_autotoc_md33}{}\doxysection{commercial devices}\label{md_readme_autotoc_md33}
+
+\begin{DoxyItemize}
+\item \mbox{[} \mbox{]} Sonoff mini / S20 (1x\+RELAY, Push Button, indicator LED, ESP8285)
+\item \mbox{[} \mbox{]} RGBW Light Bulb
+\item \mbox{[}X\mbox{]} H801 5ch 12-\/24V constant voltage LED (strip) dimmer
+\item \mbox{[} \mbox{]} Addressable LED Light Strips (Neopixel)
+\item \mbox{[} \mbox{]} TUYA serial dimmers 
+\end{DoxyItemize}

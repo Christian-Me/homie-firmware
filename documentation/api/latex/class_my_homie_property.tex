@@ -1,0 +1,141 @@
+\hypertarget{class_my_homie_property}{}\doxysection{My\+Homie\+Property Class Reference}
+\label{class_my_homie_property}\index{MyHomieProperty@{MyHomieProperty}}
+
+
+\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} Object.  
+
+
+
+
+{\ttfamily \#include $<$homie\+\_\+property.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a3112a07c98ab21e9999c34c929044e25}\label{class_my_homie_property_a3112a07c98ab21e9999c34c929044e25}} 
+{\bfseries My\+Homie\+Property} (const Homie\+Node $\ast$parent\+Node, \mbox{\hyperlink{struct_homie_property_def}{Homie\+Property\+Def}} def, uint8\+\_\+t channel)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a59cb37adac0eb7e8751ef6cbf852fbe6}\label{class_my_homie_property_a59cb37adac0eb7e8751ef6cbf852fbe6}} 
+const char $\ast$ {\bfseries get\+Id} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a7b05c113e8e66ee8358567c6447d06e3}\label{class_my_homie_property_a7b05c113e8e66ee8358567c6447d06e3}} 
+const \mbox{\hyperlink{struct_homie_property_def}{Homie\+Property\+Def}} {\bfseries get\+Def} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_property_ae2b0fee368311a10a8cb4dd8c8047ec6}\label{class_my_homie_property_ae2b0fee368311a10a8cb4dd8c8047ec6}} 
+bool {\bfseries add\+Plugin} (uint8\+\_\+t plugin\+Id, uint8\+\_\+t gpio)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_af7b0b7e9e5341640d8f66cf22bd262e9}\label{class_my_homie_property_af7b0b7e9e5341640d8f66cf22bd262e9}} 
+\mbox{\hyperlink{class_plugin}{Plugin}} $\ast$ {\bfseries get\+Plugin} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a5cec8244eec3301ae1b6a295857b823c}\label{class_my_homie_property_a5cec8244eec3301ae1b6a295857b823c}} 
+uint8\+\_\+t {\bfseries channel} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_property_ad6b135e4bdda6801f2fed0219a909c5d}\label{class_my_homie_property_ad6b135e4bdda6801f2fed0219a909c5d}} 
+bool {\bfseries ready\+To\+Sample} (unsigned long timebase)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_aa5d170adba138da6bc2ab7e507d6cdfb}\label{class_my_homie_property_aa5d170adba138da6bc2ab7e507d6cdfb}} 
+bool {\bfseries ready\+To\+Send} (unsigned long timebase)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_ace331fef0e59e3445a98718ad74591ff}\label{class_my_homie_property_ace331fef0e59e3445a98718ad74591ff}} 
+bool {\bfseries send\+Value} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a6279f1bd6a29a7c7f75aa5e586449666}\label{class_my_homie_property_a6279f1bd6a29a7c7f75aa5e586449666}} 
+bool {\bfseries send\+Value} (float value)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a8145ec3801476981030e3d6dbe736c9b}\label{class_my_homie_property_a8145ec3801476981030e3d6dbe736c9b}} 
+bool {\bfseries send\+Value} (bool value)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a16dba5e88e60b9407091859650287d96}\label{class_my_homie_property_a16dba5e88e60b9407091859650287d96}} 
+bool {\bfseries send\+Value} (const char $\ast$string)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a2e0395477670190089ce515248af281a}\label{class_my_homie_property_a2e0395477670190089ce515248af281a}} 
+bool {\bfseries input\+Handler} (const Homie\+Range \&range, const String \&value, \mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$homie\+Node, \mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a1a866e23f190e21296ecc9d621b441f8}\label{class_my_homie_property_a1a866e23f190e21296ecc9d621b441f8}} 
+bool {\bfseries has\+Input\+Handler} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_property_ae0a39a8482db3d524d95a07de2fdcd5b}\label{class_my_homie_property_ae0a39a8482db3d524d95a07de2fdcd5b}} 
+bool {\bfseries default\+Property\+Input\+Handler} (const Homie\+Range \&range, const String \&value, \mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$homie\+Node, \mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_af27d3a551464a4923347f1de3b5a100f}\label{class_my_homie_property_af27d3a551464a4923347f1de3b5a100f}} 
+void {\bfseries set\+Input\+Handler} (Input\+Handler input\+Handler)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a90aceefa643049038a3b2b62e5d652ae}\label{class_my_homie_property_a90aceefa643049038a3b2b62e5d652ae}} 
+bool {\bfseries read\+Handler} (uint8\+\_\+t task, \mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$homie\+Node, \mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a1f6e40689b0c928e9bd00437191655b6}\label{class_my_homie_property_a1f6e40689b0c928e9bd00437191655b6}} 
+bool {\bfseries default\+Property\+Read\+Handler} (uint8\+\_\+t task, \mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$homie\+Node, \mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a2caa0d9fd1f08d423e0d946bc92fb217}\label{class_my_homie_property_a2caa0d9fd1f08d423e0d946bc92fb217}} 
+bool {\bfseries default\+Read\+Handler} (uint8\+\_\+t task, \mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$homie\+Node, \mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a27b7d37b8e7eead6276a1d277d367321}\label{class_my_homie_property_a27b7d37b8e7eead6276a1d277d367321}} 
+void {\bfseries set\+Read\+Handler} (Read\+Handler read\+Handler)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a5ce202ec31567a9a0d72e8295b210703}\label{class_my_homie_property_a5ce202ec31567a9a0d72e8295b210703}} 
+bool {\bfseries set\+Read\+Value} (float value)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a9934ba9899bf98adce9dab4a63dec9e2}\label{class_my_homie_property_a9934ba9899bf98adce9dab4a63dec9e2}} 
+bool {\bfseries update\+Value} (float value)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a5115ad8c16cf63f40f50f2b89cb99349}\label{class_my_homie_property_a5115ad8c16cf63f40f50f2b89cb99349}} 
+bool {\bfseries set\+Value} (float value)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a5f4ad294a45f308e49021b01d05eb311}\label{class_my_homie_property_a5f4ad294a45f308e49021b01d05eb311}} 
+bool {\bfseries set\+Value} (bool value)
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a6884d41d2e66dc1e525cd48a47eda95d}\label{class_my_homie_property_a6884d41d2e66dc1e525cd48a47eda95d}} 
+bool {\bfseries set\+Factor} (float value)
+\item 
+bool \mbox{\hyperlink{class_my_homie_property_ab67d704fa44e3aec45ae0a1e48ed5504}{is\+Target}} (const char $\ast$id, uint8\+\_\+t start=0)
+\begin{DoxyCompactList}\small\item\em check if property has matches a specific id \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_my_homie_property_ae27196bd9bc137c4aa5dcd05f345a772}\label{class_my_homie_property_ae27196bd9bc137c4aa5dcd05f345a772}} 
+float {\bfseries get\+Read\+Value} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_property_acedbf481260bca5deb8d668610159cf9}\label{class_my_homie_property_acedbf481260bca5deb8d668610159cf9}} 
+float {\bfseries get\+Value} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_property_ab61905c1af12e69aaa7f52dbf8630822}\label{class_my_homie_property_ab61905c1af12e69aaa7f52dbf8630822}} 
+float {\bfseries default\+Value} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_property_a80c6c226f499ef7f7093d209cbbc0639}\label{class_my_homie_property_a80c6c226f499ef7f7093d209cbbc0639}} 
+\mbox{\hyperlink{struct_property_data}{Property\+Data}} $\ast$ {\bfseries get\+Data} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_my_homie_property_ae537ccc45c22b8302f29217d8c22d2d0}\label{class_my_homie_property_ae537ccc45c22b8302f29217d8c22d2d0}} 
+uint8\+\_\+t {\bfseries hide\+Log} = 0b11111111
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} Object. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_my_homie_property_ab67d704fa44e3aec45ae0a1e48ed5504}\label{class_my_homie_property_ab67d704fa44e3aec45ae0a1e48ed5504}} 
+\index{MyHomieProperty@{MyHomieProperty}!isTarget@{isTarget}}
+\index{isTarget@{isTarget}!MyHomieProperty@{MyHomieProperty}}
+\doxysubsubsection{\texorpdfstring{isTarget()}{isTarget()}}
+{\footnotesize\ttfamily bool My\+Homie\+Property\+::is\+Target (\begin{DoxyParamCaption}\item[{const char $\ast$}]{id,  }\item[{uint8\+\_\+t}]{start = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+check if property has matches a specific id 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & (const char$\ast$) id to check \\
+\hline
+{\em start} & (uint8\+\_\+t)(optional) compare from position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if property has this id 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/c\+\_\+\+Homie/homie\+\_\+property.\+hpp\item 
+lib/c\+\_\+\+Homie/homie\+\_\+property.\+cpp\end{DoxyCompactItemize}

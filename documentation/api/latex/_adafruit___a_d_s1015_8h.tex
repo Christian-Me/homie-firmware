@@ -1,0 +1,205 @@
+\hypertarget{_adafruit___a_d_s1015_8h}{}\doxysection{lib\+\_\+4\+MB/\+Adafruit ADS1\+X15/\+Adafruit\+\_\+\+ADS1015.h File Reference}
+\label{_adafruit___a_d_s1015_8h}\index{lib\_4MB/Adafruit ADS1X15/Adafruit\_ADS1015.h@{lib\_4MB/Adafruit ADS1X15/Adafruit\_ADS1015.h}}
+{\ttfamily \#include \char`\"{}WProgram.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$Wire.\+h$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_adafruit___a_d_s1015}{Adafruit\+\_\+\+ADS1015}}
+\begin{DoxyCompactList}\small\item\em Sensor driver for the Adafruit ADS1015 ADC breakout. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_adafruit___a_d_s1115}{Adafruit\+\_\+\+ADS1115}}
+\begin{DoxyCompactList}\small\item\em Sensor driver for the Adafruit ADS1115 ADC breakout. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_ae55d158023984e8f0ddc80b58d5b30dc}\label{_adafruit___a_d_s1015_8h_ae55d158023984e8f0ddc80b58d5b30dc}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_ae55d158023984e8f0ddc80b58d5b30dc}{ADS1015\+\_\+\+ADDRESS}}~(0x48)
+\begin{DoxyCompactList}\small\item\em 1001 000 (ADDR = GND) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_ad8139ae1a3f6d6e2f1873a6fd637e27c}\label{_adafruit___a_d_s1015_8h_ad8139ae1a3f6d6e2f1873a6fd637e27c}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_ad8139ae1a3f6d6e2f1873a6fd637e27c}{ADS1015\+\_\+\+CONVERSIONDELAY}}~(1)
+\begin{DoxyCompactList}\small\item\em Conversion delay. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a19058003b7ee8f55deb5492d9c3b6cb5}\label{_adafruit___a_d_s1015_8h_a19058003b7ee8f55deb5492d9c3b6cb5}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a19058003b7ee8f55deb5492d9c3b6cb5}{ADS1115\+\_\+\+CONVERSIONDELAY}}~(9)
+\begin{DoxyCompactList}\small\item\em Conversion delay. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_ae1c2c379e0cfccca29140d2f6053c379}\label{_adafruit___a_d_s1015_8h_ae1c2c379e0cfccca29140d2f6053c379}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_ae1c2c379e0cfccca29140d2f6053c379}{ADS1015\+\_\+\+REG\+\_\+\+POINTER\+\_\+\+MASK}}~(0x03)
+\begin{DoxyCompactList}\small\item\em Point mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a0f462c806b353bd682fa3c2d67e66622}\label{_adafruit___a_d_s1015_8h_a0f462c806b353bd682fa3c2d67e66622}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a0f462c806b353bd682fa3c2d67e66622}{ADS1015\+\_\+\+REG\+\_\+\+POINTER\+\_\+\+CONVERT}}~(0x00)
+\begin{DoxyCompactList}\small\item\em Conversion. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_ab9abb781632542a0e7d8b058292f26b1}\label{_adafruit___a_d_s1015_8h_ab9abb781632542a0e7d8b058292f26b1}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_ab9abb781632542a0e7d8b058292f26b1}{ADS1015\+\_\+\+REG\+\_\+\+POINTER\+\_\+\+CONFIG}}~(0x01)
+\begin{DoxyCompactList}\small\item\em Configuration. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a01582fe1e67b55686d35818696925480}\label{_adafruit___a_d_s1015_8h_a01582fe1e67b55686d35818696925480}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a01582fe1e67b55686d35818696925480}{ADS1015\+\_\+\+REG\+\_\+\+POINTER\+\_\+\+LOWTHRESH}}~(0x02)
+\begin{DoxyCompactList}\small\item\em Low threshold. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a89000549c6dfe50337c7962b7b3677cb}\label{_adafruit___a_d_s1015_8h_a89000549c6dfe50337c7962b7b3677cb}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a89000549c6dfe50337c7962b7b3677cb}{ADS1015\+\_\+\+REG\+\_\+\+POINTER\+\_\+\+HITHRESH}}~(0x03)
+\begin{DoxyCompactList}\small\item\em High threshold. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_af56888306d87ed7a55a75ce231601564}\label{_adafruit___a_d_s1015_8h_af56888306d87ed7a55a75ce231601564}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_af56888306d87ed7a55a75ce231601564}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+OS\+\_\+\+MASK}}~(0x8000)
+\begin{DoxyCompactList}\small\item\em OS Mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a13f4550d061699b1cf4bd49520fc4a9c}\label{_adafruit___a_d_s1015_8h_a13f4550d061699b1cf4bd49520fc4a9c}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a13f4550d061699b1cf4bd49520fc4a9c}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+OS\+\_\+\+SINGLE}}~  (0x8000)
+\begin{DoxyCompactList}\small\item\em Write\+: Set to start a single-\/conversion. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_aab6ae96215401637a9435c030e1919a9}\label{_adafruit___a_d_s1015_8h_aab6ae96215401637a9435c030e1919a9}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_aab6ae96215401637a9435c030e1919a9}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+OS\+\_\+\+BUSY}}~  (0x0000)
+\begin{DoxyCompactList}\small\item\em Read\+: Bit = 0 when conversion is in progress. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a7744f0dffe0c80b9052a31b1f1d4d4d3}\label{_adafruit___a_d_s1015_8h_a7744f0dffe0c80b9052a31b1f1d4d4d3}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a7744f0dffe0c80b9052a31b1f1d4d4d3}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+OS\+\_\+\+NOTBUSY}}~  (0x8000)
+\begin{DoxyCompactList}\small\item\em Read\+: Bit = 1 when device is not performing a conversion. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_af43b7ed620be4bf64c57b2448c834b28}\label{_adafruit___a_d_s1015_8h_af43b7ed620be4bf64c57b2448c834b28}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_af43b7ed620be4bf64c57b2448c834b28}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MUX\+\_\+\+MASK}}~(0x7000)
+\begin{DoxyCompactList}\small\item\em Mux Mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a7db34e6ba1050094aa2f5895594fa473}\label{_adafruit___a_d_s1015_8h_a7db34e6ba1050094aa2f5895594fa473}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a7db34e6ba1050094aa2f5895594fa473}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MUX\+\_\+\+DIFF\+\_\+0\+\_\+1}}~  (0x0000)
+\begin{DoxyCompactList}\small\item\em Differential P = AIN0, N = AIN1 (default) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a467ee1de37d13577785e33fb6d67e93d}\label{_adafruit___a_d_s1015_8h_a467ee1de37d13577785e33fb6d67e93d}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a467ee1de37d13577785e33fb6d67e93d}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MUX\+\_\+\+DIFF\+\_\+0\+\_\+3}}~  (0x1000)
+\begin{DoxyCompactList}\small\item\em Differential P = AIN0, N = AIN3. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a59f246f973620f2d59f917187c9aeeb1}\label{_adafruit___a_d_s1015_8h_a59f246f973620f2d59f917187c9aeeb1}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a59f246f973620f2d59f917187c9aeeb1}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MUX\+\_\+\+DIFF\+\_\+1\+\_\+3}}~  (0x2000)
+\begin{DoxyCompactList}\small\item\em Differential P = AIN1, N = AIN3. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a438ac41e1655d0c8e10a62b36d803696}\label{_adafruit___a_d_s1015_8h_a438ac41e1655d0c8e10a62b36d803696}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a438ac41e1655d0c8e10a62b36d803696}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MUX\+\_\+\+DIFF\+\_\+2\+\_\+3}}~  (0x3000)
+\begin{DoxyCompactList}\small\item\em Differential P = AIN2, N = AIN3. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a95d034ea82362b3f6573492209aac4f2}\label{_adafruit___a_d_s1015_8h_a95d034ea82362b3f6573492209aac4f2}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a95d034ea82362b3f6573492209aac4f2}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MUX\+\_\+\+SINGLE\+\_\+0}}~(0x4000)
+\begin{DoxyCompactList}\small\item\em Single-\/ended AIN0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a2db511c8817fda53e31b5d1f72601909}\label{_adafruit___a_d_s1015_8h_a2db511c8817fda53e31b5d1f72601909}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a2db511c8817fda53e31b5d1f72601909}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MUX\+\_\+\+SINGLE\+\_\+1}}~(0x5000)
+\begin{DoxyCompactList}\small\item\em Single-\/ended AIN1. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_ae31fb46fbe9801ae7bb9210e88b7162d}\label{_adafruit___a_d_s1015_8h_ae31fb46fbe9801ae7bb9210e88b7162d}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_ae31fb46fbe9801ae7bb9210e88b7162d}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MUX\+\_\+\+SINGLE\+\_\+2}}~(0x6000)
+\begin{DoxyCompactList}\small\item\em Single-\/ended AIN2. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a9cb6f8bf1d45341e508cece5bcbc7841}\label{_adafruit___a_d_s1015_8h_a9cb6f8bf1d45341e508cece5bcbc7841}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a9cb6f8bf1d45341e508cece5bcbc7841}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MUX\+\_\+\+SINGLE\+\_\+3}}~(0x7000)
+\begin{DoxyCompactList}\small\item\em Single-\/ended AIN3. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a0003b5e532bda975fa0070d20ab97579}\label{_adafruit___a_d_s1015_8h_a0003b5e532bda975fa0070d20ab97579}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a0003b5e532bda975fa0070d20ab97579}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+\+MASK}}~(0x0\+E00)
+\begin{DoxyCompactList}\small\item\em PGA Mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_ab6fc5aa2e0ced7acd38dd5c30d2f6f29}\label{_adafruit___a_d_s1015_8h_ab6fc5aa2e0ced7acd38dd5c30d2f6f29}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_ab6fc5aa2e0ced7acd38dd5c30d2f6f29}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+6\+\_\+144V}}~(0x0000)
+\begin{DoxyCompactList}\small\item\em +/-\/6.144V range = Gain 2/3 \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a6ed67863634add41314604de916b6ed6}\label{_adafruit___a_d_s1015_8h_a6ed67863634add41314604de916b6ed6}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a6ed67863634add41314604de916b6ed6}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+4\+\_\+096V}}~(0x0200)
+\begin{DoxyCompactList}\small\item\em +/-\/4.096V range = Gain 1 \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a871217d93b9a7614cd921d6aced54338}\label{_adafruit___a_d_s1015_8h_a871217d93b9a7614cd921d6aced54338}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a871217d93b9a7614cd921d6aced54338}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+2\+\_\+048V}}~  (0x0400)
+\begin{DoxyCompactList}\small\item\em +/-\/2.048V range = Gain 2 (default) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a84b06e45d01519b8073dcb59dd46b4ac}\label{_adafruit___a_d_s1015_8h_a84b06e45d01519b8073dcb59dd46b4ac}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a84b06e45d01519b8073dcb59dd46b4ac}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+1\+\_\+024V}}~(0x0600)
+\begin{DoxyCompactList}\small\item\em +/-\/1.024V range = Gain 4 \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_ad6305868e7343c5d83f68acd45a0967f}\label{_adafruit___a_d_s1015_8h_ad6305868e7343c5d83f68acd45a0967f}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_ad6305868e7343c5d83f68acd45a0967f}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+0\+\_\+512V}}~(0x0800)
+\begin{DoxyCompactList}\small\item\em +/-\/0.512V range = Gain 8 \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a7d41c826b50b0b019ddb02e8093287a1}\label{_adafruit___a_d_s1015_8h_a7d41c826b50b0b019ddb02e8093287a1}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a7d41c826b50b0b019ddb02e8093287a1}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+0\+\_\+256V}}~(0x0\+A00)
+\begin{DoxyCompactList}\small\item\em +/-\/0.256V range = Gain 16 \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_acafab942035eaae15efcccaff58b118d}\label{_adafruit___a_d_s1015_8h_acafab942035eaae15efcccaff58b118d}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_acafab942035eaae15efcccaff58b118d}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MODE\+\_\+\+MASK}}~(0x0100)
+\begin{DoxyCompactList}\small\item\em Mode Mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_afbb1b96a1b61fae1301ed075330d3a20}\label{_adafruit___a_d_s1015_8h_afbb1b96a1b61fae1301ed075330d3a20}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_afbb1b96a1b61fae1301ed075330d3a20}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MODE\+\_\+\+CONTIN}}~(0x0000)
+\begin{DoxyCompactList}\small\item\em Continuous conversion mode. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a50168c1821f075b7296745be1d4d346f}\label{_adafruit___a_d_s1015_8h_a50168c1821f075b7296745be1d4d346f}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a50168c1821f075b7296745be1d4d346f}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+MODE\+\_\+\+SINGLE}}~  (0x0100)
+\begin{DoxyCompactList}\small\item\em Power-\/down single-\/shot mode (default) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_aea6dc577968ff0b39178c9e1ffdc5fc6}\label{_adafruit___a_d_s1015_8h_aea6dc577968ff0b39178c9e1ffdc5fc6}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_aea6dc577968ff0b39178c9e1ffdc5fc6}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+DR\+\_\+\+MASK}}~(0x00\+E0)
+\begin{DoxyCompactList}\small\item\em Data Rate Mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a9390165d2a679a5b71aaceed84a830b7}\label{_adafruit___a_d_s1015_8h_a9390165d2a679a5b71aaceed84a830b7}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a9390165d2a679a5b71aaceed84a830b7}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+DR\+\_\+128\+SPS}}~(0x0000)
+\begin{DoxyCompactList}\small\item\em 128 samples per second \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a68b468fa5a7e4833519f44fdf318206a}\label{_adafruit___a_d_s1015_8h_a68b468fa5a7e4833519f44fdf318206a}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a68b468fa5a7e4833519f44fdf318206a}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+DR\+\_\+250\+SPS}}~(0x0020)
+\begin{DoxyCompactList}\small\item\em 250 samples per second \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a3caefc8642d34b58d0c25348fc9b84e0}\label{_adafruit___a_d_s1015_8h_a3caefc8642d34b58d0c25348fc9b84e0}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a3caefc8642d34b58d0c25348fc9b84e0}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+DR\+\_\+490\+SPS}}~(0x0040)
+\begin{DoxyCompactList}\small\item\em 490 samples per second \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a77fd8c7103e1ad09bd2c8e4b954db74c}\label{_adafruit___a_d_s1015_8h_a77fd8c7103e1ad09bd2c8e4b954db74c}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a77fd8c7103e1ad09bd2c8e4b954db74c}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+DR\+\_\+920\+SPS}}~(0x0060)
+\begin{DoxyCompactList}\small\item\em 920 samples per second \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_aa4665026711a8587430d9235dbc4ccf0}\label{_adafruit___a_d_s1015_8h_aa4665026711a8587430d9235dbc4ccf0}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_aa4665026711a8587430d9235dbc4ccf0}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+DR\+\_\+1600\+SPS}}~  (0x0080)
+\begin{DoxyCompactList}\small\item\em 1600 samples per second (default) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_aac4dc4c024be17e41db623b84c406715}\label{_adafruit___a_d_s1015_8h_aac4dc4c024be17e41db623b84c406715}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_aac4dc4c024be17e41db623b84c406715}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+DR\+\_\+2400\+SPS}}~(0x00\+A0)
+\begin{DoxyCompactList}\small\item\em 2400 samples per second \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a32fd6e9d31d8ff19f3829604550bf43a}\label{_adafruit___a_d_s1015_8h_a32fd6e9d31d8ff19f3829604550bf43a}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a32fd6e9d31d8ff19f3829604550bf43a}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+DR\+\_\+3300\+SPS}}~(0x00\+C0)
+\begin{DoxyCompactList}\small\item\em 3300 samples per second \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a1c8f7ef44cde123b151d4a2f73f07b23}\label{_adafruit___a_d_s1015_8h_a1c8f7ef44cde123b151d4a2f73f07b23}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a1c8f7ef44cde123b151d4a2f73f07b23}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CMODE\+\_\+\+MASK}}~(0x0010)
+\begin{DoxyCompactList}\small\item\em CMode Mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_afb5240325d7ec757ccad7b098a2b93c3}\label{_adafruit___a_d_s1015_8h_afb5240325d7ec757ccad7b098a2b93c3}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_afb5240325d7ec757ccad7b098a2b93c3}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CMODE\+\_\+\+TRAD}}~  (0x0000)
+\begin{DoxyCompactList}\small\item\em Traditional comparator with hysteresis (default) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a49d39ffb8fb66bdb877d0f2546137cce}\label{_adafruit___a_d_s1015_8h_a49d39ffb8fb66bdb877d0f2546137cce}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a49d39ffb8fb66bdb877d0f2546137cce}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CMODE\+\_\+\+WINDOW}}~(0x0010)
+\begin{DoxyCompactList}\small\item\em Window comparator. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_afcf8cf97a06249f0a07d4ae0c8374d8d}\label{_adafruit___a_d_s1015_8h_afcf8cf97a06249f0a07d4ae0c8374d8d}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_afcf8cf97a06249f0a07d4ae0c8374d8d}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CPOL\+\_\+\+MASK}}~(0x0008)
+\begin{DoxyCompactList}\small\item\em CPol Mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a775f732c7e97574b38858820b96cf771}\label{_adafruit___a_d_s1015_8h_a775f732c7e97574b38858820b96cf771}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a775f732c7e97574b38858820b96cf771}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CPOL\+\_\+\+ACTVLOW}}~  (0x0000)
+\begin{DoxyCompactList}\small\item\em ALERT/\+RDY pin is low when active (default) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a81494a3f6eaf337f4132cc32bba9f28d}\label{_adafruit___a_d_s1015_8h_a81494a3f6eaf337f4132cc32bba9f28d}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a81494a3f6eaf337f4132cc32bba9f28d}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CPOL\+\_\+\+ACTVHI}}~  (0x0008)
+\begin{DoxyCompactList}\small\item\em ALERT/\+RDY pin is high when active. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a97067a07f18717a60279fb3a093814c0}\label{_adafruit___a_d_s1015_8h_a97067a07f18717a60279fb3a093814c0}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a97067a07f18717a60279fb3a093814c0}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CLAT\+\_\+\+MASK}}~  (0x0004)
+\begin{DoxyCompactList}\small\item\em Determines if ALERT/\+RDY pin latches once asserted. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a98757804761f1d945f4cf6ca40e30457}\label{_adafruit___a_d_s1015_8h_a98757804761f1d945f4cf6ca40e30457}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a98757804761f1d945f4cf6ca40e30457}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CLAT\+\_\+\+NONLAT}}~  (0x0000)
+\begin{DoxyCompactList}\small\item\em Non-\/latching comparator (default) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_af7f9528dd1aee135afad4c44d771b9f6}\label{_adafruit___a_d_s1015_8h_af7f9528dd1aee135afad4c44d771b9f6}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_af7f9528dd1aee135afad4c44d771b9f6}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CLAT\+\_\+\+LATCH}}~(0x0004)
+\begin{DoxyCompactList}\small\item\em Latching comparator. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a61b259699fa69f86e8fb36ac4f88bfb8}\label{_adafruit___a_d_s1015_8h_a61b259699fa69f86e8fb36ac4f88bfb8}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a61b259699fa69f86e8fb36ac4f88bfb8}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CQUE\+\_\+\+MASK}}~(0x0003)
+\begin{DoxyCompactList}\small\item\em CQue Mask. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a4889b7e8a019906eb7c2670ec2466917}\label{_adafruit___a_d_s1015_8h_a4889b7e8a019906eb7c2670ec2466917}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a4889b7e8a019906eb7c2670ec2466917}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CQUE\+\_\+1\+CONV}}~  (0x0000)
+\begin{DoxyCompactList}\small\item\em Assert ALERT/\+RDY after one conversions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a88a73e81b13059b1f4756cf5c8a342a3}\label{_adafruit___a_d_s1015_8h_a88a73e81b13059b1f4756cf5c8a342a3}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a88a73e81b13059b1f4756cf5c8a342a3}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CQUE\+\_\+2\+CONV}}~  (0x0001)
+\begin{DoxyCompactList}\small\item\em Assert ALERT/\+RDY after two conversions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_ad14f479d9c6f636631444de22dd7b133}\label{_adafruit___a_d_s1015_8h_ad14f479d9c6f636631444de22dd7b133}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_ad14f479d9c6f636631444de22dd7b133}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CQUE\+\_\+4\+CONV}}~  (0x0002)
+\begin{DoxyCompactList}\small\item\em Assert ALERT/\+RDY after four conversions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_aa52ede69f39daf837bb2ebbe639dbef9}\label{_adafruit___a_d_s1015_8h_aa52ede69f39daf837bb2ebbe639dbef9}} 
+\#define \mbox{\hyperlink{_adafruit___a_d_s1015_8h_aa52ede69f39daf837bb2ebbe639dbef9}{ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+CQUE\+\_\+\+NONE}}~  (0x0003)
+\begin{DoxyCompactList}\small\item\em Disable the comparator and put ALERT/\+RDY in high state (default) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a3d6c0e15829a207b9155890811fa4781}{ads\+Gain\+\_\+t}} \{ \newline
+{\bfseries GAIN\+\_\+\+TWOTHIRDS} = ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+6\+\_\+144V
+, {\bfseries GAIN\+\_\+\+ONE} = ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+4\+\_\+096V
+, {\bfseries GAIN\+\_\+\+TWO} = ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+2\+\_\+048V
+, {\bfseries GAIN\+\_\+\+FOUR} = ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+1\+\_\+024V
+, \newline
+{\bfseries GAIN\+\_\+\+EIGHT} = ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+0\+\_\+512V
+, {\bfseries GAIN\+\_\+\+SIXTEEN} = ADS1015\+\_\+\+REG\+\_\+\+CONFIG\+\_\+\+PGA\+\_\+0\+\_\+256V
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is a library for the Adafruit ADS1\+X15 ADC breakout boards.
+
+Adafruit invests time and resources providing this open source code, please support Adafruit and open-\/source hardware by purchasing products from Adafruit!
+
+Written by Kevin \char`\"{}\+KTOWN\char`\"{} Townsend for Adafruit Industries.
+
+BSD license, all text here must be included in any redistribution 
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{_adafruit___a_d_s1015_8h_a3d6c0e15829a207b9155890811fa4781}\label{_adafruit___a_d_s1015_8h_a3d6c0e15829a207b9155890811fa4781}} 
+\index{Adafruit\_ADS1015.h@{Adafruit\_ADS1015.h}!adsGain\_t@{adsGain\_t}}
+\index{adsGain\_t@{adsGain\_t}!Adafruit\_ADS1015.h@{Adafruit\_ADS1015.h}}
+\doxysubsubsection{\texorpdfstring{adsGain\_t}{adsGain\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a3d6c0e15829a207b9155890811fa4781}{ads\+Gain\+\_\+t}}}
+
+Gain settings 

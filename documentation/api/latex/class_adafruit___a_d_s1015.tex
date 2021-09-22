@@ -1,0 +1,188 @@
+\hypertarget{class_adafruit___a_d_s1015}{}\doxysection{Adafruit\+\_\+\+ADS1015 Class Reference}
+\label{class_adafruit___a_d_s1015}\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+
+
+Sensor driver for the Adafruit ADS1015 ADC breakout.  
+
+
+
+
+{\ttfamily \#include $<$Adafruit\+\_\+\+ADS1015.\+h$>$}
+
+Inheritance diagram for Adafruit\+\_\+\+ADS1015\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_adafruit___a_d_s1015}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_adafruit___a_d_s1015_a12dfb7b48af1a8e411c59f775c6457ab}{Adafruit\+\_\+\+ADS1015}} (uint8\+\_\+t i2c\+Address=\mbox{\hyperlink{_adafruit___a_d_s1015_8h_ae55d158023984e8f0ddc80b58d5b30dc}{ADS1015\+\_\+\+ADDRESS}})
+\begin{DoxyCompactList}\small\item\em Instantiates a new ADS1015 class w/appropriate properties. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_a6eba7c3cd854927f60883bb371e5faa6}\label{class_adafruit___a_d_s1015_a6eba7c3cd854927f60883bb371e5faa6}} 
+void \mbox{\hyperlink{class_adafruit___a_d_s1015_a6eba7c3cd854927f60883bb371e5faa6}{begin}} (void)
+\begin{DoxyCompactList}\small\item\em Sets up the HW (reads coefficients values, etc.) \end{DoxyCompactList}\item 
+int16\+\_\+t \mbox{\hyperlink{class_adafruit___a_d_s1015_ae357ed799b98109f972d992a570f4a3d}{read\+ADC\+\_\+\+Single\+Ended}} (uint8\+\_\+t channel)
+\begin{DoxyCompactList}\small\item\em Gets a single-\/ended ADC reading from the specified channel. \end{DoxyCompactList}\item 
+int16\+\_\+t \mbox{\hyperlink{class_adafruit___a_d_s1015_a56582333958e66efaccd3d4a8a47e3ff}{read\+ADC\+\_\+\+Differential\+\_\+0\+\_\+1}} (void)
+\begin{DoxyCompactList}\small\item\em Reads the conversion results, measuring the voltage difference between the P (AIN0) and N (AIN1) input. Generates a signed value since the difference can be either positive or negative. \end{DoxyCompactList}\item 
+int16\+\_\+t \mbox{\hyperlink{class_adafruit___a_d_s1015_a38311881bcab46f7496c4bb6e4cad576}{read\+ADC\+\_\+\+Differential\+\_\+2\+\_\+3}} (void)
+\begin{DoxyCompactList}\small\item\em Reads the conversion results, measuring the voltage difference between the P (AIN2) and N (AIN3) input. Generates a signed value since the difference can be either positive or negative. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_adafruit___a_d_s1015_aecd30775d943ea9d9cff0e3485926596}{start\+Comparator\+\_\+\+Single\+Ended}} (uint8\+\_\+t channel, int16\+\_\+t threshold)
+\begin{DoxyCompactList}\small\item\em Sets up the comparator to operate in basic mode, causing the ALERT/\+RDY pin to assert (go from high to low) when the ADC value exceeds the specified threshold. \end{DoxyCompactList}\item 
+int16\+\_\+t \mbox{\hyperlink{class_adafruit___a_d_s1015_ad8f36d80847020778425107f6451a8c2}{get\+Last\+Conversion\+Results}} ()
+\begin{DoxyCompactList}\small\item\em In order to clear the comparator, we need to read the conversion results. This function reads the last conversion results without changing the config value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_adafruit___a_d_s1015_a399441eace686975ff22937cbe45cc50}{set\+Gain}} (\mbox{\hyperlink{_adafruit___a_d_s1015_8h_a3d6c0e15829a207b9155890811fa4781}{ads\+Gain\+\_\+t}} gain)
+\begin{DoxyCompactList}\small\item\em Sets the gain and input voltage range. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_adafruit___a_d_s1015_8h_a3d6c0e15829a207b9155890811fa4781}{ads\+Gain\+\_\+t}} \mbox{\hyperlink{class_adafruit___a_d_s1015_a6232d089aaa82226bc34623fdf92237c}{get\+Gain}} (void)
+\begin{DoxyCompactList}\small\item\em Gets a gain and input voltage range. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_a2186993621a7973256d47f086c74035d}\label{class_adafruit___a_d_s1015_a2186993621a7973256d47f086c74035d}} 
+uint8\+\_\+t \mbox{\hyperlink{class_adafruit___a_d_s1015_a2186993621a7973256d47f086c74035d}{m\+\_\+i2c\+Address}}
+\begin{DoxyCompactList}\small\item\em the I2C address \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_aa3a29a64a6705fce1fee21d73c642a0e}\label{class_adafruit___a_d_s1015_aa3a29a64a6705fce1fee21d73c642a0e}} 
+uint8\+\_\+t \mbox{\hyperlink{class_adafruit___a_d_s1015_aa3a29a64a6705fce1fee21d73c642a0e}{m\+\_\+conversion\+Delay}}
+\begin{DoxyCompactList}\small\item\em conversion deay \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_ab238ce17112a78db2be4ea14d57fb114}\label{class_adafruit___a_d_s1015_ab238ce17112a78db2be4ea14d57fb114}} 
+uint8\+\_\+t \mbox{\hyperlink{class_adafruit___a_d_s1015_ab238ce17112a78db2be4ea14d57fb114}{m\+\_\+bit\+Shift}}
+\begin{DoxyCompactList}\small\item\em bit shift amount \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_a8db90fe03d55a18246984ba2ba5e7f32}\label{class_adafruit___a_d_s1015_a8db90fe03d55a18246984ba2ba5e7f32}} 
+\mbox{\hyperlink{_adafruit___a_d_s1015_8h_a3d6c0e15829a207b9155890811fa4781}{ads\+Gain\+\_\+t}} \mbox{\hyperlink{class_adafruit___a_d_s1015_a8db90fe03d55a18246984ba2ba5e7f32}{m\+\_\+gain}}
+\begin{DoxyCompactList}\small\item\em ADC gain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Sensor driver for the Adafruit ADS1015 ADC breakout. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_a12dfb7b48af1a8e411c59f775c6457ab}\label{class_adafruit___a_d_s1015_a12dfb7b48af1a8e411c59f775c6457ab}} 
+\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}!Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}!Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+\doxysubsubsection{\texorpdfstring{Adafruit\_ADS1015()}{Adafruit\_ADS1015()}}
+{\footnotesize\ttfamily Adafruit\+\_\+\+ADS1015\+::\+Adafruit\+\_\+\+ADS1015 (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{i2c\+Address = {\ttfamily \mbox{\hyperlink{_adafruit___a_d_s1015_8h_ae55d158023984e8f0ddc80b58d5b30dc}{ADS1015\+\_\+\+ADDRESS}}} }\end{DoxyParamCaption})}
+
+
+
+Instantiates a new ADS1015 class w/appropriate properties. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i2c\+Address} & I2C address of device \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_a6232d089aaa82226bc34623fdf92237c}\label{class_adafruit___a_d_s1015_a6232d089aaa82226bc34623fdf92237c}} 
+\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}!getGain@{getGain}}
+\index{getGain@{getGain}!Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+\doxysubsubsection{\texorpdfstring{getGain()}{getGain()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_adafruit___a_d_s1015_8h_a3d6c0e15829a207b9155890811fa4781}{ads\+Gain\+\_\+t}} Adafruit\+\_\+\+ADS1015\+::get\+Gain (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Gets a gain and input voltage range. 
+
+\begin{DoxyReturn}{Returns}
+the gain setting 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_ad8f36d80847020778425107f6451a8c2}\label{class_adafruit___a_d_s1015_ad8f36d80847020778425107f6451a8c2}} 
+\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}!getLastConversionResults@{getLastConversionResults}}
+\index{getLastConversionResults@{getLastConversionResults}!Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+\doxysubsubsection{\texorpdfstring{getLastConversionResults()}{getLastConversionResults()}}
+{\footnotesize\ttfamily int16\+\_\+t Adafruit\+\_\+\+ADS1015\+::get\+Last\+Conversion\+Results (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+In order to clear the comparator, we need to read the conversion results. This function reads the last conversion results without changing the config value. 
+
+\begin{DoxyReturn}{Returns}
+the last ADC reading 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_a56582333958e66efaccd3d4a8a47e3ff}\label{class_adafruit___a_d_s1015_a56582333958e66efaccd3d4a8a47e3ff}} 
+\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}!readADC\_Differential\_0\_1@{readADC\_Differential\_0\_1}}
+\index{readADC\_Differential\_0\_1@{readADC\_Differential\_0\_1}!Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+\doxysubsubsection{\texorpdfstring{readADC\_Differential\_0\_1()}{readADC\_Differential\_0\_1()}}
+{\footnotesize\ttfamily int16\+\_\+t Adafruit\+\_\+\+ADS1015\+::read\+ADC\+\_\+\+Differential\+\_\+0\+\_\+1 (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Reads the conversion results, measuring the voltage difference between the P (AIN0) and N (AIN1) input. Generates a signed value since the difference can be either positive or negative. 
+
+\begin{DoxyReturn}{Returns}
+the ADC reading 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_a38311881bcab46f7496c4bb6e4cad576}\label{class_adafruit___a_d_s1015_a38311881bcab46f7496c4bb6e4cad576}} 
+\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}!readADC\_Differential\_2\_3@{readADC\_Differential\_2\_3}}
+\index{readADC\_Differential\_2\_3@{readADC\_Differential\_2\_3}!Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+\doxysubsubsection{\texorpdfstring{readADC\_Differential\_2\_3()}{readADC\_Differential\_2\_3()}}
+{\footnotesize\ttfamily int16\+\_\+t Adafruit\+\_\+\+ADS1015\+::read\+ADC\+\_\+\+Differential\+\_\+2\+\_\+3 (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Reads the conversion results, measuring the voltage difference between the P (AIN2) and N (AIN3) input. Generates a signed value since the difference can be either positive or negative. 
+
+\begin{DoxyReturn}{Returns}
+the ADC reading 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_ae357ed799b98109f972d992a570f4a3d}\label{class_adafruit___a_d_s1015_ae357ed799b98109f972d992a570f4a3d}} 
+\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}!readADC\_SingleEnded@{readADC\_SingleEnded}}
+\index{readADC\_SingleEnded@{readADC\_SingleEnded}!Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+\doxysubsubsection{\texorpdfstring{readADC\_SingleEnded()}{readADC\_SingleEnded()}}
+{\footnotesize\ttfamily int16\+\_\+t Adafruit\+\_\+\+ADS1015\+::read\+ADC\+\_\+\+Single\+Ended (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel }\end{DoxyParamCaption})}
+
+
+
+Gets a single-\/ended ADC reading from the specified channel. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & ADC channel to read\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the ADC reading 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_a399441eace686975ff22937cbe45cc50}\label{class_adafruit___a_d_s1015_a399441eace686975ff22937cbe45cc50}} 
+\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}!setGain@{setGain}}
+\index{setGain@{setGain}!Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+\doxysubsubsection{\texorpdfstring{setGain()}{setGain()}}
+{\footnotesize\ttfamily void Adafruit\+\_\+\+ADS1015\+::set\+Gain (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_adafruit___a_d_s1015_8h_a3d6c0e15829a207b9155890811fa4781}{ads\+Gain\+\_\+t}}}]{gain }\end{DoxyParamCaption})}
+
+
+
+Sets the gain and input voltage range. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gain} & gain setting to use \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_adafruit___a_d_s1015_aecd30775d943ea9d9cff0e3485926596}\label{class_adafruit___a_d_s1015_aecd30775d943ea9d9cff0e3485926596}} 
+\index{Adafruit\_ADS1015@{Adafruit\_ADS1015}!startComparator\_SingleEnded@{startComparator\_SingleEnded}}
+\index{startComparator\_SingleEnded@{startComparator\_SingleEnded}!Adafruit\_ADS1015@{Adafruit\_ADS1015}}
+\doxysubsubsection{\texorpdfstring{startComparator\_SingleEnded()}{startComparator\_SingleEnded()}}
+{\footnotesize\ttfamily void Adafruit\+\_\+\+ADS1015\+::start\+Comparator\+\_\+\+Single\+Ended (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel,  }\item[{int16\+\_\+t}]{threshold }\end{DoxyParamCaption})}
+
+
+
+Sets up the comparator to operate in basic mode, causing the ALERT/\+RDY pin to assert (go from high to low) when the ADC value exceeds the specified threshold. 
+
+This will also set the ADC in continuous conversion mode.
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & ADC channel to use \\
+\hline
+{\em threshold} & comparator threshold \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib\+\_\+4\+MB/\+Adafruit ADS1\+X15/\mbox{\hyperlink{_adafruit___a_d_s1015_8h}{Adafruit\+\_\+\+ADS1015.\+h}}\item 
+lib\+\_\+4\+MB/\+Adafruit ADS1\+X15/Adafruit\+\_\+\+ADS1015.\+cpp\end{DoxyCompactItemize}

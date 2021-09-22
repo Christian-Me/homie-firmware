@@ -99,24 +99,48 @@ $(document).ready(function(){initNavTree('class_my_homie_property.html',''); ini
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acbd23812a3f828935421398b0917bf84"><td class="memItemLeft" align="right" valign="top"><a id="acbd23812a3f828935421398b0917bf84"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>MyHomieProperty</b> (const <a class="el" href="struct_homie_property_def.html">HomiePropertyDef</a> *def)</td></tr>
-<tr class="separator:acbd23812a3f828935421398b0917bf84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3112a07c98ab21e9999c34c929044e25"><td class="memItemLeft" align="right" valign="top"><a id="a3112a07c98ab21e9999c34c929044e25"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>MyHomieProperty</b> (const HomieNode *parentNode, <a class="el" href="struct_homie_property_def.html">HomiePropertyDef</a> def, uint8_t channel)</td></tr>
+<tr class="separator:a3112a07c98ab21e9999c34c929044e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59cb37adac0eb7e8751ef6cbf852fbe6"><td class="memItemLeft" align="right" valign="top"><a id="a59cb37adac0eb7e8751ef6cbf852fbe6"></a>
 const char *&#160;</td><td class="memItemRight" valign="bottom"><b>getId</b> ()</td></tr>
 <tr class="separator:a59cb37adac0eb7e8751ef6cbf852fbe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56913b9b490c4628f4a7e3d6a5ddc916"><td class="memItemLeft" align="right" valign="top"><a id="a56913b9b490c4628f4a7e3d6a5ddc916"></a>
-const <a class="el" href="struct_homie_property_def.html">HomiePropertyDef</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getDef</b> () const</td></tr>
-<tr class="separator:a56913b9b490c4628f4a7e3d6a5ddc916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b05c113e8e66ee8358567c6447d06e3"><td class="memItemLeft" align="right" valign="top"><a id="a7b05c113e8e66ee8358567c6447d06e3"></a>
+const <a class="el" href="struct_homie_property_def.html">HomiePropertyDef</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getDef</b> ()</td></tr>
+<tr class="separator:a7b05c113e8e66ee8358567c6447d06e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2b0fee368311a10a8cb4dd8c8047ec6"><td class="memItemLeft" align="right" valign="top"><a id="ae2b0fee368311a10a8cb4dd8c8047ec6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>addPlugin</b> (uint8_t pluginId, uint8_t gpio)</td></tr>
+<tr class="separator:ae2b0fee368311a10a8cb4dd8c8047ec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7b0b7e9e5341640d8f66cf22bd262e9"><td class="memItemLeft" align="right" valign="top"><a id="af7b0b7e9e5341640d8f66cf22bd262e9"></a>
+<a class="el" href="class_plugin.html">Plugin</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getPlugin</b> ()</td></tr>
+<tr class="separator:af7b0b7e9e5341640d8f66cf22bd262e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cec8244eec3301ae1b6a295857b823c"><td class="memItemLeft" align="right" valign="top"><a id="a5cec8244eec3301ae1b6a295857b823c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>channel</b> ()</td></tr>
+<tr class="separator:a5cec8244eec3301ae1b6a295857b823c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6b135e4bdda6801f2fed0219a909c5d"><td class="memItemLeft" align="right" valign="top"><a id="ad6b135e4bdda6801f2fed0219a909c5d"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>readyToSample</b> (unsigned long timebase)</td></tr>
 <tr class="separator:ad6b135e4bdda6801f2fed0219a909c5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5d170adba138da6bc2ab7e507d6cdfb"><td class="memItemLeft" align="right" valign="top"><a id="aa5d170adba138da6bc2ab7e507d6cdfb"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>readyToSend</b> (unsigned long timebase)</td></tr>
 <tr class="separator:aa5d170adba138da6bc2ab7e507d6cdfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace331fef0e59e3445a98718ad74591ff"><td class="memItemLeft" align="right" valign="top"><a id="ace331fef0e59e3445a98718ad74591ff"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>sendValue</b> ()</td></tr>
+<tr class="separator:ace331fef0e59e3445a98718ad74591ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6279f1bd6a29a7c7f75aa5e586449666"><td class="memItemLeft" align="right" valign="top"><a id="a6279f1bd6a29a7c7f75aa5e586449666"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>sendValue</b> (float value)</td></tr>
+<tr class="separator:a6279f1bd6a29a7c7f75aa5e586449666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8145ec3801476981030e3d6dbe736c9b"><td class="memItemLeft" align="right" valign="top"><a id="a8145ec3801476981030e3d6dbe736c9b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>sendValue</b> (bool value)</td></tr>
+<tr class="separator:a8145ec3801476981030e3d6dbe736c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16dba5e88e60b9407091859650287d96"><td class="memItemLeft" align="right" valign="top"><a id="a16dba5e88e60b9407091859650287d96"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>sendValue</b> (const char *string)</td></tr>
+<tr class="separator:a16dba5e88e60b9407091859650287d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e0395477670190089ce515248af281a"><td class="memItemLeft" align="right" valign="top"><a id="a2e0395477670190089ce515248af281a"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>inputHandler</b> (const HomieRange &amp;range, const String &amp;value, <a class="el" href="class_my_homie_node.html">MyHomieNode</a> *homieNode, <a class="el" href="class_my_homie_property.html">MyHomieProperty</a> *homieProperty)</td></tr>
 <tr class="separator:a2e0395477670190089ce515248af281a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a866e23f190e21296ecc9d621b441f8"><td class="memItemLeft" align="right" valign="top"><a id="a1a866e23f190e21296ecc9d621b441f8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasInputHandler</b> ()</td></tr>
+<tr class="separator:a1a866e23f190e21296ecc9d621b441f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0a39a8482db3d524d95a07de2fdcd5b"><td class="memItemLeft" align="right" valign="top"><a id="ae0a39a8482db3d524d95a07de2fdcd5b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>defaultPropertyInputHandler</b> (const HomieRange &amp;range, const String &amp;value, <a class="el" href="class_my_homie_node.html">MyHomieNode</a> *homieNode, <a class="el" href="class_my_homie_property.html">MyHomieProperty</a> *homieProperty)</td></tr>
 <tr class="separator:ae0a39a8482db3d524d95a07de2fdcd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,6 +162,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setReadHandler</b> (R
 <tr class="memitem:a5ce202ec31567a9a0d72e8295b210703"><td class="memItemLeft" align="right" valign="top"><a id="a5ce202ec31567a9a0d72e8295b210703"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>setReadValue</b> (float value)</td></tr>
 <tr class="separator:a5ce202ec31567a9a0d72e8295b210703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9934ba9899bf98adce9dab4a63dec9e2"><td class="memItemLeft" align="right" valign="top"><a id="a9934ba9899bf98adce9dab4a63dec9e2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>updateValue</b> (float value)</td></tr>
+<tr class="separator:a9934ba9899bf98adce9dab4a63dec9e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5115ad8c16cf63f40f50f2b89cb99349"><td class="memItemLeft" align="right" valign="top"><a id="a5115ad8c16cf63f40f50f2b89cb99349"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>setValue</b> (float value)</td></tr>
 <tr class="separator:a5115ad8c16cf63f40f50f2b89cb99349"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,15 +174,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>setValue</b> (bool va
 <tr class="memitem:a6884d41d2e66dc1e525cd48a47eda95d"><td class="memItemLeft" align="right" valign="top"><a id="a6884d41d2e66dc1e525cd48a47eda95d"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>setFactor</b> (float value)</td></tr>
 <tr class="separator:a6884d41d2e66dc1e525cd48a47eda95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae10e6d69d3a2773b29dde5e0bca37e6c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_my_homie_property.html#ae10e6d69d3a2773b29dde5e0bca37e6c">isTarget</a> (const char *id)</td></tr>
-<tr class="memdesc:ae10e6d69d3a2773b29dde5e0bca37e6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if property has matches a specific id  <a href="class_my_homie_property.html#ae10e6d69d3a2773b29dde5e0bca37e6c">More...</a><br /></td></tr>
-<tr class="separator:ae10e6d69d3a2773b29dde5e0bca37e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab67d704fa44e3aec45ae0a1e48ed5504"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_my_homie_property.html#ab67d704fa44e3aec45ae0a1e48ed5504">isTarget</a> (const char *id, uint8_t start=0)</td></tr>
+<tr class="memdesc:ab67d704fa44e3aec45ae0a1e48ed5504"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if property has matches a specific id  <a href="class_my_homie_property.html#ab67d704fa44e3aec45ae0a1e48ed5504">More...</a><br /></td></tr>
+<tr class="separator:ab67d704fa44e3aec45ae0a1e48ed5504"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae27196bd9bc137c4aa5dcd05f345a772"><td class="memItemLeft" align="right" valign="top"><a id="ae27196bd9bc137c4aa5dcd05f345a772"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>getReadValue</b> ()</td></tr>
 <tr class="separator:ae27196bd9bc137c4aa5dcd05f345a772"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acedbf481260bca5deb8d668610159cf9"><td class="memItemLeft" align="right" valign="top"><a id="acedbf481260bca5deb8d668610159cf9"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>getValue</b> ()</td></tr>
 <tr class="separator:acedbf481260bca5deb8d668610159cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab61905c1af12e69aaa7f52dbf8630822"><td class="memItemLeft" align="right" valign="top"><a id="ab61905c1af12e69aaa7f52dbf8630822"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>defaultValue</b> ()</td></tr>
+<tr class="separator:ab61905c1af12e69aaa7f52dbf8630822"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80c6c226f499ef7f7093d209cbbc0639"><td class="memItemLeft" align="right" valign="top"><a id="a80c6c226f499ef7f7093d209cbbc0639"></a>
 <a class="el" href="struct_property_data.html">PropertyData</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getData</b> ()</td></tr>
 <tr class="separator:a80c6c226f499ef7f7093d209cbbc0639"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,8 +199,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>hideLog</b> = 0b11
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="class_my_homie_property.html" title="MyHomieProperty Object.">MyHomieProperty</a> Object. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae10e6d69d3a2773b29dde5e0bca37e6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae10e6d69d3a2773b29dde5e0bca37e6c">&#9670;&nbsp;</a></span>isTarget()</h2>
+<a id="ab67d704fa44e3aec45ae0a1e48ed5504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab67d704fa44e3aec45ae0a1e48ed5504">&#9670;&nbsp;</a></span>isTarget()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,8 +209,18 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>hideLog</b> = 0b11
           <td class="memname">bool MyHomieProperty::isTarget </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>id</em></td><td>)</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>start</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -189,6 +229,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>hideLog</b> = 0b11
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>(const char*) id to check </td></tr>
+    <tr><td class="paramname">start</td><td>(uint8_t)(optional) compare from position </td></tr>
   </table>
   </dd>
 </dl>

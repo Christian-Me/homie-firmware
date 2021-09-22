@@ -1,0 +1,73 @@
+\hypertarget{classm__neopixel}{}\doxysection{m\+\_\+neopixel Class Reference}
+\label{classm__neopixel}\index{m\_neopixel@{m\_neopixel}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classm__neopixel_ace27da1fbdea671b4a8b14989c09f4c7}\label{classm__neopixel_ace27da1fbdea671b4a8b14989c09f4c7}} 
+\mbox{\hyperlink{classm__neopixel_ace27da1fbdea671b4a8b14989c09f4c7}{m\+\_\+neopixel}} ()
+\begin{DoxyCompactList}\small\item\em constructor of neopixel object @ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classm__neopixel_ae51830c7ea46a34475e452e8d683bdc5}{show\+Value}} (uint16\+\_\+t led, float value, float min, float max)
+\begin{DoxyCompactList}\small\item\em show a singe value \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classm__neopixel_af8ebd26fdb6c1869c05c407778f2a960}\label{classm__neopixel_af8ebd26fdb6c1869c05c407778f2a960}} 
+void \mbox{\hyperlink{classm__neopixel_af8ebd26fdb6c1869c05c407778f2a960}{disable}} ()
+\begin{DoxyCompactList}\small\item\em disable neopixel \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classm__neopixel_af8dff85827525b8ae4b4aa8952ac96e2}\label{classm__neopixel_af8dff85827525b8ae4b4aa8952ac96e2}} 
+void \mbox{\hyperlink{classm__neopixel_af8dff85827525b8ae4b4aa8952ac96e2}{enable}} ()
+\begin{DoxyCompactList}\small\item\em enable neopixel \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classm__neopixel_acda1b7e2a9cdbece7279251ea3e905fb}{init}} (uint8\+\_\+t pin, String property, uint16\+\_\+t amount, uint16\+\_\+t type, uint8\+\_\+t brightness)
+\begin{DoxyCompactList}\small\item\em initialize neopixel \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classm__neopixel_a29bbdf0a1cbe97c0040a8f723b4a7860}\label{classm__neopixel_a29bbdf0a1cbe97c0040a8f723b4a7860}} 
+void \mbox{\hyperlink{classm__neopixel_a29bbdf0a1cbe97c0040a8f723b4a7860}{loop}} ()
+\begin{DoxyCompactList}\small\item\em neopixel loop function \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classm__neopixel_acda1b7e2a9cdbece7279251ea3e905fb}\label{classm__neopixel_acda1b7e2a9cdbece7279251ea3e905fb}} 
+\index{m\_neopixel@{m\_neopixel}!init@{init}}
+\index{init@{init}!m\_neopixel@{m\_neopixel}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void m\+\_\+neopixel\+::init (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{pin,  }\item[{String}]{property = {\ttfamily \char`\"{}\char`\"{}},  }\item[{uint16\+\_\+t}]{amount = {\ttfamily 1},  }\item[{uint16\+\_\+t}]{type = {\ttfamily NEO\+\_\+RGBW},  }\item[{uint8\+\_\+t}]{brightness = {\ttfamily 128} }\end{DoxyParamCaption})}
+
+
+
+initialize neopixel 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pin} & GPIO pin number of neopixel bus \\
+\hline
+{\em property} & (optional) property to show defaults=\char`\"{}iaq\char`\"{} \\
+\hline
+{\em amount} & (optional) amount of led chips on bus defaults=1 \\
+\hline
+{\em type} & (optional) type of LED chips defaults=RGB \\
+\hline
+{\em brightness} & (optional) maximum brightness defaults=128 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classm__neopixel_ae51830c7ea46a34475e452e8d683bdc5}\label{classm__neopixel_ae51830c7ea46a34475e452e8d683bdc5}} 
+\index{m\_neopixel@{m\_neopixel}!showValue@{showValue}}
+\index{showValue@{showValue}!m\_neopixel@{m\_neopixel}}
+\doxysubsubsection{\texorpdfstring{showValue()}{showValue()}}
+{\footnotesize\ttfamily void m\+\_\+neopixel\+::show\+Value (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{led,  }\item[{float}]{value,  }\item[{float}]{min,  }\item[{float}]{max }\end{DoxyParamCaption})}
+
+
+
+show a singe value 
+
+
+\begin{DoxyParams}{Parameters}
+{\em led} & number form 0 of the LED \\
+\hline
+{\em value} & float value \\
+\hline
+{\em min} & minimum range of value \\
+\hline
+{\em max} & maximum range of value \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib\+\_\+4\+MB/m\+\_\+neopixel/m\+\_\+neopixel.\+h\end{DoxyCompactItemize}

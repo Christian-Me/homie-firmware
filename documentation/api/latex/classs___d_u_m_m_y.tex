@@ -1,0 +1,305 @@
+\hypertarget{classs___d_u_m_m_y}{}\doxysection{s\+\_\+\+DUMMY Class Reference}
+\label{classs___d_u_m_m_y}\index{s\_DUMMY@{s\_DUMMY}}
+
+
+DUMMY \mbox{\hyperlink{class_plugin}{Plugin}}.  
+
+
+
+
+{\ttfamily \#include $<$s\+\_\+\+DUMMY.\+h$>$}
+
+Inheritance diagram for s\+\_\+\+DUMMY\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classs___d_u_m_m_y}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \mbox{\hyperlink{classs___d_u_m_m_y_a3b54f8c3889a4f9f552ad670a4b939bd}{id}} ()
+\begin{DoxyCompactList}\small\item\em DUMMY get id string. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classs___d_u_m_m_y_a23e26f325c0150d83a98c49a9d183dc7}{s\+\_\+\+DUMMY}} (int port)
+\begin{DoxyCompactList}\small\item\em DUMMY enviornment sensor constructor. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classs___d_u_m_m_y_af83067ec1144d282e200e2fec0d79f97}{init}} (\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$homie\+Node)
+\begin{DoxyCompactList}\small\item\em init DUMMY enviornment sensor \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classs___d_u_m_m_y_afc8433cee6186d88bd9726dcefb2d19d}{check\+Status}} ()
+\begin{DoxyCompactList}\small\item\em check if device is initialized and/or if sensor is in operation \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classs___d_u_m_m_y_a69581af8302d84a9db98f0f91447e5f3}{set\+Option}} (uint16\+\_\+t option, bool value)
+\begin{DoxyCompactList}\small\item\em set an option of the blugin individually \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classs___d_u_m_m_y_a7ae5337f6651611cd0b3ddd23f214cc0}{set\+Option}} (uint16\+\_\+t option, int value)
+\begin{DoxyCompactList}\small\item\em set an option of the blugin individually \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classs___d_u_m_m_y_acf75b961c7c032acd57901c24fdad41d}{available}} ()
+\begin{DoxyCompactList}\small\item\em check if new data is available \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___d_u_m_m_y_a02305a757d98fa110d56f09565f78c0a}\label{classs___d_u_m_m_y_a02305a757d98fa110d56f09565f78c0a}} 
+void \mbox{\hyperlink{classs___d_u_m_m_y_a02305a757d98fa110d56f09565f78c0a}{loop}} ()
+\begin{DoxyCompactList}\small\item\em link into the big loop \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classs___d_u_m_m_y_abe22402358188afaecae7926271e1d70}{read}} ()
+\begin{DoxyCompactList}\small\item\em read the senor value(s) \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classs___d_u_m_m_y_ae72203fe3303660e0aed658bbb56cc0b}{get}} (uint8\+\_\+t channel)
+\begin{DoxyCompactList}\small\item\em read current value \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classs___d_u_m_m_y_a648966d0da0876e10b6492d76ab823dd}{set}} (uint8\+\_\+t channel, float value)
+\begin{DoxyCompactList}\small\item\em set value for channel (float) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classs___d_u_m_m_y_a9736dee4c7f4ed59552579b774e04181}{set}} (uint8\+\_\+t channel, const String \&value)
+\begin{DoxyCompactList}\small\item\em set value for channel (String) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___d_u_m_m_y_a2bc389b4c8170ba8dcce615c804fd408}\label{classs___d_u_m_m_y_a2bc389b4c8170ba8dcce615c804fd408}} 
+bool \mbox{\hyperlink{classs___d_u_m_m_y_a2bc389b4c8170ba8dcce615c804fd408}{set}} (uint8\+\_\+t channel, \mbox{\hyperlink{struct_property_data}{Property\+Data}} $\ast$data)
+\begin{DoxyCompactList}\small\item\em set value for channel (complete data set) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+DUMMY \mbox{\hyperlink{class_plugin}{Plugin}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classs___d_u_m_m_y_a23e26f325c0150d83a98c49a9d183dc7}\label{classs___d_u_m_m_y_a23e26f325c0150d83a98c49a9d183dc7}} 
+\index{s\_DUMMY@{s\_DUMMY}!s\_DUMMY@{s\_DUMMY}}
+\index{s\_DUMMY@{s\_DUMMY}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{s\_DUMMY()}{s\_DUMMY()}}
+{\footnotesize\ttfamily s\+\_\+\+DUMMY\+::s\+\_\+\+DUMMY (\begin{DoxyParamCaption}\item[{int}]{port }\end{DoxyParamCaption})}
+
+
+
+DUMMY enviornment sensor constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & constructor port= I2C address or port=0 autodetect \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classs___d_u_m_m_y_acf75b961c7c032acd57901c24fdad41d}\label{classs___d_u_m_m_y_acf75b961c7c032acd57901c24fdad41d}} 
+\index{s\_DUMMY@{s\_DUMMY}!available@{available}}
+\index{available@{available}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{available()}{available()}}
+{\footnotesize\ttfamily bool s\+\_\+\+DUMMY\+::available (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+check if new data is available 
+
+\begin{DoxyReturn}{Returns}
+true if so 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_afae7c6ae66ca513a5752c347aacc4b6b}{Plugin}}.
+
+\mbox{\Hypertarget{classs___d_u_m_m_y_afc8433cee6186d88bd9726dcefb2d19d}\label{classs___d_u_m_m_y_afc8433cee6186d88bd9726dcefb2d19d}} 
+\index{s\_DUMMY@{s\_DUMMY}!checkStatus@{checkStatus}}
+\index{checkStatus@{checkStatus}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{checkStatus()}{checkStatus()}}
+{\footnotesize\ttfamily bool s\+\_\+\+DUMMY\+::check\+Status (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+check if device is initialized and/or if sensor is in operation 
+
+\begin{DoxyReturn}{Returns}
+true if so 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a252db5bb06c5081dd1f7f3106fa2ec08}{Plugin}}.
+
+\mbox{\Hypertarget{classs___d_u_m_m_y_ae72203fe3303660e0aed658bbb56cc0b}\label{classs___d_u_m_m_y_ae72203fe3303660e0aed658bbb56cc0b}} 
+\index{s\_DUMMY@{s\_DUMMY}!get@{get}}
+\index{get@{get}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily float s\+\_\+\+DUMMY\+::get (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+read current value 
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & number of channel to read \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+current value 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a1cb7d31edd08a8d90d6dfc9df8b7de45}{Plugin}}.
+
+\mbox{\Hypertarget{classs___d_u_m_m_y_a3b54f8c3889a4f9f552ad670a4b939bd}\label{classs___d_u_m_m_y_a3b54f8c3889a4f9f552ad670a4b939bd}} 
+\index{s\_DUMMY@{s\_DUMMY}!id@{id}}
+\index{id@{id}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{id()}{id()}}
+{\footnotesize\ttfamily const char $\ast$ s\+\_\+\+DUMMY\+::id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+DUMMY get id string. 
+
+\begin{DoxyReturn}{Returns}
+result id string 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aa8d8a1aacbb9a1e6cb37b1acf0cb1e57}{Plugin}}.
+
+\mbox{\Hypertarget{classs___d_u_m_m_y_af83067ec1144d282e200e2fec0d79f97}\label{classs___d_u_m_m_y_af83067ec1144d282e200e2fec0d79f97}} 
+\index{s\_DUMMY@{s\_DUMMY}!init@{init}}
+\index{init@{init}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily bool s\+\_\+\+DUMMY\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$}]{homie\+Node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+init DUMMY enviornment sensor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em homie\+Node} & pointer to homie Node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+result boolean -\/ true=success 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a7546d32024624aa1041429faca3cb145}{Plugin}}.
+
+\mbox{\Hypertarget{classs___d_u_m_m_y_abe22402358188afaecae7926271e1d70}\label{classs___d_u_m_m_y_abe22402358188afaecae7926271e1d70}} 
+\index{s\_DUMMY@{s\_DUMMY}!read@{read}}
+\index{read@{read}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily bool s\+\_\+\+DUMMY\+::read (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+read the senor value(s) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em force} & if true the sensor is read without any filters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if minimum one value was sent successfully 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a59b4067bb360e6349e170244a8fae557}{Plugin}}.
+
+\mbox{\Hypertarget{classs___d_u_m_m_y_a9736dee4c7f4ed59552579b774e04181}\label{classs___d_u_m_m_y_a9736dee4c7f4ed59552579b774e04181}} 
+\index{s\_DUMMY@{s\_DUMMY}!set@{set}}
+\index{set@{set}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool s\+\_\+\+DUMMY\+::set (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel,  }\item[{const String \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set value for channel (String) 
+
+set value passed by a \mbox{\hyperlink{struct_property_data}{Property\+Data}} struct. To be used by a multi datapoint (node) plugin. This value will be directly processed and NOT stored.
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & (uint8\+\_\+t) datapoint index \\
+\hline
+{\em value} & (String) pointer to text object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success 
+\end{DoxyReturn}
+set value passed by a \mbox{\hyperlink{struct_property_data}{Property\+Data}} struct. To be used by a multi datapoint (node) plugin 
+\begin{DoxyParams}{Parameters}
+{\em channel} & (uint8\+\_\+t) datapoint index \\
+\hline
+{\em value} & (\mbox{\hyperlink{struct_property_data}{Property\+Data}}) data structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aa86a57f1f6958b8d69efa6f7e4ac479b}{Plugin}}.
+
+\mbox{\Hypertarget{classs___d_u_m_m_y_a648966d0da0876e10b6492d76ab823dd}\label{classs___d_u_m_m_y_a648966d0da0876e10b6492d76ab823dd}} 
+\index{s\_DUMMY@{s\_DUMMY}!set@{set}}
+\index{set@{set}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool s\+\_\+\+DUMMY\+::set (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel,  }\item[{float}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set value for channel (float) 
+
+set value passed by a float value. To be used by a multi datapoint (node) plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & (uint8\+\_\+t) datapoint index \\
+\hline
+{\em value} & (vloat) floating point number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_ad71012e7e737b8df1ba157166874b22c}{Plugin}}.
+
+\mbox{\Hypertarget{classs___d_u_m_m_y_a69581af8302d84a9db98f0f91447e5f3}\label{classs___d_u_m_m_y_a69581af8302d84a9db98f0f91447e5f3}} 
+\index{s\_DUMMY@{s\_DUMMY}!setOption@{setOption}}
+\index{setOption@{setOption}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{setOption()}{setOption()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool s\+\_\+\+DUMMY\+::set\+Option (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{option,  }\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set an option of the blugin individually 
+
+
+\begin{DoxyParams}{Parameters}
+{\em option} & option ID defined in \\
+\hline
+{\em value} & (bool) option value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+result boolean -\/ true=success 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a993485eba589376949e989abb063584a}{Plugin}}.
+
+\mbox{\Hypertarget{classs___d_u_m_m_y_a7ae5337f6651611cd0b3ddd23f214cc0}\label{classs___d_u_m_m_y_a7ae5337f6651611cd0b3ddd23f214cc0}} 
+\index{s\_DUMMY@{s\_DUMMY}!setOption@{setOption}}
+\index{setOption@{setOption}!s\_DUMMY@{s\_DUMMY}}
+\doxysubsubsection{\texorpdfstring{setOption()}{setOption()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool s\+\_\+\+DUMMY\+::set\+Option (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{option,  }\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set an option of the blugin individually 
+
+
+\begin{DoxyParams}{Parameters}
+{\em option} & option ID defined in \\
+\hline
+{\em value} & (integer) option value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+result boolean -\/ true=success 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aa31b78849344b0340795e9df40d9301b}{Plugin}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib\+\_\+4\+MB/s\+\_\+\+DUMMY/s\+\_\+\+DUMMY.\+h\item 
+lib\+\_\+4\+MB/s\+\_\+\+DUMMY/s\+\_\+\+DUMMY.\+cpp\end{DoxyCompactItemize}

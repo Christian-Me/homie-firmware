@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['m_5fbitshift_181',['m_bitShift',['../class_adafruit___a_d_s1015.html#ab238ce17112a78db2be4ea14d57fb114',1,'Adafruit_ADS1015']]],
-  ['m_5fconversiondelay_182',['m_conversionDelay',['../class_adafruit___a_d_s1015.html#aa3a29a64a6705fce1fee21d73c642a0e',1,'Adafruit_ADS1015']]],
-  ['m_5fgain_183',['m_gain',['../class_adafruit___a_d_s1015.html#a8db90fe03d55a18246984ba2ba5e7f32',1,'Adafruit_ADS1015']]],
-  ['m_5fi2caddress_184',['m_i2cAddress',['../class_adafruit___a_d_s1015.html#a2186993621a7973256d47f086c74035d',1,'Adafruit_ADS1015']]]
+  ['datatype_245',['datatype',['../struct_homie_property_def.html#af9507357d71949368f42fa98f8dc833b',1,'HomiePropertyDef']]],
+  ['delay_246',['delay',['../struct_sequence_step.html#a82d330d2fe3a983eb2f38dda6060d968',1,'SequenceStep']]]
 ];

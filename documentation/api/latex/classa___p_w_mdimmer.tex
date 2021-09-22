@@ -1,0 +1,388 @@
+\hypertarget{classa___p_w_mdimmer}{}\doxysection{a\+\_\+\+PWMdimmer Class Reference}
+\label{classa___p_w_mdimmer}\index{a\_PWMdimmer@{a\_PWMdimmer}}
+
+
+write a value to channel  
+
+
+
+
+{\ttfamily \#include $<$a\+\_\+pwm\+\_\+dimmer.\+h$>$}
+
+Inheritance diagram for a\+\_\+\+PWMdimmer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classa___p_w_mdimmer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590}{PWM\+\_\+\+Options}} \{ \newline
+\mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a5c2d026cf59992913397d5d95f70b45f}{PWM\+\_\+\+FREQUENCY}} = 1
+, \mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590ac1213c291dcaf8cc8381bbbacc6e7470}{PWM\+\_\+\+MINIMUM}} = 2
+, \mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a54d705f5073f0ad0e4e0d516e0986c76}{PWM\+\_\+\+MAXIMUM}} = 3
+, \mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a5f517ac646629af1bc45988530bc1d54}{PWM\+\_\+\+FADE\+\_\+\+DURATION\+\_\+S}} = 4
+, \newline
+\mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590ac675a6dba333cc887a50e7b2ba76d866}{PWM\+\_\+\+FADE\+\_\+\+DURATION\+\_\+\+MS}} = 5
+, \mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590aa1acb55bab1ab4358d6215a2a216546e}{PWM\+\_\+\+FADE\+\_\+\+DELAY}} = 6
+, \mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a5afb930666cb9e6f1411f4a8586a9759}{SCALE}} = 7
+, \mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a1fc5c750dbc76bb16828d25197c2544d}{SHIFT}} = 8
+ \}
+\item 
+enum \mbox{\hyperlink{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43}{PWM\+\_\+\+Commands}} \{ {\bfseries NO\+\_\+\+COMMAND} = 0
+, \mbox{\hyperlink{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43aff2f0a9d28b1a032e573afb429226b03}{FADE}} = 1
+, \mbox{\hyperlink{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43a16b03a648ba666d5d27803030f163fb1}{TONE}} = 2
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \mbox{\hyperlink{classa___p_w_mdimmer_a1e2ca430b5b30c06bb9beffdcb51f82c}{id}} ()
+\begin{DoxyCompactList}\small\item\em get the id string of the plugin \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classa___p_w_mdimmer_aa38f28e55bec14ad2d9c3ebc2a3774a6}{a\+\_\+\+PWMdimmer}} ()
+\begin{DoxyCompactList}\small\item\em PWM PWM \char`\"{}analog\char`\"{} out actuator. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{classa___p_w_mdimmer_a8f641e8e9749fda2449d15620535a789}{min\+Value}} ()
+\begin{DoxyCompactList}\small\item\em get the minimum generic value \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{classa___p_w_mdimmer_ab7cd88b4186d72be56ea69d0fe5a38d0}{max\+Value}} ()
+\begin{DoxyCompactList}\small\item\em get the maximum generic value \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___p_w_mdimmer_aa3abbf42492e73bcd6f19241d0d26232}{init}} (\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property, uint8\+\_\+t gpio)
+\begin{DoxyCompactList}\small\item\em initialize property plugin \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___p_w_mdimmer_aefe066a34be261c8909dd72d851669aa}{set\+Option}} (uint16\+\_\+t option, int value)
+\begin{DoxyCompactList}\small\item\em set a plugin option \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___p_w_mdimmer_acebd466936d1f315c3c471287721a14c}{set\+Filter}} (int\+Value\+Filter filter)
+\begin{DoxyCompactList}\small\item\em \begin{quote}
+set plugin option \end{quote}
+\end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___p_w_mdimmer_a0f4b5fad90cada45a6928d3ef6b8911f}{check\+Status}} (void)
+\begin{DoxyCompactList}\small\item\em check the status of the device returns true if initalized \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___p_w_mdimmer_a499e401a194ae08b3062cb8ade0b0f2c}{available}} ()
+\begin{DoxyCompactList}\small\item\em true if plugin / sensor data is available \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classa___p_w_mdimmer_a2e516af44cfaae683bfc55e5c5bcd955}{get}} ()
+\begin{DoxyCompactList}\small\item\em get value \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classa___p_w_mdimmer_a42a184b926d1118b54c00a66cc54f891}\label{classa___p_w_mdimmer_a42a184b926d1118b54c00a66cc54f891}} 
+void \mbox{\hyperlink{classa___p_w_mdimmer_a42a184b926d1118b54c00a66cc54f891}{loop}} ()
+\begin{DoxyCompactList}\small\item\em main loop \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classa___p_w_mdimmer_ad2b2d591d08069d95e59e7d9092b144c}\label{classa___p_w_mdimmer_ad2b2d591d08069d95e59e7d9092b144c}} 
+bool \mbox{\hyperlink{classa___p_w_mdimmer_ad2b2d591d08069d95e59e7d9092b144c}{set}} (\mbox{\hyperlink{struct_property_data}{Property\+Data}} $\ast$data)
+\begin{DoxyCompactList}\small\item\em set value for channel (complete data set) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___p_w_mdimmer_aad80af2954d832edc4c6c258eebc9431}{set}} (const String \&value)
+\begin{DoxyCompactList}\small\item\em set command string \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+write a value to channel 
+
+PWM dimmer actuator plugin.
+
+loop function of the PWM dimmer plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & pointer to \mbox{\hyperlink{struct_property_data}{Property\+Data}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(boolean) true = achnkoleged new value
+\end{DoxyReturn}
+The PWM \mbox{\hyperlink{class_plugin}{Plugin}} comes with it\textquotesingle{}s own loop and timer for frequent updates during dimming events. If the timer is triggered it in-\/ or decrements the {\ttfamily \+\_\+current} value to reach the {\ttfamily \+\_\+target} The limits are checked and the current value is fine tuned if the target is reached within the {\ttfamily \+\_\+increment} range
+
+Handles one PWM output including smooth fading with an given duration amd fade steps \begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]logarithmic as LED for examples fades brightness on low duty cycles stringer than on higher values 
+
+lower limits as motors for example don\textquotesingle{}t spin on low duty cycles (some motors can do slow rpm if you start them with a higher value and then step down) \end{DoxyRefDesc}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43}\label{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!PWM\_Commands@{PWM\_Commands}}
+\index{PWM\_Commands@{PWM\_Commands}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{PWM\_Commands}{PWM\_Commands}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43}{a\+\_\+\+PWMdimmer\+::\+PWM\+\_\+\+Commands}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FADE@{FADE}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!FADE@{FADE}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43aff2f0a9d28b1a032e573afb429226b03}\label{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43aff2f0a9d28b1a032e573afb429226b03}} 
+FADE&fading in progress \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TONE@{TONE}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!TONE@{TONE}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43a16b03a648ba666d5d27803030f163fb1}\label{classa___p_w_mdimmer_a8a85c6812062b1a7d957e5c72d1bda43a16b03a648ba666d5d27803030f163fb1}} 
+TONE&play a tone on a buzzer or speaker. Parameters\+: frequency, duration \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590}\label{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!PWM\_Options@{PWM\_Options}}
+\index{PWM\_Options@{PWM\_Options}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{PWM\_Options}{PWM\_Options}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590}{a\+\_\+\+PWMdimmer\+::\+PWM\+\_\+\+Options}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PWM\_FREQUENCY@{PWM\_FREQUENCY}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!PWM\_FREQUENCY@{PWM\_FREQUENCY}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a5c2d026cf59992913397d5d95f70b45f}\label{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a5c2d026cf59992913397d5d95f70b45f}} 
+PWM\+\_\+\+FREQUENCY&PWM switching frequency. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PWM\_MINIMUM@{PWM\_MINIMUM}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!PWM\_MINIMUM@{PWM\_MINIMUM}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590ac1213c291dcaf8cc8381bbbacc6e7470}\label{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590ac1213c291dcaf8cc8381bbbacc6e7470}} 
+PWM\+\_\+\+MINIMUM&minimum Value \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PWM\_MAXIMUM@{PWM\_MAXIMUM}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!PWM\_MAXIMUM@{PWM\_MAXIMUM}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a54d705f5073f0ad0e4e0d516e0986c76}\label{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a54d705f5073f0ad0e4e0d516e0986c76}} 
+PWM\+\_\+\+MAXIMUM&maximum Value \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PWM\_FADE\_DURATION\_S@{PWM\_FADE\_DURATION\_S}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!PWM\_FADE\_DURATION\_S@{PWM\_FADE\_DURATION\_S}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a5f517ac646629af1bc45988530bc1d54}\label{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a5f517ac646629af1bc45988530bc1d54}} 
+PWM\+\_\+\+FADE\+\_\+\+DURATION\+\_\+S&Fade duration in seconds. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PWM\_FADE\_DURATION\_MS@{PWM\_FADE\_DURATION\_MS}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!PWM\_FADE\_DURATION\_MS@{PWM\_FADE\_DURATION\_MS}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590ac675a6dba333cc887a50e7b2ba76d866}\label{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590ac675a6dba333cc887a50e7b2ba76d866}} 
+PWM\+\_\+\+FADE\+\_\+\+DURATION\+\_\+\+MS&Fade duration in seconds. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PWM\_FADE\_DELAY@{PWM\_FADE\_DELAY}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!PWM\_FADE\_DELAY@{PWM\_FADE\_DELAY}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590aa1acb55bab1ab4358d6215a2a216546e}\label{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590aa1acb55bab1ab4358d6215a2a216546e}} 
+PWM\+\_\+\+FADE\+\_\+\+DELAY&shortest delay per fade step \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SCALE@{SCALE}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!SCALE@{SCALE}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a5afb930666cb9e6f1411f4a8586a9759}\label{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a5afb930666cb9e6f1411f4a8586a9759}} 
+SCALE&set scaling factor and update output \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SHIFT@{SHIFT}!a\_PWMdimmer@{a\_PWMdimmer}}\index{a\_PWMdimmer@{a\_PWMdimmer}!SHIFT@{SHIFT}}}\mbox{\Hypertarget{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a1fc5c750dbc76bb16828d25197c2544d}\label{classa___p_w_mdimmer_a9db09900c88f09c495a29f998beeb590a1fc5c750dbc76bb16828d25197c2544d}} 
+SHIFT&set shift value and update output \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classa___p_w_mdimmer_aa38f28e55bec14ad2d9c3ebc2a3774a6}\label{classa___p_w_mdimmer_aa38f28e55bec14ad2d9c3ebc2a3774a6}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!a\_PWMdimmer@{a\_PWMdimmer}}
+\index{a\_PWMdimmer@{a\_PWMdimmer}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{a\_PWMdimmer()}{a\_PWMdimmer()}}
+{\footnotesize\ttfamily a\+\_\+\+PWMdimmer\+::a\+\_\+\+PWMdimmer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+PWM PWM \char`\"{}analog\char`\"{} out actuator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classa___p_w_mdimmer_a499e401a194ae08b3062cb8ade0b0f2c}\label{classa___p_w_mdimmer_a499e401a194ae08b3062cb8ade0b0f2c}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!available@{available}}
+\index{available@{available}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{available()}{available()}}
+{\footnotesize\ttfamily bool a\+\_\+\+PWMdimmer\+::available (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+true if plugin / sensor data is available 
+
+check if data is available
+
+\begin{DoxyReturn}{Returns}
+true if (new) data is available 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_afae7c6ae66ca513a5752c347aacc4b6b}{Plugin}}.
+
+\mbox{\Hypertarget{classa___p_w_mdimmer_a0f4b5fad90cada45a6928d3ef6b8911f}\label{classa___p_w_mdimmer_a0f4b5fad90cada45a6928d3ef6b8911f}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!checkStatus@{checkStatus}}
+\index{checkStatus@{checkStatus}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{checkStatus()}{checkStatus()}}
+{\footnotesize\ttfamily bool a\+\_\+\+PWMdimmer\+::check\+Status (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+check the status of the device returns true if initalized 
+
+check the status of the plugin / device
+
+\begin{DoxyReturn}{Returns}
+(boolean) true if everthing is OK 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a252db5bb06c5081dd1f7f3106fa2ec08}{Plugin}}.
+
+\mbox{\Hypertarget{classa___p_w_mdimmer_a2e516af44cfaae683bfc55e5c5bcd955}\label{classa___p_w_mdimmer_a2e516af44cfaae683bfc55e5c5bcd955}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!get@{get}}
+\index{get@{get}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily float a\+\_\+\+PWMdimmer\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+get value 
+
+read/update current value
+
+\begin{DoxyReturn}{Returns}
+(float) current value 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a7c254a322b7d3be69533939b7dd50c2a}{Plugin}}.
+
+\mbox{\Hypertarget{classa___p_w_mdimmer_a1e2ca430b5b30c06bb9beffdcb51f82c}\label{classa___p_w_mdimmer_a1e2ca430b5b30c06bb9beffdcb51f82c}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!id@{id}}
+\index{id@{id}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{id()}{id()}}
+{\footnotesize\ttfamily const char $\ast$ a\+\_\+\+PWMdimmer\+::id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+get the id string of the plugin 
+
+\begin{DoxyReturn}{Returns}
+id string (const char$\ast$) 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aa8d8a1aacbb9a1e6cb37b1acf0cb1e57}{Plugin}}.
+
+\mbox{\Hypertarget{classa___p_w_mdimmer_aa3abbf42492e73bcd6f19241d0d26232}\label{classa___p_w_mdimmer_aa3abbf42492e73bcd6f19241d0d26232}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!init@{init}}
+\index{init@{init}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily bool a\+\_\+\+PWMdimmer\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$}]{homie\+Property,  }\item[{uint8\+\_\+t}]{gpio }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+initialize property plugin 
+
+init PWM controller
+
+
+\begin{DoxyParams}{Parameters}
+{\em homie\+Property} & pointer to property definition \\
+\hline
+{\em gpio} & gpio port number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(boolean) -\/ true=success 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_afe1cd95bcc80eb0a37e4072a65689925}{Plugin}}.
+
+\mbox{\Hypertarget{classa___p_w_mdimmer_ab7cd88b4186d72be56ea69d0fe5a38d0}\label{classa___p_w_mdimmer_ab7cd88b4186d72be56ea69d0fe5a38d0}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!maxValue@{maxValue}}
+\index{maxValue@{maxValue}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{maxValue()}{maxValue()}}
+{\footnotesize\ttfamily uint16\+\_\+t a\+\_\+\+PWMdimmer\+::max\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+get the maximum generic value 
+
+get the maximum setable generic value
+
+\begin{DoxyReturn}{Returns}
+(uint16\+\_\+t) maximum Value 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_ac6933fad1569c71f21d9e3423b125775}{Plugin}}.
+
+\mbox{\Hypertarget{classa___p_w_mdimmer_a8f641e8e9749fda2449d15620535a789}\label{classa___p_w_mdimmer_a8f641e8e9749fda2449d15620535a789}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!minValue@{minValue}}
+\index{minValue@{minValue}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{minValue()}{minValue()}}
+{\footnotesize\ttfamily uint16\+\_\+t a\+\_\+\+PWMdimmer\+::min\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+get the minimum generic value 
+
+get the minimum setable generic value
+
+\begin{DoxyReturn}{Returns}
+(uint16\+\_\+t) minimum Value 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a542ed25a99ce48e6d2a61aa7c61a8bfa}{Plugin}}.
+
+\mbox{\Hypertarget{classa___p_w_mdimmer_aad80af2954d832edc4c6c258eebc9431}\label{classa___p_w_mdimmer_aad80af2954d832edc4c6c258eebc9431}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!set@{set}}
+\index{set@{set}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily bool a\+\_\+\+PWMdimmer\+::set (\begin{DoxyParamCaption}\item[{const String \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set command string 
+
+set a command string
+
+\begin{DoxyReturn}{Returns}
+(boolean) true if everthing is OK 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_ab15981cc879e56d1695a70dd6579e028}{Plugin}}.
+
+\mbox{\Hypertarget{classa___p_w_mdimmer_acebd466936d1f315c3c471287721a14c}\label{classa___p_w_mdimmer_acebd466936d1f315c3c471287721a14c}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!setFilter@{setFilter}}
+\index{setFilter@{setFilter}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{setFilter()}{setFilter()}}
+{\footnotesize\ttfamily bool a\+\_\+\+PWMdimmer\+::set\+Filter (\begin{DoxyParamCaption}\item[{int\+Value\+Filter}]{filter }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\begin{quote}
+set plugin option \end{quote}
+
+
+set an integer value filter
+
+set individual channel option (filter callback function)
+
+
+\begin{DoxyParams}{Parameters}
+{\em filter} & (int\+Value\+Filter) filter callback function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success; 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a8e822c9d560a18e797dbab0c584b5754}{Plugin}}.
+
+\mbox{\Hypertarget{classa___p_w_mdimmer_aefe066a34be261c8909dd72d851669aa}\label{classa___p_w_mdimmer_aefe066a34be261c8909dd72d851669aa}} 
+\index{a\_PWMdimmer@{a\_PWMdimmer}!setOption@{setOption}}
+\index{setOption@{setOption}!a\_PWMdimmer@{a\_PWMdimmer}}
+\doxysubsubsection{\texorpdfstring{setOption()}{setOption()}}
+{\footnotesize\ttfamily bool a\+\_\+\+PWMdimmer\+::set\+Option (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{option,  }\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set a plugin option 
+
+
+\begin{DoxyParams}{Parameters}
+{\em option} & (uint16\+\_\+t) option Id \\
+\hline
+{\em value} & (int) option value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(boolean) true if option set successfull 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aa31b78849344b0340795e9df40d9301b}{Plugin}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/a\+\_\+pwm\+\_\+dimmer/a\+\_\+pwm\+\_\+dimmer.\+h\item 
+lib/a\+\_\+pwm\+\_\+dimmer/a\+\_\+pwm\+\_\+dimmer.\+cpp\end{DoxyCompactItemize}

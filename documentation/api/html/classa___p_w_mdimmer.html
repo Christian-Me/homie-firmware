@@ -92,10 +92,10 @@ $(document).ready(function(){initNavTree('classa___p_w_mdimmer.html',''); initRe
 </div><!--header-->
 <div class="contents">
 
-<p>PWM dimmer <a class="el" href="class_plugin.html" title="parent plugin object">Plugin</a>.  
+<p>write a value to channel  
  <a href="classa___p_w_mdimmer.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="a__pwm__dimmer_8hpp_source.html">a_pwm_dimmer.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="a__pwm__dimmer_8h_source.html">a_pwm_dimmer.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for a_PWMdimmer:</div>
 <div class="dyncontent">
@@ -108,50 +108,75 @@ Inheritance diagram for a_PWMdimmer:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a9db09900c88f09c495a29f998beeb590"><td class="memItemLeft" align="right" valign="top"><a id="a9db09900c88f09c495a29f998beeb590"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>PWM_Options</b> { <b>PWM_FREQUENCY</b> = 1
-, <b>PWM_FADE_INCREMENT</b> = 2
-, <b>DIMM_SPEED</b> = 3
-, <b>PWM_FADE_DURATION</b> = 4
+<tr class="memitem:a9db09900c88f09c495a29f998beeb590"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590">PWM_Options</a> { <br />
+&#160;&#160;<a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590a5c2d026cf59992913397d5d95f70b45f">PWM_FREQUENCY</a> = 1
+, <a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590ac1213c291dcaf8cc8381bbbacc6e7470">PWM_MINIMUM</a> = 2
+, <a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590a54d705f5073f0ad0e4e0d516e0986c76">PWM_MAXIMUM</a> = 3
+, <a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590a5f517ac646629af1bc45988530bc1d54">PWM_FADE_DURATION_S</a> = 4
+, <br />
+&#160;&#160;<a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590ac675a6dba333cc887a50e7b2ba76d866">PWM_FADE_DURATION_MS</a> = 5
+, <a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590aa1acb55bab1ab4358d6215a2a216546e">PWM_FADE_DELAY</a> = 6
+, <a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590a5afb930666cb9e6f1411f4a8586a9759">SCALE</a> = 7
+, <a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590a1fc5c750dbc76bb16828d25197c2544d">SHIFT</a> = 8
+<br />
  }</td></tr>
 <tr class="separator:a9db09900c88f09c495a29f998beeb590"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a85c6812062b1a7d957e5c72d1bda43"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a8a85c6812062b1a7d957e5c72d1bda43">PWM_Commands</a> { <b>NO_COMMAND</b> = 0
+, <a class="el" href="classa___p_w_mdimmer.html#a8a85c6812062b1a7d957e5c72d1bda43aff2f0a9d28b1a032e573afb429226b03">FADE</a> = 1
+, <a class="el" href="classa___p_w_mdimmer.html#a8a85c6812062b1a7d957e5c72d1bda43a16b03a648ba666d5d27803030f163fb1">TONE</a> = 2
+ }</td></tr>
+<tr class="separator:a8a85c6812062b1a7d957e5c72d1bda43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1e2ca430b5b30c06bb9beffdcb51f82c"><td class="memItemLeft" align="right" valign="top"><a id="a1e2ca430b5b30c06bb9beffdcb51f82c"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a1e2ca430b5b30c06bb9beffdcb51f82c">id</a> ()</td></tr>
-<tr class="memdesc:a1e2ca430b5b30c06bb9beffdcb51f82c"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the id string <br /></td></tr>
+<tr class="memitem:a1e2ca430b5b30c06bb9beffdcb51f82c"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a1e2ca430b5b30c06bb9beffdcb51f82c">id</a> ()</td></tr>
+<tr class="memdesc:a1e2ca430b5b30c06bb9beffdcb51f82c"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the id string of the plugin  <a href="classa___p_w_mdimmer.html#a1e2ca430b5b30c06bb9beffdcb51f82c">More...</a><br /></td></tr>
 <tr class="separator:a1e2ca430b5b30c06bb9beffdcb51f82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa38f28e55bec14ad2d9c3ebc2a3774a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#aa38f28e55bec14ad2d9c3ebc2a3774a6">a_PWMdimmer</a> ()</td></tr>
 <tr class="memdesc:aa38f28e55bec14ad2d9c3ebc2a3774a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">PWM PWM "analog" out actuator.  <a href="classa___p_w_mdimmer.html#aa38f28e55bec14ad2d9c3ebc2a3774a6">More...</a><br /></td></tr>
 <tr class="separator:aa38f28e55bec14ad2d9c3ebc2a3774a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3e6faabccd6cb50f860bcf474aa925f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#ac3e6faabccd6cb50f860bcf474aa925f">init</a> (<a class="el" href="class_my_homie_node.html">MyHomieNode</a> *homieNode)</td></tr>
-<tr class="memdesc:ac3e6faabccd6cb50f860bcf474aa925f"><td class="mdescLeft">&#160;</td><td class="mdescRight">init PWM controller  <a href="classa___p_w_mdimmer.html#ac3e6faabccd6cb50f860bcf474aa925f">More...</a><br /></td></tr>
-<tr class="separator:ac3e6faabccd6cb50f860bcf474aa925f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f641e8e9749fda2449d15620535a789"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a8f641e8e9749fda2449d15620535a789">minValue</a> ()</td></tr>
+<tr class="memdesc:a8f641e8e9749fda2449d15620535a789"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the minimum generic value  <a href="classa___p_w_mdimmer.html#a8f641e8e9749fda2449d15620535a789">More...</a><br /></td></tr>
+<tr class="separator:a8f641e8e9749fda2449d15620535a789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7cd88b4186d72be56ea69d0fe5a38d0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#ab7cd88b4186d72be56ea69d0fe5a38d0">maxValue</a> ()</td></tr>
+<tr class="memdesc:ab7cd88b4186d72be56ea69d0fe5a38d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the maximum generic value  <a href="classa___p_w_mdimmer.html#ab7cd88b4186d72be56ea69d0fe5a38d0">More...</a><br /></td></tr>
+<tr class="separator:ab7cd88b4186d72be56ea69d0fe5a38d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3abbf42492e73bcd6f19241d0d26232"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#aa3abbf42492e73bcd6f19241d0d26232">init</a> (<a class="el" href="class_my_homie_property.html">MyHomieProperty</a> *homieProperty, uint8_t gpio)</td></tr>
+<tr class="memdesc:aa3abbf42492e73bcd6f19241d0d26232"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize property plugin  <a href="classa___p_w_mdimmer.html#aa3abbf42492e73bcd6f19241d0d26232">More...</a><br /></td></tr>
+<tr class="separator:aa3abbf42492e73bcd6f19241d0d26232"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefe066a34be261c8909dd72d851669aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#aefe066a34be261c8909dd72d851669aa">setOption</a> (uint16_t option, int value)</td></tr>
 <tr class="memdesc:aefe066a34be261c8909dd72d851669aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">set a plugin option  <a href="classa___p_w_mdimmer.html#aefe066a34be261c8909dd72d851669aa">More...</a><br /></td></tr>
 <tr class="separator:aefe066a34be261c8909dd72d851669aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acaad8eac27c536608df906f69554d632"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#acaad8eac27c536608df906f69554d632">setOption</a> (uint16_t option, uint8_t channel, float value)</td></tr>
-<tr class="memdesc:acaad8eac27c536608df906f69554d632"><td class="mdescLeft">&#160;</td><td class="mdescRight">set a channel option  <a href="classa___p_w_mdimmer.html#acaad8eac27c536608df906f69554d632">More...</a><br /></td></tr>
-<tr class="separator:acaad8eac27c536608df906f69554d632"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f4b5fad90cada45a6928d3ef6b8911f"><td class="memItemLeft" align="right" valign="top"><a id="a0f4b5fad90cada45a6928d3ef6b8911f"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a0f4b5fad90cada45a6928d3ef6b8911f">checkStatus</a> (void)</td></tr>
-<tr class="memdesc:a0f4b5fad90cada45a6928d3ef6b8911f"><td class="mdescLeft">&#160;</td><td class="mdescRight">check the status of the device <br /></td></tr>
+<tr class="memitem:acebd466936d1f315c3c471287721a14c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#acebd466936d1f315c3c471287721a14c">setFilter</a> (intValueFilter filter)</td></tr>
+<tr class="memdesc:acebd466936d1f315c3c471287721a14c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><blockquote class="doxtable">
+<p>set plugin option </p>
+</blockquote>
+ <a href="classa___p_w_mdimmer.html#acebd466936d1f315c3c471287721a14c">More...</a><br /></td></tr>
+<tr class="separator:acebd466936d1f315c3c471287721a14c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f4b5fad90cada45a6928d3ef6b8911f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a0f4b5fad90cada45a6928d3ef6b8911f">checkStatus</a> (void)</td></tr>
+<tr class="memdesc:a0f4b5fad90cada45a6928d3ef6b8911f"><td class="mdescLeft">&#160;</td><td class="mdescRight">check the status of the device returns true if initalized  <a href="classa___p_w_mdimmer.html#a0f4b5fad90cada45a6928d3ef6b8911f">More...</a><br /></td></tr>
 <tr class="separator:a0f4b5fad90cada45a6928d3ef6b8911f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2e0a01a0c60283bac4760aa7cfbffba"><td class="memItemLeft" align="right" valign="top"><a id="ae2e0a01a0c60283bac4760aa7cfbffba"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#ae2e0a01a0c60283bac4760aa7cfbffba">available</a> (void)</td></tr>
-<tr class="memdesc:ae2e0a01a0c60283bac4760aa7cfbffba"><td class="mdescLeft">&#160;</td><td class="mdescRight">true if sensor data is available <br /></td></tr>
-<tr class="separator:ae2e0a01a0c60283bac4760aa7cfbffba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a85c338dbe75bbe2f7fd702b2e823f4"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a8a85c338dbe75bbe2f7fd702b2e823f4">get</a> (uint8_t channel)</td></tr>
-<tr class="memdesc:a8a85c338dbe75bbe2f7fd702b2e823f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">read/update current value  <a href="classa___p_w_mdimmer.html#a8a85c338dbe75bbe2f7fd702b2e823f4">More...</a><br /></td></tr>
-<tr class="separator:a8a85c338dbe75bbe2f7fd702b2e823f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a499e401a194ae08b3062cb8ade0b0f2c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a499e401a194ae08b3062cb8ade0b0f2c">available</a> ()</td></tr>
+<tr class="memdesc:a499e401a194ae08b3062cb8ade0b0f2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">true if plugin / sensor data is available  <a href="classa___p_w_mdimmer.html#a499e401a194ae08b3062cb8ade0b0f2c">More...</a><br /></td></tr>
+<tr class="separator:a499e401a194ae08b3062cb8ade0b0f2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e516af44cfaae683bfc55e5c5bcd955"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a2e516af44cfaae683bfc55e5c5bcd955">get</a> ()</td></tr>
+<tr class="memdesc:a2e516af44cfaae683bfc55e5c5bcd955"><td class="mdescLeft">&#160;</td><td class="mdescRight">get value  <a href="classa___p_w_mdimmer.html#a2e516af44cfaae683bfc55e5c5bcd955">More...</a><br /></td></tr>
+<tr class="separator:a2e516af44cfaae683bfc55e5c5bcd955"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42a184b926d1118b54c00a66cc54f891"><td class="memItemLeft" align="right" valign="top"><a id="a42a184b926d1118b54c00a66cc54f891"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a42a184b926d1118b54c00a66cc54f891">loop</a> ()</td></tr>
 <tr class="memdesc:a42a184b926d1118b54c00a66cc54f891"><td class="mdescLeft">&#160;</td><td class="mdescRight">main loop <br /></td></tr>
 <tr class="separator:a42a184b926d1118b54c00a66cc54f891"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a131704568b71ae662f2756f342f5aab3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#a131704568b71ae662f2756f342f5aab3">set</a> (uint8_t channel, <a class="el" href="struct_property_data.html">PropertyData</a> *data)</td></tr>
-<tr class="memdesc:a131704568b71ae662f2756f342f5aab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">write a value to channel  <a href="classa___p_w_mdimmer.html#a131704568b71ae662f2756f342f5aab3">More...</a><br /></td></tr>
-<tr class="separator:a131704568b71ae662f2756f342f5aab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2b2d591d08069d95e59e7d9092b144c"><td class="memItemLeft" align="right" valign="top"><a id="ad2b2d591d08069d95e59e7d9092b144c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#ad2b2d591d08069d95e59e7d9092b144c">set</a> (<a class="el" href="struct_property_data.html">PropertyData</a> *data)</td></tr>
+<tr class="memdesc:ad2b2d591d08069d95e59e7d9092b144c"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value for channel (complete data set) <br /></td></tr>
+<tr class="separator:ad2b2d591d08069d95e59e7d9092b144c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad80af2954d832edc4c6c258eebc9431"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classa___p_w_mdimmer.html#aad80af2954d832edc4c6c258eebc9431">set</a> (const String &amp;value)</td></tr>
+<tr class="memdesc:aad80af2954d832edc4c6c258eebc9431"><td class="mdescLeft">&#160;</td><td class="mdescRight">set command string  <a href="classa___p_w_mdimmer.html#aad80af2954d832edc4c6c258eebc9431">More...</a><br /></td></tr>
+<tr class="separator:aad80af2954d832edc4c6c258eebc9431"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_plugin"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_plugin')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_plugin.html">Plugin</a></td></tr>
+<tr class="memitem:a7546d32024624aa1041429faca3cb145 inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#a7546d32024624aa1041429faca3cb145">init</a> (<a class="el" href="class_my_homie_node.html">MyHomieNode</a> *homieNode)</td></tr>
+<tr class="memdesc:a7546d32024624aa1041429faca3cb145 inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize node plugin  <a href="class_plugin.html#a7546d32024624aa1041429faca3cb145">More...</a><br /></td></tr>
+<tr class="separator:a7546d32024624aa1041429faca3cb145 inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a993485eba589376949e989abb063584a inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top"><a id="a993485eba589376949e989abb063584a"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#a993485eba589376949e989abb063584a">setOption</a> (uint16_t option, bool value)</td></tr>
 <tr class="memdesc:a993485eba589376949e989abb063584a inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set individual plugin option (bool) <br /></td></tr>
@@ -160,22 +185,108 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#aa27d2ca16c9dd2bec93a27b1e9c19975">setOption</a> (uint16_t option, float value)</td></tr>
 <tr class="memdesc:aa27d2ca16c9dd2bec93a27b1e9c19975 inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set individual plugin option (float) <br /></td></tr>
 <tr class="separator:aa27d2ca16c9dd2bec93a27b1e9c19975 inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a274cd9e6919550d60cb76a62d2302b23 inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top"><a id="a274cd9e6919550d60cb76a62d2302b23"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#a274cd9e6919550d60cb76a62d2302b23">setOption</a> (uint16_t option, uint8_t channel, float value)</td></tr>
+<tr class="memdesc:a274cd9e6919550d60cb76a62d2302b23 inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set individual channel option (float) <br /></td></tr>
+<tr class="separator:a274cd9e6919550d60cb76a62d2302b23 inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a217ab791c2afc63af74cdae4ac1c3f64 inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top"><a id="a217ab791c2afc63af74cdae4ac1c3f64"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#a217ab791c2afc63af74cdae4ac1c3f64">setFilter</a> (floatValueFilter filter)</td></tr>
+<tr class="memdesc:a217ab791c2afc63af74cdae4ac1c3f64 inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set individual channel option (filter callback function) <br /></td></tr>
+<tr class="separator:a217ab791c2afc63af74cdae4ac1c3f64 inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59b4067bb360e6349e170244a8fae557 inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top"><a id="a59b4067bb360e6349e170244a8fae557"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#a59b4067bb360e6349e170244a8fae557">read</a> ()</td></tr>
 <tr class="memdesc:a59b4067bb360e6349e170244a8fae557 inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">read values from device <br /></td></tr>
 <tr class="separator:a59b4067bb360e6349e170244a8fae557 inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad71012e7e737b8df1ba157166874b22c inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top"><a id="ad71012e7e737b8df1ba157166874b22c"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#ad71012e7e737b8df1ba157166874b22c">set</a> (uint8_t channel, float value)</td></tr>
-<tr class="memdesc:ad71012e7e737b8df1ba157166874b22c inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value for channel (float) <br /></td></tr>
+<tr class="memitem:a1cb7d31edd08a8d90d6dfc9df8b7de45 inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top"><a id="a1cb7d31edd08a8d90d6dfc9df8b7de45"></a>
+virtual float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#a1cb7d31edd08a8d90d6dfc9df8b7de45">get</a> (uint8_t channel)</td></tr>
+<tr class="memdesc:a1cb7d31edd08a8d90d6dfc9df8b7de45 inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">get value for channel <br /></td></tr>
+<tr class="separator:a1cb7d31edd08a8d90d6dfc9df8b7de45 inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad71012e7e737b8df1ba157166874b22c inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#ad71012e7e737b8df1ba157166874b22c">set</a> (uint8_t channel, float value)</td></tr>
+<tr class="memdesc:ad71012e7e737b8df1ba157166874b22c inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value for channel (float)  <a href="class_plugin.html#ad71012e7e737b8df1ba157166874b22c">More...</a><br /></td></tr>
 <tr class="separator:ad71012e7e737b8df1ba157166874b22c inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa86a57f1f6958b8d69efa6f7e4ac479b inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top"><a id="aa86a57f1f6958b8d69efa6f7e4ac479b"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#aa86a57f1f6958b8d69efa6f7e4ac479b">set</a> (uint8_t channel, const String &amp;value)</td></tr>
-<tr class="memdesc:aa86a57f1f6958b8d69efa6f7e4ac479b inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value for channel (String) <br /></td></tr>
+<tr class="memitem:a9d0feae4efb449413e22253e948d1e2b inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#a9d0feae4efb449413e22253e948d1e2b">set</a> (uint8_t channel, bool value)</td></tr>
+<tr class="memdesc:a9d0feae4efb449413e22253e948d1e2b inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value for channel (bool)  <a href="class_plugin.html#a9d0feae4efb449413e22253e948d1e2b">More...</a><br /></td></tr>
+<tr class="separator:a9d0feae4efb449413e22253e948d1e2b inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa86a57f1f6958b8d69efa6f7e4ac479b inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#aa86a57f1f6958b8d69efa6f7e4ac479b">set</a> (uint8_t channel, const String &amp;value)</td></tr>
+<tr class="memdesc:aa86a57f1f6958b8d69efa6f7e4ac479b inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value for channel (String)  <a href="class_plugin.html#aa86a57f1f6958b8d69efa6f7e4ac479b">More...</a><br /></td></tr>
 <tr class="separator:aa86a57f1f6958b8d69efa6f7e4ac479b inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee5d454554f8eafe5a00117f2dbc356d inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top"><a id="aee5d454554f8eafe5a00117f2dbc356d"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#aee5d454554f8eafe5a00117f2dbc356d">set</a> (uint8_t channel, <a class="el" href="struct_property_data.html">PropertyData</a> *data)</td></tr>
+<tr class="memdesc:aee5d454554f8eafe5a00117f2dbc356d inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value for channel (complete data set) <br /></td></tr>
+<tr class="separator:aee5d454554f8eafe5a00117f2dbc356d inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf3e2decfaa3752da6957adf04c04aeb inherit pub_methods_class_plugin"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_plugin.html#aaf3e2decfaa3752da6957adf04c04aeb">set</a> (int data)</td></tr>
+<tr class="memdesc:aaf3e2decfaa3752da6957adf04c04aeb inherit pub_methods_class_plugin"><td class="mdescLeft">&#160;</td><td class="mdescRight">set value property (integer)  <a href="class_plugin.html#aaf3e2decfaa3752da6957adf04c04aeb">More...</a><br /></td></tr>
+<tr class="separator:aaf3e2decfaa3752da6957adf04c04aeb inherit pub_methods_class_plugin"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PWM dimmer <a class="el" href="class_plugin.html" title="parent plugin object">Plugin</a>. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<div class="textblock"><p>write a value to channel </p>
+<p>PWM dimmer actuator plugin.</p>
+<p>loop function of the PWM dimmer plugin</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>pointer to <a class="el" href="struct_property_data.html" title="Structure holding the datapoint information.">PropertyData</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>(boolean) true = achnkoleged new value</dd></dl>
+<p>The PWM <a class="el" href="class_plugin.html" title="parent plugin object">Plugin</a> comes with it's own loop and timer for frequent updates during dimming events. If the timer is triggered it in- or decrements the <code>_current</code> value to reach the <code>_target</code> The limits are checked and the current value is fine tuned if the target is reached within the <code>_increment</code> range</p>
+<p>Handles one PWM output including smooth fading with an given duration amd fade steps </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd><p class="startdd">logarithmic as LED for examples fades brightness on low duty cycles stringer than on higher values </p>
+<p class="enddd">lower limits as motors for example don't spin on low duty cycles (some motors can do slow rpm if you start them with a higher value and then step down) </p>
+</dd></dl>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a8a85c6812062b1a7d957e5c72d1bda43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a85c6812062b1a7d957e5c72d1bda43">&#9670;&nbsp;</a></span>PWM_Commands</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classa___p_w_mdimmer.html#a8a85c6812062b1a7d957e5c72d1bda43">a_PWMdimmer::PWM_Commands</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8a85c6812062b1a7d957e5c72d1bda43aff2f0a9d28b1a032e573afb429226b03"></a>FADE&#160;</td><td class="fielddoc"><p>fading in progress </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a8a85c6812062b1a7d957e5c72d1bda43a16b03a648ba666d5d27803030f163fb1"></a>TONE&#160;</td><td class="fielddoc"><p>play a tone on a buzzer or speaker. Parameters: frequency, duration </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="a9db09900c88f09c495a29f998beeb590"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9db09900c88f09c495a29f998beeb590">&#9670;&nbsp;</a></span>PWM_Options</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590">a_PWMdimmer::PWM_Options</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9db09900c88f09c495a29f998beeb590a5c2d026cf59992913397d5d95f70b45f"></a>PWM_FREQUENCY&#160;</td><td class="fielddoc"><p>PWM switching frequency. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9db09900c88f09c495a29f998beeb590ac1213c291dcaf8cc8381bbbacc6e7470"></a>PWM_MINIMUM&#160;</td><td class="fielddoc"><p>minimum Value </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9db09900c88f09c495a29f998beeb590a54d705f5073f0ad0e4e0d516e0986c76"></a>PWM_MAXIMUM&#160;</td><td class="fielddoc"><p>maximum Value </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9db09900c88f09c495a29f998beeb590a5f517ac646629af1bc45988530bc1d54"></a>PWM_FADE_DURATION_S&#160;</td><td class="fielddoc"><p>Fade duration in seconds. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9db09900c88f09c495a29f998beeb590ac675a6dba333cc887a50e7b2ba76d866"></a>PWM_FADE_DURATION_MS&#160;</td><td class="fielddoc"><p>Fade duration in seconds. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9db09900c88f09c495a29f998beeb590aa1acb55bab1ab4358d6215a2a216546e"></a>PWM_FADE_DELAY&#160;</td><td class="fielddoc"><p>shortest delay per fade step </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9db09900c88f09c495a29f998beeb590a5afb930666cb9e6f1411f4a8586a9759"></a>SCALE&#160;</td><td class="fielddoc"><p>set scaling factor and update output </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a9db09900c88f09c495a29f998beeb590a1fc5c750dbc76bb16828d25197c2544d"></a>SHIFT&#160;</td><td class="fielddoc"><p>set shift value and update output </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa38f28e55bec14ad2d9c3ebc2a3774a6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa38f28e55bec14ad2d9c3ebc2a3774a6">&#9670;&nbsp;</a></span>a_PWMdimmer()</h2>
 
@@ -202,8 +313,71 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8a85c338dbe75bbe2f7fd702b2e823f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a85c338dbe75bbe2f7fd702b2e823f4">&#9670;&nbsp;</a></span>get()</h2>
+<a id="a499e401a194ae08b3062cb8ade0b0f2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a499e401a194ae08b3062cb8ade0b0f2c">&#9670;&nbsp;</a></span>available()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool a_PWMdimmer::available </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>true if plugin / sensor data is available </p>
+<p>check if data is available</p>
+<dl class="section return"><dt>Returns</dt><dd>true if (new) data is available </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_plugin.html#afae7c6ae66ca513a5752c347aacc4b6b">Plugin</a>.</p>
+
+</div>
+</div>
+<a id="a0f4b5fad90cada45a6928d3ef6b8911f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f4b5fad90cada45a6928d3ef6b8911f">&#9670;&nbsp;</a></span>checkStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool a_PWMdimmer::checkStatus </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>check the status of the device returns true if initalized </p>
+<p>check the status of the plugin / device</p>
+<dl class="section return"><dt>Returns</dt><dd>(boolean) true if everthing is OK </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_plugin.html#a252db5bb06c5081dd1f7f3106fa2ec08">Plugin</a>.</p>
+
+</div>
+</div>
+<a id="a2e516af44cfaae683bfc55e5c5bcd955"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e516af44cfaae683bfc55e5c5bcd955">&#9670;&nbsp;</a></span>get()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,8 +388,7 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
         <tr>
           <td class="memname">float a_PWMdimmer::get </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>channel</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -226,21 +399,46 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </table>
 </div><div class="memdoc">
 
-<p>read/update current value </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">channel</td><td>number of channel to read </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>current value </dd></dl>
+<p>get value </p>
+<p>read/update current value</p>
+<dl class="section return"><dt>Returns</dt><dd>(float) current value </dd></dl>
 
-<p>Reimplemented from <a class="el" href="class_plugin.html#a1cb7d31edd08a8d90d6dfc9df8b7de45">Plugin</a>.</p>
+<p>Reimplemented from <a class="el" href="class_plugin.html#a7c254a322b7d3be69533939b7dd50c2a">Plugin</a>.</p>
 
 </div>
 </div>
-<a id="ac3e6faabccd6cb50f860bcf474aa925f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3e6faabccd6cb50f860bcf474aa925f">&#9670;&nbsp;</a></span>init()</h2>
+<a id="a1e2ca430b5b30c06bb9beffdcb51f82c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e2ca430b5b30c06bb9beffdcb51f82c">&#9670;&nbsp;</a></span>id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * a_PWMdimmer::id </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the id string of the plugin </p>
+<dl class="section return"><dt>Returns</dt><dd>id string (const char*) </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_plugin.html#aa8d8a1aacbb9a1e6cb37b1acf0cb1e57">Plugin</a>.</p>
+
+</div>
+</div>
+<a id="aa3abbf42492e73bcd6f19241d0d26232"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3abbf42492e73bcd6f19241d0d26232">&#9670;&nbsp;</a></span>init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,51 +449,14 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
         <tr>
           <td class="memname">bool a_PWMdimmer::init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_my_homie_node.html">MyHomieNode</a> *&#160;</td>
-          <td class="paramname"><em>homieNode</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>init PWM controller </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">nodeDef</td><td>pointer to node definition </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>result boolean - true=success </dd></dl>
-
-<p>Reimplemented from <a class="el" href="class_plugin.html#a7546d32024624aa1041429faca3cb145">Plugin</a>.</p>
-
-</div>
-</div>
-<a id="a131704568b71ae662f2756f342f5aab3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a131704568b71ae662f2756f342f5aab3">&#9670;&nbsp;</a></span>set()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool a_PWMdimmer::set </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
+          <td class="paramtype"><a class="el" href="class_my_homie_property.html">MyHomieProperty</a> *&#160;</td>
+          <td class="paramname"><em>homieProperty</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_property_data.html">PropertyData</a> *&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>gpio</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -310,21 +471,159 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </table>
 </div><div class="memdoc">
 
-<p>write a value to channel </p>
+<p>initialize property plugin </p>
+<p>init PWM controller</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">channel</td><td>number of channel to write to </td></tr>
+    <tr><td class="paramname">homieProperty</td><td>pointer to property definition </td></tr>
+    <tr><td class="paramname">gpio</td><td>gpio port number </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true = success </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(boolean) - true=success </dd></dl>
 
-<p>Reimplemented from <a class="el" href="class_plugin.html#aee5d454554f8eafe5a00117f2dbc356d">Plugin</a>.</p>
+<p>Reimplemented from <a class="el" href="class_plugin.html#afe1cd95bcc80eb0a37e4072a65689925">Plugin</a>.</p>
+
+</div>
+</div>
+<a id="ab7cd88b4186d72be56ea69d0fe5a38d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7cd88b4186d72be56ea69d0fe5a38d0">&#9670;&nbsp;</a></span>maxValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t a_PWMdimmer::maxValue </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the maximum generic value </p>
+<p>get the maximum setable generic value</p>
+<dl class="section return"><dt>Returns</dt><dd>(uint16_t) maximum Value </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_plugin.html#ac6933fad1569c71f21d9e3423b125775">Plugin</a>.</p>
+
+</div>
+</div>
+<a id="a8f641e8e9749fda2449d15620535a789"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f641e8e9749fda2449d15620535a789">&#9670;&nbsp;</a></span>minValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t a_PWMdimmer::minValue </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>get the minimum generic value </p>
+<p>get the minimum setable generic value</p>
+<dl class="section return"><dt>Returns</dt><dd>(uint16_t) minimum Value </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_plugin.html#a542ed25a99ce48e6d2a61aa7c61a8bfa">Plugin</a>.</p>
+
+</div>
+</div>
+<a id="aad80af2954d832edc4c6c258eebc9431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad80af2954d832edc4c6c258eebc9431">&#9670;&nbsp;</a></span>set()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool a_PWMdimmer::set </td>
+          <td>(</td>
+          <td class="paramtype">const String &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>set command string </p>
+<p>set a command string</p>
+<dl class="section return"><dt>Returns</dt><dd>(boolean) true if everthing is OK </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_plugin.html#ab15981cc879e56d1695a70dd6579e028">Plugin</a>.</p>
+
+</div>
+</div>
+<a id="acebd466936d1f315c3c471287721a14c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acebd466936d1f315c3c471287721a14c">&#9670;&nbsp;</a></span>setFilter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool a_PWMdimmer::setFilter </td>
+          <td>(</td>
+          <td class="paramtype">intValueFilter&#160;</td>
+          <td class="paramname"><em>filter</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><blockquote class="doxtable">
+<p>set plugin option </p>
+</blockquote>
+</p>
+<p>set an integer value filter</p>
+<p>set individual channel option (filter callback function)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filter</td><td>(intValueFilter) filter callback function </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true on success; </dd></dl>
+
+<p>Reimplemented from <a class="el" href="class_plugin.html#a8e822c9d560a18e797dbab0c584b5754">Plugin</a>.</p>
 
 </div>
 </div>
 <a id="aefe066a34be261c8909dd72d851669aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefe066a34be261c8909dd72d851669aa">&#9670;&nbsp;</a></span>setOption() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aefe066a34be261c8909dd72d851669aa">&#9670;&nbsp;</a></span>setOption()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -360,74 +659,19 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <p>set a plugin option </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">option</td><td>(uint16_t) option ID: PWM_FREQUENCY to set the PWM frequency from 100 to 40kHz </td></tr>
-    <tr><td class="paramname">value</td><td>(bool) option value </td></tr>
+    <tr><td class="paramname">option</td><td>(uint16_t) option Id </td></tr>
+    <tr><td class="paramname">value</td><td>(int) option value </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if option set successfull </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(boolean) true if option set successfull </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_plugin.html#aa31b78849344b0340795e9df40d9301b">Plugin</a>.</p>
 
 </div>
 </div>
-<a id="acaad8eac27c536608df906f69554d632"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acaad8eac27c536608df906f69554d632">&#9670;&nbsp;</a></span>setOption() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool a_PWMdimmer::setOption </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>option</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>set a channel option </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">option</td><td>(uint16_t) option ID: PWM_FREQUENCY to set the PWM frequency from 100 to 40kHz </td></tr>
-    <tr><td class="paramname">channel</td><td>(uint8_t) channel number </td></tr>
-    <tr><td class="paramname">value</td><td>(float) option value </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if option set successfull </dd></dl>
-
-<p>Reimplemented from <a class="el" href="class_plugin.html#a274cd9e6919550d60cb76a62d2302b23">Plugin</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>lib/a_pwm_dimmer/<a class="el" href="a__pwm__dimmer_8hpp_source.html">a_pwm_dimmer.hpp</a></li>
+<li>lib/a_pwm_dimmer/<a class="el" href="a__pwm__dimmer_8h_source.html">a_pwm_dimmer.h</a></li>
 <li>lib/a_pwm_dimmer/a_pwm_dimmer.cpp</li>
 </ul>
 </div><!-- contents -->

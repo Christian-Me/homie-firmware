@@ -1,6 +1,7 @@
 var struct_property_data =
 [
     [ "current", "struct_property_data.html#a21136010ecd5f3867dbc84d2c56b404b", null ],
+    [ "defaultValue", "struct_property_data.html#a0917a8e1961693d786caced8bea9a4c9", null ],
     [ "initialSample", "struct_property_data.html#a54a326d264cfcc84eeefde4dabc50e87", null ],
     [ "last", "struct_property_data.html#aadb033b160151b7c0db5a22ef1bbf017", null ],
     [ "read", "struct_property_data.html#a0a0faca2e7e35d9deb7647bdf25a7ccf", null ],

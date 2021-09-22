@@ -1,4 +1,5 @@
 #include "sequencer.h"
+#include <homieSyslog.h>
 
 bool Sequencer::startSequence(SequenceStep* sequence, SequencerCallback callback){
   _sequenceCounter = 0;
@@ -16,6 +17,7 @@ bool Sequencer::startSequence(SequenceStep* sequence, SequencerCallback callback
 };
 
 unsigned long Sequencer::sequenceStep(uint8_t step){
+  myLog.printf(LOG_DEBUG,F("Sequencer Step #%d for %dms"), step, _sequence[step].delay);
   if (!_callback(_sequence[step].node,_sequence[step].property,_sequence[step].value)) {
     return 0; // cancel sequence
   };

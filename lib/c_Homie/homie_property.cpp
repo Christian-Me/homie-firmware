@@ -350,8 +350,9 @@ bool MyHomieProperty::defaultPropertyReadHandler(uint8_t task, MyHomieNode* homi
 /*!
    @brief    check if property has matches a specific id
     @param    id    (const char*) id to check
+    @param    start (uint8_t)(optional) compare from position
    @returns  true if property has this id
 */
-bool MyHomieProperty::isTarget (const char* id) {
-  return (strcmp(getId(),id)==0);
+bool MyHomieProperty::isTarget (const char* id, uint8_t start) {
+  return (strcmp(getId() + start,id)==0);
 };

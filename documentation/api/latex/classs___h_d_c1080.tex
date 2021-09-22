@@ -1,0 +1,98 @@
+\hypertarget{classs___h_d_c1080}{}\doxysection{s\+\_\+\+HDC1080 Class Reference}
+\label{classs___h_d_c1080}\index{s\_HDC1080@{s\_HDC1080}}
+
+
+HDC1080 \mbox{\hyperlink{class_plugin}{Plugin}}.  
+
+
+
+
+{\ttfamily \#include $<$s\+\_\+\+HDC1080.\+h$>$}
+
+Inheritance diagram for s\+\_\+\+HDC1080\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classs___h_d_c1080}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942}{HDC1080\+\_\+\+Options}} \{ \mbox{\hyperlink{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942affafb43076a7166ead87c749d8292acb}{HUMIDITY\+\_\+\+RESOLUTION}} = 1
+, \mbox{\hyperlink{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942aa7525ce32a2bdfac64b4b9d1c72c000b}{TEMPERATURE\+\_\+\+RESOLUTION}} = 2
+, \mbox{\hyperlink{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942a8ad1ff2120ba742d21f5821bd696b34b}{HEATER}} = 3
+ \}
+\begin{DoxyCompactList}\small\item\em HDC1080 options. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_a3b11ec1f208a52b949199bd19d77d5d3}\label{classs___h_d_c1080_a3b11ec1f208a52b949199bd19d77d5d3}} 
+enum {\bfseries HDC2090\+\_\+\+Channels} \{ {\bfseries CHANNEL\+\_\+\+TEMPERATURE} = 1
+, {\bfseries CHANNEL\+\_\+\+HUMIDITY} = 2
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classs___h_d_c1080_a63bb084e66520c9f68687e1194c418ce}\label{classs___h_d_c1080_a63bb084e66520c9f68687e1194c418ce}} 
+const char $\ast$ \mbox{\hyperlink{classs___h_d_c1080_a63bb084e66520c9f68687e1194c418ce}{id}} ()
+\begin{DoxyCompactList}\small\item\em returns the id string \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_ab394d7be350f363c3805ea90108744d6}\label{classs___h_d_c1080_ab394d7be350f363c3805ea90108744d6}} 
+\mbox{\hyperlink{classs___h_d_c1080_ab394d7be350f363c3805ea90108744d6}{s\+\_\+\+HDC1080}} (int port)
+\begin{DoxyCompactList}\small\item\em constructor port= I2C address or port=0 autodetect \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_a0e5b6ab29cf6582ae95d55ece1d09f01}\label{classs___h_d_c1080_a0e5b6ab29cf6582ae95d55ece1d09f01}} 
+bool \mbox{\hyperlink{classs___h_d_c1080_a0e5b6ab29cf6582ae95d55ece1d09f01}{init}} (\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$homie\+Node)
+\begin{DoxyCompactList}\small\item\em initialize the device \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_ac35943fefb6b48111845d2a05865a4b8}\label{classs___h_d_c1080_ac35943fefb6b48111845d2a05865a4b8}} 
+bool \mbox{\hyperlink{classs___h_d_c1080_ac35943fefb6b48111845d2a05865a4b8}{check\+Status}} ()
+\begin{DoxyCompactList}\small\item\em check the status of the device \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_a0069c705b1f49d0cf87bbf0ec913b502}\label{classs___h_d_c1080_a0069c705b1f49d0cf87bbf0ec913b502}} 
+bool \mbox{\hyperlink{classs___h_d_c1080_a0069c705b1f49d0cf87bbf0ec913b502}{set\+Option}} (uint16\+\_\+t option, bool value)
+\begin{DoxyCompactList}\small\item\em set individual plugin option (bool) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_a3a0d4989cb2ce3317bf8a9b948e39a61}\label{classs___h_d_c1080_a3a0d4989cb2ce3317bf8a9b948e39a61}} 
+bool \mbox{\hyperlink{classs___h_d_c1080_a3a0d4989cb2ce3317bf8a9b948e39a61}{set\+Option}} (uint16\+\_\+t option, int value)
+\begin{DoxyCompactList}\small\item\em set individual plugin option (int) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_ae8ca0788fcc966fa9200fdfd39b5cdc9}\label{classs___h_d_c1080_ae8ca0788fcc966fa9200fdfd39b5cdc9}} 
+bool \mbox{\hyperlink{classs___h_d_c1080_ae8ca0788fcc966fa9200fdfd39b5cdc9}{available}} ()
+\begin{DoxyCompactList}\small\item\em true if sensor data is available \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_a567060c087ab9ec98215536b6326f17d}\label{classs___h_d_c1080_a567060c087ab9ec98215536b6326f17d}} 
+void \mbox{\hyperlink{classs___h_d_c1080_a567060c087ab9ec98215536b6326f17d}{loop}} ()
+\begin{DoxyCompactList}\small\item\em main loop \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_a5061edd818d2ca836f87df559ceabd26}\label{classs___h_d_c1080_a5061edd818d2ca836f87df559ceabd26}} 
+bool \mbox{\hyperlink{classs___h_d_c1080_a5061edd818d2ca836f87df559ceabd26}{read}} ()
+\begin{DoxyCompactList}\small\item\em read values from device and write to property database$\ast$/ \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___h_d_c1080_aad5e55d585b37fac1ba3d68d5e817d52}\label{classs___h_d_c1080_aad5e55d585b37fac1ba3d68d5e817d52}} 
+float \mbox{\hyperlink{classs___h_d_c1080_aad5e55d585b37fac1ba3d68d5e817d52}{get}} (uint8\+\_\+t channel)
+\begin{DoxyCompactList}\small\item\em read value from one device channel or from database \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+HDC1080 \mbox{\hyperlink{class_plugin}{Plugin}}. 
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942}\label{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942}} 
+\index{s\_HDC1080@{s\_HDC1080}!HDC1080\_Options@{HDC1080\_Options}}
+\index{HDC1080\_Options@{HDC1080\_Options}!s\_HDC1080@{s\_HDC1080}}
+\doxysubsubsection{\texorpdfstring{HDC1080\_Options}{HDC1080\_Options}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942}{s\+\_\+\+HDC1080\+::\+HDC1080\+\_\+\+Options}}}
+
+
+
+HDC1080 options. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HUMIDITY\_RESOLUTION@{HUMIDITY\_RESOLUTION}!s\_HDC1080@{s\_HDC1080}}\index{s\_HDC1080@{s\_HDC1080}!HUMIDITY\_RESOLUTION@{HUMIDITY\_RESOLUTION}}}\mbox{\Hypertarget{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942affafb43076a7166ead87c749d8292acb}\label{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942affafb43076a7166ead87c749d8292acb}} 
+HUMIDITY\+\_\+\+RESOLUTION&HDC1080\+\_\+\+RESOLUTION\+\_\+8\+BIT, HDC1080\+\_\+\+RESOLUTION\+\_\+11\+BIT, HDC1080\+\_\+\+RESOLUTION\+\_\+14\+BIT. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TEMPERATURE\_RESOLUTION@{TEMPERATURE\_RESOLUTION}!s\_HDC1080@{s\_HDC1080}}\index{s\_HDC1080@{s\_HDC1080}!TEMPERATURE\_RESOLUTION@{TEMPERATURE\_RESOLUTION}}}\mbox{\Hypertarget{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942aa7525ce32a2bdfac64b4b9d1c72c000b}\label{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942aa7525ce32a2bdfac64b4b9d1c72c000b}} 
+TEMPERATURE\+\_\+\+RESOLUTION&HDC1080\+\_\+\+RESOLUTION\+\_\+8\+BIT, HDC1080\+\_\+\+RESOLUTION\+\_\+11\+BIT, HDC1080\+\_\+\+RESOLUTION\+\_\+14\+BIT. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HEATER@{HEATER}!s\_HDC1080@{s\_HDC1080}}\index{s\_HDC1080@{s\_HDC1080}!HEATER@{HEATER}}}\mbox{\Hypertarget{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942a8ad1ff2120ba742d21f5821bd696b34b}\label{classs___h_d_c1080_a3e829e64bbeb35abde3966ce64365942a8ad1ff2120ba742d21f5821bd696b34b}} 
+HEATER&Heater duration in seconds. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib\+\_\+4\+MB/s\+\_\+\+HDC1080/s\+\_\+\+HDC1080.\+h\end{DoxyCompactItemize}

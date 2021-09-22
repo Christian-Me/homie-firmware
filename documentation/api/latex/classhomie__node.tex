@@ -1,0 +1,41 @@
+\hypertarget{classhomie__node}{}\doxysection{homie\+\_\+node Class Reference}
+\label{classhomie__node}\index{homie\_node@{homie\_node}}
+
+
+adds a property to a node by calling this mehtod a property is created defined by the {\ttfamily \mbox{\hyperlink{struct_homie_property_def}{Homie\+Property\+Def}}} structure. in addition a channel of a node plugin or a property plugin including the basic port value can be associated  
+
+
+
+
+\doxysubsection{Detailed Description}
+adds a property to a node by calling this mehtod a property is created defined by the {\ttfamily \mbox{\hyperlink{struct_homie_property_def}{Homie\+Property\+Def}}} structure. in addition a channel of a node plugin or a property plugin including the basic port value can be associated 
+
+
+\begin{DoxyParams}{Parameters}
+{\em def} & (\mbox{\hyperlink{struct_homie_property_def}{Homie\+Property\+Def}}) \{(string)id, (sting)name, (string)unit, (uint8\+\_\+t) datatype, (bool) retained, (string) format, (bool) settable, (float) threshold, (uint16\+\_\+t) sample\+Rate \mbox{[}s\mbox{]}, (uint16\+\_\+t) timeout \mbox{[}s\mbox{]}, (uint8\+\_\+t) oversampling\} \\
+\hline
+{\em channel} & (unit8\+\_\+t) channel \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to homie Node
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em def} & (\mbox{\hyperlink{struct_homie_property_def}{Homie\+Property\+Def}}) \{(string)id, (sting)name, (string)unit, (uint8\+\_\+t) datatype, (bool) retained, (string) format, (bool) settable, (float) threshold, (uint16\+\_\+t) sample\+Rate \mbox{[}s\mbox{]}, (uint16\+\_\+t) timeout \mbox{[}s\mbox{]}, (uint8\+\_\+t) oversampling\} \\
+\hline
+{\em plugin\+Id} & optional (unit8\+\_\+t) id of the plugin \\
+\hline
+{\em gpio} & optional (unit8\+\_\+t) gpio / port value \\
+\hline
+{\em default\+Value} & optional (float) default value during intialisation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to homie Node 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/c\+\_\+\+Homie/homie\+\_\+node.\+cpp\end{DoxyCompactItemize}

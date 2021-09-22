@@ -93,12 +93,12 @@ $(document).ready(function(){initNavTree('class_my_homie_device.html',''); initR
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad3a51b7527810e9359085a8753db3a3c"><td class="memItemLeft" align="right" valign="top"><a id="ad3a51b7527810e9359085a8753db3a3c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (const <a class="el" href="struct_homie_device_def.html">HomieDeviceDef</a> *homieDevice)</td></tr>
-<tr class="separator:ad3a51b7527810e9359085a8753db3a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea5a27c424a6baab6caa94f07118ec57"><td class="memItemLeft" align="right" valign="top"><a id="aea5a27c424a6baab6caa94f07118ec57"></a>
-<a class="el" href="class_my_homie_node.html">MyHomieNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>addNode</b> (uint8_t pluginId, const <a class="el" href="struct_homie_node_def.html">HomieNodeDef</a> *homieNode)</td></tr>
-<tr class="separator:aea5a27c424a6baab6caa94f07118ec57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1c79c5645d99bb94a74ff9fc17fa528"><td class="memItemLeft" align="right" valign="top"><a id="ab1c79c5645d99bb94a74ff9fc17fa528"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (<a class="el" href="struct_homie_device_def.html">HomieDeviceDef</a> homieDevice)</td></tr>
+<tr class="separator:ab1c79c5645d99bb94a74ff9fc17fa528"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addfbcc04b7bb91a6a19ed4f8756e621a"><td class="memItemLeft" align="right" valign="top"><a id="addfbcc04b7bb91a6a19ed4f8756e621a"></a>
+<a class="el" href="class_my_homie_node.html">MyHomieNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>addNode</b> (<a class="el" href="struct_homie_node_def.html">HomieNodeDef</a> nodeDef, uint8_t pluginId=VIRTUAL_ID, uint8_t gpio=0)</td></tr>
+<tr class="separator:addfbcc04b7bb91a6a19ed4f8756e621a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95e41f8a3cba539cf37ad73d9529b1ce"><td class="memItemLeft" align="right" valign="top"><a id="a95e41f8a3cba539cf37ad73d9529b1ce"></a>
 <a class="el" href="class_my_homie_node.html">MyHomieNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getNode</b> (uint8_t index) const</td></tr>
 <tr class="separator:a95e41f8a3cba539cf37ad73d9529b1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,22 +108,171 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (const <a cl
 <tr class="memitem:a88955bc85f377f97ae4e0ada2bc5d488"><td class="memItemLeft" align="right" valign="top"><a id="a88955bc85f377f97ae4e0ada2bc5d488"></a>
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>length</b> ()</td></tr>
 <tr class="separator:a88955bc85f377f97ae4e0ada2bc5d488"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8630ff8c3dd5daf8328f28e41297d46"><td class="memItemLeft" align="right" valign="top"><a id="ad8630ff8c3dd5daf8328f28e41297d46"></a>
-const <a class="el" href="struct_homie_device_def.html">HomieDeviceDef</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getDef</b> ()</td></tr>
-<tr class="separator:ad8630ff8c3dd5daf8328f28e41297d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad49c3d32b890ce2d9443afe1ceb87a85"><td class="memItemLeft" align="right" valign="top"><a id="ad49c3d32b890ce2d9443afe1ceb87a85"></a>
+const <a class="el" href="struct_homie_device_def.html">HomieDeviceDef</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getDef</b> ()</td></tr>
+<tr class="separator:ad49c3d32b890ce2d9443afe1ceb87a85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1585b4072311c785c2f1f2c9c3b4db19"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_my_homie_device.html#a1585b4072311c785c2f1f2c9c3b4db19">setOption</a> (const char *nodeId, const char *propertyId, uint16_t option, int value) const</td></tr>
+<tr class="memdesc:a1585b4072311c785c2f1f2c9c3b4db19"><td class="mdescLeft">&#160;</td><td class="mdescRight">set option of one or many properties. Will exits on first error!  <a href="class_my_homie_device.html#a1585b4072311c785c2f1f2c9c3b4db19">More...</a><br /></td></tr>
+<tr class="separator:a1585b4072311c785c2f1f2c9c3b4db19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af69eaeb2dea8c0a6307f85565a810a47"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_my_homie_device.html#af69eaeb2dea8c0a6307f85565a810a47">setFilter</a> (const char *nodeId, const char *propertyId, floatValueFilter filter) const</td></tr>
+<tr class="memdesc:af69eaeb2dea8c0a6307f85565a810a47"><td class="mdescLeft">&#160;</td><td class="mdescRight">set option of one or many properties. Will exits on first error!  <a href="class_my_homie_device.html#af69eaeb2dea8c0a6307f85565a810a47">More...</a><br /></td></tr>
+<tr class="separator:af69eaeb2dea8c0a6307f85565a810a47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedb5c484f24fe3e52fe605259b765c2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_my_homie_device.html#aedb5c484f24fe3e52fe605259b765c2a">setFilter</a> (const char *nodeId, const char *propertyId, intValueFilter filter) const</td></tr>
+<tr class="memdesc:aedb5c484f24fe3e52fe605259b765c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">set filter callback of one or many properties. Will exits on first error!  <a href="class_my_homie_device.html#aedb5c484f24fe3e52fe605259b765c2a">More...</a><br /></td></tr>
+<tr class="separator:aedb5c484f24fe3e52fe605259b765c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a809ffde9e36782389fd6dccd44a30d1d"><td class="memItemLeft" align="right" valign="top"><a id="a809ffde9e36782389fd6dccd44a30d1d"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>setValue</b> (const char *nodeId, const char *propertyId, float value) const</td></tr>
 <tr class="separator:a809ffde9e36782389fd6dccd44a30d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c07a55033e861473aac66ac2a821fa2"><td class="memItemLeft" align="right" valign="top"><a id="a3c07a55033e861473aac66ac2a821fa2"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>setFactor</b> (const char *nodeId, const char *propertyId, float value) const</td></tr>
 <tr class="separator:a3c07a55033e861473aac66ac2a821fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48e881d1f823cdeea738551353ee6289"><td class="memItemLeft" align="right" valign="top"><a id="a48e881d1f823cdeea738551353ee6289"></a>
-<a class="el" href="class_my_homie_node.html">MyHomieNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>createHomieNode</b> (uint8_t pluginId, const <a class="el" href="struct_homie_node_def.html">HomieNodeDef</a> *nodeDef)</td></tr>
-<tr class="separator:a48e881d1f823cdeea738551353ee6289"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39e0e310832a779327cf7bed66f650da"><td class="memItemLeft" align="right" valign="top"><a id="a39e0e310832a779327cf7bed66f650da"></a>
 unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>loop</b> ()</td></tr>
 <tr class="separator:a39e0e310832a779327cf7bed66f650da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="af69eaeb2dea8c0a6307f85565a810a47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af69eaeb2dea8c0a6307f85565a810a47">&#9670;&nbsp;</a></span>setFilter() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MyHomieDevice::setFilter </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>nodeId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>propertyId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">floatValueFilter&#160;</td>
+          <td class="paramname"><em>filter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>set option of one or many properties. Will exits on first error! </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodeId</td><td>(string) the nodeId, wildcards (*,?,.) allowed. </td></tr>
+    <tr><td class="paramname">propertyId</td><td>(string) the propertyId, wildcards (*,?,.) allowed. Provide a empty propertyId for node plugins </td></tr>
+    <tr><td class="paramname">filter</td><td>(floatValueFilter) filter callback function </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successfull </dd></dl>
+
+</div>
+</div>
+<a id="aedb5c484f24fe3e52fe605259b765c2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedb5c484f24fe3e52fe605259b765c2a">&#9670;&nbsp;</a></span>setFilter() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MyHomieDevice::setFilter </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>nodeId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>propertyId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">intValueFilter&#160;</td>
+          <td class="paramname"><em>filter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>set filter callback of one or many properties. Will exits on first error! </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodeId</td><td>(string) the nodeId, wildcards (*,?,.) allowed. </td></tr>
+    <tr><td class="paramname">propertyId</td><td>(string) the propertyId, wildcards (*,?,.) allowed. Provide a empty propertyId for node plugins </td></tr>
+    <tr><td class="paramname">filter</td><td>(intValueFilter) filter callback function </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successfull </dd></dl>
+
+</div>
+</div>
+<a id="a1585b4072311c785c2f1f2c9c3b4db19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1585b4072311c785c2f1f2c9c3b4db19">&#9670;&nbsp;</a></span>setOption()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MyHomieDevice::setOption </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>nodeId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>propertyId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>option</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>set option of one or many properties. Will exits on first error! </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodeId</td><td>(string) the nodeId, wildcards (*,?,.) allowed. </td></tr>
+    <tr><td class="paramname">propertyId</td><td>(string) the propertyId, wildcards (*,?,.) allowed. Provide a empty propertyId for node plugins </td></tr>
+    <tr><td class="paramname">option</td><td>(uint18_t) option id </td></tr>
+    <tr><td class="paramname">value</td><td>(integer) value to be set </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if successfull </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>lib/c_Homie/<a class="el" href="homie__device_8hpp_source.html">homie_device.hpp</a></li>
 <li>lib/c_Homie/homie_device.cpp</li>

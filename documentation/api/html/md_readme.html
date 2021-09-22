@@ -87,15 +87,16 @@ $(document).ready(function(){initNavTree('md_readme.html',''); initResizable(); 
 <div class="title">homie-firmware </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Early alpha of my own firmware for my automation projects on ESP8266 and ESP32 platform it is based on the great homie-esp8266 library.</p>
-<p>It is still a work in progress but I'm happy like it is working now</p>
+<div class="textblock"><p><b>Work in progress update #1</b></p>
+<p>Early alpha of my own firmware for my automation projects on ESP8266 and ESP32 platform it is based on the great homie-esp8266 library.</p>
+<p>It is still a work in progress but I'm happy like it is working now <b>next:</b> design of the display api</p>
 <p><a href="https://homieiot.github.io/"><img src="https://homieiot.github.io/img/works-with-homie.png" alt="works with MQTT Homie" class="inline"/> </a></p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+<h1><a class="anchor" id="autotoc_md23"></a>
 intro</h1>
 <p>As handy as all the great frameworks like ESPEasy, Tasmota ... sooner or later I had issues with some details. As I use the homie convention for my communication via MQTT the choices are limited too. After several single task projects I decided to start with a new approach collecting all the bits and pieces into my own modular firmware or perhaps I should call it framework?</p>
 <p>Perhaps I'm reinventing the wheel here. But why not?</p>
 <p><b>Any ideas, comments, issues, help or contributions are welcome.</b></p>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md24"></a>
 features</h1>
 <ul>
 <li>small footprint 400k with 3 plugins (OTA should be possible even on 1MB flash). Will be reduced by removing a lot of debugging log messages.</li>
@@ -108,34 +109,39 @@ features</h1>
 <li>write your own code using c and not a limited scripting interpreter</li>
 <li>OTA via MQTT upload thanks to the homie-ESP8266 library (you can use DHCP for your devices)</li>
 <li>crash detection (to be improved) to enable OTA even when your code causes an exception resulting in a boot loop</li>
-<li>logging to console and syslog. Console logging can switch log level and extra info by key press.</li>
+<li>logging to console and syslog. Console logging can switch log level (1..8) and extra info (i,m) by key press.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md6"></a>
+<h1><a class="anchor" id="autotoc_md25"></a>
 get started.</h1>
 <p>This project is intended to be compiled using <a href="https://platformio.org/">platformIO</a>. I highly recommend using vs-code as your IDE not only because this is the official IDE for platformIO but it is a great tool for beginners and advanced users</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 create your on project</h2>
 <ul>
 <li>create your project in <code>platformio.ini</code> with a unique <code>build_flag</code></li>
-<li>add your project into <code><a class="el" href="projects_8h_source.html">projects.h</a></code> and include your <code>device-yours.h</code> file</li>
-<li>edit your <code>device-yours.h</code> file. Here is where all your device specific things should happen. Take a look into <code>device-testbench.h</code> for reference (Update: use <code><a class="el" href="device-_p_l_a_n_t-control_8h_source.html">device-PLANT-control.h</a></code> because the API had changed. I will update the test bench soon.)</li>
+<li>add your project into <code>device-xxx.h</code> and include it to your section in the <code>platform.ini</code> file</li>
+<li>edit your <code>device-xxx.h</code> file. Here is where all your device specific things should happen.</li>
 <li>edit your own <code>config.json</code> with your device configuration (see example)</li>
 <li>upload your <code>config.json</code> via usb or flash the initial-upload build to use the config web interface or upload your config using curl</li>
 <li>flash your firmware via usb/serial or OTA if you have flashed the initial-upload build</li>
 <li>use the serial console or syslog for debugging</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h1><a class="anchor" id="autotoc_md27"></a>
 platforms</h1>
 <ul>
 <li>[X] ESP8266 (minimum 1MB flash)</li>
 <li>[X] ESP8285 (used in many of the shelf devices, 1MB flash)</li>
 <li>[ ] ESP32</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md9"></a>
+<h1><a class="anchor" id="autotoc_md28"></a>
 modules</h1>
 <p>the following list shows the planned and implemented devices. Basically all devices I used before or planning to use in the near future. Think the list grows quickly. Hopefully the ticks too.</p>
-<p><b>Update:</b> as the API for plugins is still work in progress.</p>
-<h2><a class="anchor" id="autotoc_md10"></a>
+<p><b>Update:</b></p><ul>
+<li>the API for plugins is more developed.</li>
+<li>scheduler works better</li>
+<li>device-xxx api is getting stable</li>
+<li>log period pwm fading</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md29"></a>
 core</h2>
 <ul>
 <li>[X] MQTT communication following the homie convention</li>
@@ -147,24 +153,26 @@ core</h2>
 <li>[X] data averaging to limit sensor noise. Configurable per property.</li>
 <li>[ ] auto sleep / deep sleep based on the timer settings</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md11"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 sensors</h2>
 <ul>
 <li>[X] ADS1115 4ch 16 bit AD converter</li>
 <li>[X] BME280 temperature, humidity and pressure sensor</li>
+<li>[X] HDC1080 temperature, humidity sensor</li>
 <li>[ ] BME680 air quality (IAQ), temperature, humidity and pressure sensor</li>
 <li>[X] BH1750 light sensor (LUX meter)</li>
+<li>[ ] HLW8012 mains power sensor</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 actuators</h2>
 <ul>
-<li>[ ] RELAY / MOSFET switch (GPIO)</li>
-<li>[ ] DC Motor actuator</li>
+<li>[X] RELAY / MOSFET switch (GPIO)</li>
+<li>[X] DC Motor actuator</li>
 <li>[X] LED dimmers, bulbs and strips (PWM)</li>
 <li>[ ] RGBW addressable LED</li>
 <li>[ ] TUYA serial mcus</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h2><a class="anchor" id="autotoc_md32"></a>
 human interface devices HID</h2>
 <ul>
 <li>[ ] RGBW addressable LED (Neopixels)</li>
@@ -173,10 +181,10 @@ human interface devices HID</h2>
 <li>[ ] LCD Matrix display (SPI)</li>
 <li>[ ] LCD Character display (I2C)</li>
 <li>[ ] OLED Display (I2C)</li>
-<li>[ ] Push Button</li>
+<li>[X] Push Button</li>
 <li>[ ] i2c rotary encoder (with RGB led)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md14"></a>
+<h1><a class="anchor" id="autotoc_md33"></a>
 commercial devices</h1>
 <ul>
 <li>[ ] Sonoff mini / S20 (1xRELAY, Push Button, indicator LED, ESP8285)</li>

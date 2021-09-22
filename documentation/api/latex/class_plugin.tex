@@ -1,0 +1,302 @@
+\hypertarget{class_plugin}{}\doxysection{Plugin Class Reference}
+\label{class_plugin}\index{Plugin@{Plugin}}
+
+
+parent plugin object  
+
+
+
+
+{\ttfamily \#include $<$plugins.\+h$>$}
+
+Inheritance diagram for Plugin\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_plugin}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_plugin_aa8d8a1aacbb9a1e6cb37b1acf0cb1e57}\label{class_plugin_aa8d8a1aacbb9a1e6cb37b1acf0cb1e57}} 
+virtual const char $\ast$ \mbox{\hyperlink{class_plugin_aa8d8a1aacbb9a1e6cb37b1acf0cb1e57}{id}} ()
+\begin{DoxyCompactList}\small\item\em returns the id string \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_plugin_a7546d32024624aa1041429faca3cb145}{init}} (\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$homie\+Node)
+\begin{DoxyCompactList}\small\item\em initialize node plugin \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_plugin_afe1cd95bcc80eb0a37e4072a65689925}{init}} (\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Node, uint8\+\_\+t gpio)
+\begin{DoxyCompactList}\small\item\em initialize property plugin \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_a252db5bb06c5081dd1f7f3106fa2ec08}\label{class_plugin_a252db5bb06c5081dd1f7f3106fa2ec08}} 
+virtual bool \mbox{\hyperlink{class_plugin_a252db5bb06c5081dd1f7f3106fa2ec08}{check\+Status}} (void)
+\begin{DoxyCompactList}\small\item\em check the status of the device returns true if initalized \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_aa31b78849344b0340795e9df40d9301b}\label{class_plugin_aa31b78849344b0340795e9df40d9301b}} 
+virtual bool \mbox{\hyperlink{class_plugin_aa31b78849344b0340795e9df40d9301b}{set\+Option}} (uint16\+\_\+t option, int value)
+\begin{DoxyCompactList}\small\item\em set individual plugin option (int) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_a993485eba589376949e989abb063584a}\label{class_plugin_a993485eba589376949e989abb063584a}} 
+virtual bool \mbox{\hyperlink{class_plugin_a993485eba589376949e989abb063584a}{set\+Option}} (uint16\+\_\+t option, bool value)
+\begin{DoxyCompactList}\small\item\em set individual plugin option (bool) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_aa27d2ca16c9dd2bec93a27b1e9c19975}\label{class_plugin_aa27d2ca16c9dd2bec93a27b1e9c19975}} 
+virtual bool \mbox{\hyperlink{class_plugin_aa27d2ca16c9dd2bec93a27b1e9c19975}{set\+Option}} (uint16\+\_\+t option, float value)
+\begin{DoxyCompactList}\small\item\em set individual plugin option (float) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_a274cd9e6919550d60cb76a62d2302b23}\label{class_plugin_a274cd9e6919550d60cb76a62d2302b23}} 
+virtual bool \mbox{\hyperlink{class_plugin_a274cd9e6919550d60cb76a62d2302b23}{set\+Option}} (uint16\+\_\+t option, uint8\+\_\+t channel, float value)
+\begin{DoxyCompactList}\small\item\em set individual channel option (float) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_a217ab791c2afc63af74cdae4ac1c3f64}\label{class_plugin_a217ab791c2afc63af74cdae4ac1c3f64}} 
+virtual bool \mbox{\hyperlink{class_plugin_a217ab791c2afc63af74cdae4ac1c3f64}{set\+Filter}} (float\+Value\+Filter filter)
+\begin{DoxyCompactList}\small\item\em set individual channel option (filter callback function) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_a8e822c9d560a18e797dbab0c584b5754}\label{class_plugin_a8e822c9d560a18e797dbab0c584b5754}} 
+virtual bool \mbox{\hyperlink{class_plugin_a8e822c9d560a18e797dbab0c584b5754}{set\+Filter}} (int\+Value\+Filter filter)
+\begin{DoxyCompactList}\small\item\em set individual channel option (filter callback function) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_a542ed25a99ce48e6d2a61aa7c61a8bfa}\label{class_plugin_a542ed25a99ce48e6d2a61aa7c61a8bfa}} 
+virtual uint16\+\_\+t \mbox{\hyperlink{class_plugin_a542ed25a99ce48e6d2a61aa7c61a8bfa}{min\+Value}} ()
+\begin{DoxyCompactList}\small\item\em get the minimum generic value \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_ac6933fad1569c71f21d9e3423b125775}\label{class_plugin_ac6933fad1569c71f21d9e3423b125775}} 
+virtual uint16\+\_\+t \mbox{\hyperlink{class_plugin_ac6933fad1569c71f21d9e3423b125775}{max\+Value}} ()
+\begin{DoxyCompactList}\small\item\em get the maximum generic value \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_afae7c6ae66ca513a5752c347aacc4b6b}\label{class_plugin_afae7c6ae66ca513a5752c347aacc4b6b}} 
+virtual bool \mbox{\hyperlink{class_plugin_afae7c6ae66ca513a5752c347aacc4b6b}{available}} ()
+\begin{DoxyCompactList}\small\item\em true if plugin / sensor data is available \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_aade6be28a6bb6083bf93375d2d188793}\label{class_plugin_aade6be28a6bb6083bf93375d2d188793}} 
+virtual void \mbox{\hyperlink{class_plugin_aade6be28a6bb6083bf93375d2d188793}{loop}} ()
+\begin{DoxyCompactList}\small\item\em main loop \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_a59b4067bb360e6349e170244a8fae557}\label{class_plugin_a59b4067bb360e6349e170244a8fae557}} 
+virtual bool \mbox{\hyperlink{class_plugin_a59b4067bb360e6349e170244a8fae557}{read}} ()
+\begin{DoxyCompactList}\small\item\em read values from device \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_a7c254a322b7d3be69533939b7dd50c2a}\label{class_plugin_a7c254a322b7d3be69533939b7dd50c2a}} 
+virtual float \mbox{\hyperlink{class_plugin_a7c254a322b7d3be69533939b7dd50c2a}{get}} ()
+\begin{DoxyCompactList}\small\item\em get value \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_a1cb7d31edd08a8d90d6dfc9df8b7de45}\label{class_plugin_a1cb7d31edd08a8d90d6dfc9df8b7de45}} 
+virtual float \mbox{\hyperlink{class_plugin_a1cb7d31edd08a8d90d6dfc9df8b7de45}{get}} (uint8\+\_\+t channel)
+\begin{DoxyCompactList}\small\item\em get value for channel \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_plugin_ad71012e7e737b8df1ba157166874b22c}{set}} (uint8\+\_\+t channel, float value)
+\begin{DoxyCompactList}\small\item\em set value for channel (float) \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_plugin_a9d0feae4efb449413e22253e948d1e2b}{set}} (uint8\+\_\+t channel, bool value)
+\begin{DoxyCompactList}\small\item\em set value for channel (bool) \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_plugin_aa86a57f1f6958b8d69efa6f7e4ac479b}{set}} (uint8\+\_\+t channel, const String \&value)
+\begin{DoxyCompactList}\small\item\em set value for channel (String) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_plugin_aee5d454554f8eafe5a00117f2dbc356d}\label{class_plugin_aee5d454554f8eafe5a00117f2dbc356d}} 
+virtual bool \mbox{\hyperlink{class_plugin_aee5d454554f8eafe5a00117f2dbc356d}{set}} (uint8\+\_\+t channel, \mbox{\hyperlink{struct_property_data}{Property\+Data}} $\ast$data)
+\begin{DoxyCompactList}\small\item\em set value for channel (complete data set) \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_plugin_afcc4774147778f1d54a8bf7ad6a0f9ca}{set}} (\mbox{\hyperlink{struct_property_data}{Property\+Data}} $\ast$data)
+\begin{DoxyCompactList}\small\item\em set value for channel (complete data set) \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_plugin_aaf3e2decfaa3752da6957adf04c04aeb}{set}} (int data)
+\begin{DoxyCompactList}\small\item\em set value property (integer) \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_plugin_ab15981cc879e56d1695a70dd6579e028}{set}} (const String \&value)
+\begin{DoxyCompactList}\small\item\em set value property (String) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+parent plugin object 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_plugin_a7546d32024624aa1041429faca3cb145}\label{class_plugin_a7546d32024624aa1041429faca3cb145}} 
+\index{Plugin@{Plugin}!init@{init}}
+\index{init@{init}!Plugin@{Plugin}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Plugin\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$}]{homie\+Node }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+initialize node plugin 
+
+initialize a node plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em homie\+Node} & (My\+Homie\+Node$\ast$) pointer to the coresponding homie node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classs___h_d_c1080_a0e5b6ab29cf6582ae95d55ece1d09f01}{s\+\_\+\+HDC1080}}, and \mbox{\hyperlink{classs___d_u_m_m_y_af83067ec1144d282e200e2fec0d79f97}{s\+\_\+\+DUMMY}}.
+
+\mbox{\Hypertarget{class_plugin_afe1cd95bcc80eb0a37e4072a65689925}\label{class_plugin_afe1cd95bcc80eb0a37e4072a65689925}} 
+\index{Plugin@{Plugin}!init@{init}}
+\index{init@{init}!Plugin@{Plugin}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Plugin\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$}]{homie\+Node,  }\item[{uint8\+\_\+t}]{gpio }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+initialize property plugin 
+
+initialize a property plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em homie\+Node} & (My\+Homie\+Node$\ast$) pointer to the coresponding homie node \\
+\hline
+{\em gpio} & (uint8\+\_\+t) IO port (I2C address or GPIO port number) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classi___g_p_i_o_a53abe3554efb510dfb29143fc01bc40e}{i\+\_\+\+GPIO}}, \mbox{\hyperlink{classa___p_w_mdimmer_aa3abbf42492e73bcd6f19241d0d26232}{a\+\_\+\+PWMdimmer}}, and \mbox{\hyperlink{classa___g_p_i_o_a0829f3ad79fa805b58cf30519d83d482}{a\+\_\+\+GPIO}}.
+
+\mbox{\Hypertarget{class_plugin_ab15981cc879e56d1695a70dd6579e028}\label{class_plugin_ab15981cc879e56d1695a70dd6579e028}} 
+\index{Plugin@{Plugin}!set@{set}}
+\index{set@{set}!Plugin@{Plugin}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily bool Plugin\+::set (\begin{DoxyParamCaption}\item[{const String \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set value property (String) 
+
+set a string value. This value will be directly processed and NOT stored
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & (String) text value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classa___p_w_mdimmer_aad80af2954d832edc4c6c258eebc9431}{a\+\_\+\+PWMdimmer}}.
+
+\mbox{\Hypertarget{class_plugin_aaf3e2decfaa3752da6957adf04c04aeb}\label{class_plugin_aaf3e2decfaa3752da6957adf04c04aeb}} 
+\index{Plugin@{Plugin}!set@{set}}
+\index{set@{set}!Plugin@{Plugin}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily bool Plugin\+::set (\begin{DoxyParamCaption}\item[{int}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set value property (integer) 
+
+set a integer value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & (int) integer number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classa___g_p_i_o_a27692fc52d89e2194897f1226b2e1979}{a\+\_\+\+GPIO}}.
+
+\mbox{\Hypertarget{class_plugin_afcc4774147778f1d54a8bf7ad6a0f9ca}\label{class_plugin_afcc4774147778f1d54a8bf7ad6a0f9ca}} 
+\index{Plugin@{Plugin}!set@{set}}
+\index{set@{set}!Plugin@{Plugin}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily bool Plugin\+::set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_property_data}{Property\+Data}} $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set value for channel (complete data set) 
+
+set value passed by a \mbox{\hyperlink{struct_property_data}{Property\+Data}} struct. To be used by a single datapoint (property) plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & (\mbox{\hyperlink{struct_property_data}{Property\+Data}}) data structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classa___p_w_mdimmer_ad2b2d591d08069d95e59e7d9092b144c}{a\+\_\+\+PWMdimmer}}, and \mbox{\hyperlink{classa___g_p_i_o_afca0c7e862bcadae6844f8447ba92e03}{a\+\_\+\+GPIO}}.
+
+\mbox{\Hypertarget{class_plugin_a9d0feae4efb449413e22253e948d1e2b}\label{class_plugin_a9d0feae4efb449413e22253e948d1e2b}} 
+\index{Plugin@{Plugin}!set@{set}}
+\index{set@{set}!Plugin@{Plugin}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily bool Plugin\+::set (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel,  }\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set value for channel (bool) 
+
+set value passed by a boolean value. To be used by a multi datapoint (node) plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & (uint8\+\_\+t) datapoint index \\
+\hline
+{\em value} & (bool) boolean value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_plugin_aa86a57f1f6958b8d69efa6f7e4ac479b}\label{class_plugin_aa86a57f1f6958b8d69efa6f7e4ac479b}} 
+\index{Plugin@{Plugin}!set@{set}}
+\index{set@{set}!Plugin@{Plugin}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily bool Plugin\+::set (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel,  }\item[{const String \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set value for channel (String) 
+
+set value passed by a \mbox{\hyperlink{struct_property_data}{Property\+Data}} struct. To be used by a multi datapoint (node) plugin. This value will be directly processed and NOT stored.
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & (uint8\+\_\+t) datapoint index \\
+\hline
+{\em value} & (String) pointer to text object \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success 
+\end{DoxyReturn}
+set value passed by a \mbox{\hyperlink{struct_property_data}{Property\+Data}} struct. To be used by a multi datapoint (node) plugin 
+\begin{DoxyParams}{Parameters}
+{\em channel} & (uint8\+\_\+t) datapoint index \\
+\hline
+{\em value} & (\mbox{\hyperlink{struct_property_data}{Property\+Data}}) data structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classs___d_u_m_m_y_a9736dee4c7f4ed59552579b774e04181}{s\+\_\+\+DUMMY}}.
+
+\mbox{\Hypertarget{class_plugin_ad71012e7e737b8df1ba157166874b22c}\label{class_plugin_ad71012e7e737b8df1ba157166874b22c}} 
+\index{Plugin@{Plugin}!set@{set}}
+\index{set@{set}!Plugin@{Plugin}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily bool Plugin\+::set (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{channel,  }\item[{float}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set value for channel (float) 
+
+set value passed by a float value. To be used by a multi datapoint (node) plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & (uint8\+\_\+t) datapoint index \\
+\hline
+{\em value} & (vloat) floating point number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success 
+\end{DoxyReturn}
+
+
+Reimplemented in \mbox{\hyperlink{classs___d_u_m_m_y_a648966d0da0876e10b6492d76ab823dd}{s\+\_\+\+DUMMY}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/plugins/plugins.\+h\item 
+lib/plugins/plugins.\+cpp\end{DoxyCompactItemize}

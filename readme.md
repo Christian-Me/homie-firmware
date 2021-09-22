@@ -1,9 +1,12 @@
 # homie-firmware
 
+**Work in progress update #1**
+
 Early alpha of my own firmware for my automation projects on ESP8266 and ESP32 platform
 it is based on the great homie-esp8266 library.
 
 It is still a work in progress but I'm happy like it is working now
+**next:** design of the display api
 
 <a href="https://homieiot.github.io/">
   <img src="https://homieiot.github.io/img/works-with-homie.png" alt="works with MQTT Homie">
@@ -29,7 +32,7 @@ Perhaps I'm reinventing the wheel here. But why not?
 - write your own code using c and not a limited scripting interpreter
 - OTA via MQTT upload thanks to the homie-ESP8266 library (you can use DHCP for your devices)
 - crash detection (to be improved) to enable OTA even when your code causes an exception resulting in a boot loop
-- logging to console and syslog. Console logging can switch log level and extra info by key press. 
+- logging to console and syslog. Console logging can switch log level (1..8) and extra info (i,m) by key press. 
 
 ## get started.
 
@@ -38,8 +41,8 @@ This project is intended to be compiled using [platformIO](https://platformio.or
 ### create your on project
 
 - create your project in `platformio.ini` with a unique `build_flag`
-- add your project into `projects.h` and include your `device-yours.h` file
-- edit your `device-yours.h` file. Here is where all your device specific things should happen. Take a look into `device-testbench.h` for reference (Update: use `device-PLANT-control.h` because the API had changed. I will update the test bench soon.)
+- add your project into `device-xxx.h` and include it to your section in the `platform.ini` file
+- edit your `device-xxx.h` file. Here is where all your device specific things should happen. 
 - edit your own `config.json` with your device configuration (see example)
 - upload your `config.json` via usb or flash the initial-upload build to use the config web interface or upload your config using curl
 - flash your firmware via usb/serial or OTA if you have flashed the initial-upload build
@@ -55,7 +58,12 @@ This project is intended to be compiled using [platformIO](https://platformio.or
 
 the following list shows the planned and implemented devices. Basically all devices I used before or planning to use in the near future. Think the list grows quickly. Hopefully the ticks too. 
 
-**Update:** as the API for plugins is still work in progress.
+**Update:** 
+- the API for plugins is more developed.
+- scheduler works better
+- device-xxx api is getting stable
+- log period pwm fading
+
 
 ### core
 
@@ -73,13 +81,15 @@ the following list shows the planned and implemented devices. Basically all devi
 
 - [X] ADS1115 4ch 16 bit AD converter
 - [X] BME280 temperature, humidity and pressure sensor
+- [X] HDC1080 temperature, humidity sensor
 - [ ] BME680 air quality (IAQ), temperature, humidity and pressure sensor
 - [X] BH1750 light sensor (LUX meter)
+- [ ] HLW8012 mains power sensor
 
 ### actuators
 
-- [ ] RELAY / MOSFET switch (GPIO)
-- [ ] DC Motor actuator
+- [X] RELAY / MOSFET switch (GPIO)
+- [X] DC Motor actuator
 - [X] LED dimmers, bulbs and strips (PWM)
 - [ ] RGBW addressable LED
 - [ ] TUYA serial mcus
@@ -94,7 +104,7 @@ the following list shows the planned and implemented devices. Basically all devi
 - [ ] OLED Display (I2C)
 
 
-- [ ] Push Button
+- [X] Push Button
 - [ ] i2c rotary encoder (with RGB led)
 
 ## commercial devices

@@ -1,0 +1,115 @@
+\hypertarget{class_my_homie_device}{}\doxysection{My\+Homie\+Device Class Reference}
+\label{class_my_homie_device}\index{MyHomieDevice@{MyHomieDevice}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_my_homie_device_ab1c79c5645d99bb94a74ff9fc17fa528}\label{class_my_homie_device_ab1c79c5645d99bb94a74ff9fc17fa528}} 
+void {\bfseries init} (\mbox{\hyperlink{struct_homie_device_def}{Homie\+Device\+Def}} homie\+Device)
+\item 
+\mbox{\Hypertarget{class_my_homie_device_addfbcc04b7bb91a6a19ed4f8756e621a}\label{class_my_homie_device_addfbcc04b7bb91a6a19ed4f8756e621a}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries add\+Node} (\mbox{\hyperlink{struct_homie_node_def}{Homie\+Node\+Def}} node\+Def, uint8\+\_\+t plugin\+Id=VIRTUAL\+\_\+\+ID, uint8\+\_\+t gpio=0)
+\item 
+\mbox{\Hypertarget{class_my_homie_device_a95e41f8a3cba539cf37ad73d9529b1ce}\label{class_my_homie_device_a95e41f8a3cba539cf37ad73d9529b1ce}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries get\+Node} (uint8\+\_\+t index) const
+\item 
+\mbox{\Hypertarget{class_my_homie_device_a8ada4f85c0007406cd7d73125d35f8ca}\label{class_my_homie_device_a8ada4f85c0007406cd7d73125d35f8ca}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries get\+Node} (const char $\ast$id) const
+\item 
+\mbox{\Hypertarget{class_my_homie_device_a88955bc85f377f97ae4e0ada2bc5d488}\label{class_my_homie_device_a88955bc85f377f97ae4e0ada2bc5d488}} 
+uint8\+\_\+t {\bfseries length} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_device_ad49c3d32b890ce2d9443afe1ceb87a85}\label{class_my_homie_device_ad49c3d32b890ce2d9443afe1ceb87a85}} 
+const \mbox{\hyperlink{struct_homie_device_def}{Homie\+Device\+Def}} {\bfseries get\+Def} ()
+\item 
+bool \mbox{\hyperlink{class_my_homie_device_a1585b4072311c785c2f1f2c9c3b4db19}{set\+Option}} (const char $\ast$node\+Id, const char $\ast$property\+Id, uint16\+\_\+t option, int value) const
+\begin{DoxyCompactList}\small\item\em set option of one or many properties. Will exits on first error! \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_my_homie_device_af69eaeb2dea8c0a6307f85565a810a47}{set\+Filter}} (const char $\ast$node\+Id, const char $\ast$property\+Id, float\+Value\+Filter filter) const
+\begin{DoxyCompactList}\small\item\em set option of one or many properties. Will exits on first error! \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_my_homie_device_aedb5c484f24fe3e52fe605259b765c2a}{set\+Filter}} (const char $\ast$node\+Id, const char $\ast$property\+Id, int\+Value\+Filter filter) const
+\begin{DoxyCompactList}\small\item\em set filter callback of one or many properties. Will exits on first error! \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_my_homie_device_a809ffde9e36782389fd6dccd44a30d1d}\label{class_my_homie_device_a809ffde9e36782389fd6dccd44a30d1d}} 
+bool {\bfseries set\+Value} (const char $\ast$node\+Id, const char $\ast$property\+Id, float value) const
+\item 
+\mbox{\Hypertarget{class_my_homie_device_a3c07a55033e861473aac66ac2a821fa2}\label{class_my_homie_device_a3c07a55033e861473aac66ac2a821fa2}} 
+bool {\bfseries set\+Factor} (const char $\ast$node\+Id, const char $\ast$property\+Id, float value) const
+\item 
+\mbox{\Hypertarget{class_my_homie_device_a39e0e310832a779327cf7bed66f650da}\label{class_my_homie_device_a39e0e310832a779327cf7bed66f650da}} 
+unsigned long {\bfseries loop} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_my_homie_device_af69eaeb2dea8c0a6307f85565a810a47}\label{class_my_homie_device_af69eaeb2dea8c0a6307f85565a810a47}} 
+\index{MyHomieDevice@{MyHomieDevice}!setFilter@{setFilter}}
+\index{setFilter@{setFilter}!MyHomieDevice@{MyHomieDevice}}
+\doxysubsubsection{\texorpdfstring{setFilter()}{setFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool My\+Homie\+Device\+::set\+Filter (\begin{DoxyParamCaption}\item[{const char $\ast$}]{node\+Id,  }\item[{const char $\ast$}]{property\+Id,  }\item[{float\+Value\+Filter}]{filter }\end{DoxyParamCaption}) const}
+
+
+
+set option of one or many properties. Will exits on first error! 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id} & (string) the node\+Id, wildcards ($\ast$,?,.) allowed. \\
+\hline
+{\em property\+Id} & (string) the property\+Id, wildcards ($\ast$,?,.) allowed. Provide a empty property\+Id for node plugins \\
+\hline
+{\em filter} & (float\+Value\+Filter) filter callback function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successfull 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_my_homie_device_aedb5c484f24fe3e52fe605259b765c2a}\label{class_my_homie_device_aedb5c484f24fe3e52fe605259b765c2a}} 
+\index{MyHomieDevice@{MyHomieDevice}!setFilter@{setFilter}}
+\index{setFilter@{setFilter}!MyHomieDevice@{MyHomieDevice}}
+\doxysubsubsection{\texorpdfstring{setFilter()}{setFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool My\+Homie\+Device\+::set\+Filter (\begin{DoxyParamCaption}\item[{const char $\ast$}]{node\+Id,  }\item[{const char $\ast$}]{property\+Id,  }\item[{int\+Value\+Filter}]{filter }\end{DoxyParamCaption}) const}
+
+
+
+set filter callback of one or many properties. Will exits on first error! 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id} & (string) the node\+Id, wildcards ($\ast$,?,.) allowed. \\
+\hline
+{\em property\+Id} & (string) the property\+Id, wildcards ($\ast$,?,.) allowed. Provide a empty property\+Id for node plugins \\
+\hline
+{\em filter} & (int\+Value\+Filter) filter callback function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successfull 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_my_homie_device_a1585b4072311c785c2f1f2c9c3b4db19}\label{class_my_homie_device_a1585b4072311c785c2f1f2c9c3b4db19}} 
+\index{MyHomieDevice@{MyHomieDevice}!setOption@{setOption}}
+\index{setOption@{setOption}!MyHomieDevice@{MyHomieDevice}}
+\doxysubsubsection{\texorpdfstring{setOption()}{setOption()}}
+{\footnotesize\ttfamily bool My\+Homie\+Device\+::set\+Option (\begin{DoxyParamCaption}\item[{const char $\ast$}]{node\+Id,  }\item[{const char $\ast$}]{property\+Id,  }\item[{uint16\+\_\+t}]{option,  }\item[{int}]{value }\end{DoxyParamCaption}) const}
+
+
+
+set option of one or many properties. Will exits on first error! 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+Id} & (string) the node\+Id, wildcards ($\ast$,?,.) allowed. \\
+\hline
+{\em property\+Id} & (string) the property\+Id, wildcards ($\ast$,?,.) allowed. Provide a empty property\+Id for node plugins \\
+\hline
+{\em option} & (uint18\+\_\+t) option id \\
+\hline
+{\em value} & (integer) value to be set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successfull 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/c\+\_\+\+Homie/homie\+\_\+device.\+hpp\item 
+lib/c\+\_\+\+Homie/homie\+\_\+device.\+cpp\end{DoxyCompactItemize}

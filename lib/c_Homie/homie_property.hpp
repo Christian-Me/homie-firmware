@@ -58,7 +58,7 @@ class MyHomieProperty {
     bool setValue (float value);
     bool setValue (bool value);
     bool setFactor (float value);
-    bool isTarget (const char* id);
+    bool isTarget (const char* id, uint8_t start = 0);
     float getReadValue ();
     float getValue ();
     float defaultValue();

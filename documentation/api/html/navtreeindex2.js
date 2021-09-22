@@ -1,0 +1,25 @@
+var NAVTREEINDEX2 =
+{
+"structcolor___color_r_g_b.html#ab1593a86099bf1941b4123d7a205d058":[6,0,7,1],
+"structcolor___color_r_g_b.html#ab53907c19e8b564b5d5c67e5373d42f4":[6,0,7,2],
+"structcolor___color_r_g_b.html#ae8d3665a126f1e9297d3c86ddaffddec":[6,0,7,0],
+"structinicator_sample_type.html":[6,0,14],
+"structinicator_sample_type.html#a1eb1e545d7c1d9e45d871f0bfc754285":[6,0,14,0],
+"structinicator_sample_type.html#ad2d89ea4c51fb81cdd1fa1039bc3c5d0":[6,0,14,1],
+"todo.html":[5],
+"unionneopixel_color.html":[6,0,20],
+"unionneopixel_color.html#a018f7bcffa241015804e55dc2b698e71":[6,0,20,2],
+"unionneopixel_color.html#a44f57faf636520172c6231ea601ddd1a":[6,0,20,4],
+"unionneopixel_color.html#a45445f30e8062ea3e2e2f7693c80db1a":[6,0,20,0],
+"unionneopixel_color.html#a7860a4470019c92cf1e1356cceb63f91":[6,0,20,1],
+"unionneopixel_color.html#a86cc72a85bae4a0d7d1754229ccfaf9e":[6,0,20,3],
+"unionneopixel_color.html#ad84db73df42354fa25b7f13698e01c60":[6,0,20,5],
+"unionpacked_color.html":[6,0,22],
+"unionpacked_color.html#a47c525c3895eb46665d81f3b37bb5595":[6,0,22,4],
+"unionpacked_color.html#a4a4d14a3da42d93a802414be39f089cd":[6,0,22,3],
+"unionpacked_color.html#a7c530d8b4be11628c3880358932b7338":[6,0,22,1],
+"unionpacked_color.html#ab24509287f333659bacd55cae9fe279d":[6,0,22,2],
+"unionpacked_color.html#ab62a065d1bc4676e500d8b1ee5f7dc18":[6,0,22,5],
+"unionpacked_color.html#acad60ba108184921cb3e46fcbeab52c4":[6,0,22,0],
+"utils_8h_source.html":[7,0,1,11,0]
+};

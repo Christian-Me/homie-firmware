@@ -1,0 +1,235 @@
+\hypertarget{classi___g_p_i_o}{}\doxysection{i\+\_\+\+GPIO Class Reference}
+\label{classi___g_p_i_o}\index{i\_GPIO@{i\_GPIO}}
+
+
+loop function of the a\+GIO plugin  
+
+
+Inheritance diagram for i\+\_\+\+GPIO\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classi___g_p_i_o}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996}{OPTIONS}} \{ \mbox{\hyperlink{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996ab083d5f0935af3b97e7f18226361721d}{DEBOUNCE\+\_\+\+TIME}} = 1
+, \mbox{\hyperlink{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996ad7df2bc1a945800f971f98f068882be6}{MODE}} = 2
+ \}
+\item 
+enum \mbox{\hyperlink{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406}{MODE}} \{ \newline
+\mbox{\hyperlink{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406ae45be680604d90687b1b73600f27ab2b}{BUTTON\+\_\+\+RISING}} = 1
+, \mbox{\hyperlink{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a3ddda3dd679b3277f569a0ab696b131c}{BUTTON\+\_\+\+FALLING}} = 2
+, \mbox{\hyperlink{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a5eda5b27a7b7899af74ef9d220b87ac4}{FREQUENCY}} = 3
+, \mbox{\hyperlink{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a40a5eec9a8e17157bf2c6ff0514a2326}{COUNTER\+\_\+\+RISING}} = 4
+, \newline
+\mbox{\hyperlink{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a4f155e2682550de2fe68061d2bbc803e}{COUNTER\+\_\+\+FALLING}} = 5
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \mbox{\hyperlink{classi___g_p_i_o_a4c051081f75ba148c1c908389ec79c83}{id}} ()
+\begin{DoxyCompactList}\small\item\em get the id string of the plugin \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classi___g_p_i_o_a1c5664a6488075e6df82fb875d5e31b2}{i\+\_\+\+GPIO}} ()
+\begin{DoxyCompactList}\small\item\em get the GPIO plugin status (is\+Initialized) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classi___g_p_i_o_a53abe3554efb510dfb29143fc01bc40e}{init}} (\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property, uint8\+\_\+t gpio)
+\begin{DoxyCompactList}\small\item\em initialize property plugin \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classi___g_p_i_o_a8c450a632f4a6dd61dc7edea533054f4}{check\+Status}} (void)
+\begin{DoxyCompactList}\small\item\em check the status of the device returns true if initalized \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classi___g_p_i_o_a62b43ec983337174c5aa88e2aee4ea41}{set\+Option}} (uint16\+\_\+t option, int value)
+\begin{DoxyCompactList}\small\item\em set a plugin option \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classi___g_p_i_o_ab21492da939ddac04c4ff93a6d70aece}{get}} ()
+\begin{DoxyCompactList}\small\item\em \begin{quote}
+set plugin option \end{quote}
+\end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classi___g_p_i_o_a97d689460bc4b877bb20e711ade4e033}\label{classi___g_p_i_o_a97d689460bc4b877bb20e711ade4e033}} 
+void \mbox{\hyperlink{classi___g_p_i_o_a97d689460bc4b877bb20e711ade4e033}{loop}} ()
+\begin{DoxyCompactList}\small\item\em main loop \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+loop function of the a\+GIO plugin 
+
+The input GPIO \mbox{\hyperlink{class_plugin}{Plugin}} comes with it\textquotesingle{}s own loop for continuos scan and switch debounce. 
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406}\label{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406}} 
+\index{i\_GPIO@{i\_GPIO}!MODE@{MODE}}
+\index{MODE@{MODE}!i\_GPIO@{i\_GPIO}}
+\doxysubsubsection{\texorpdfstring{MODE}{MODE}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406}{i\+\_\+\+GPIO\+::\+MODE}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BUTTON\_RISING@{BUTTON\_RISING}!i\_GPIO@{i\_GPIO}}\index{i\_GPIO@{i\_GPIO}!BUTTON\_RISING@{BUTTON\_RISING}}}\mbox{\Hypertarget{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406ae45be680604d90687b1b73600f27ab2b}\label{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406ae45be680604d90687b1b73600f27ab2b}} 
+BUTTON\+\_\+\+RISING&button send on rising edge \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BUTTON\_FALLING@{BUTTON\_FALLING}!i\_GPIO@{i\_GPIO}}\index{i\_GPIO@{i\_GPIO}!BUTTON\_FALLING@{BUTTON\_FALLING}}}\mbox{\Hypertarget{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a3ddda3dd679b3277f569a0ab696b131c}\label{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a3ddda3dd679b3277f569a0ab696b131c}} 
+BUTTON\+\_\+\+FALLING&button send on falling edge \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FREQUENCY@{FREQUENCY}!i\_GPIO@{i\_GPIO}}\index{i\_GPIO@{i\_GPIO}!FREQUENCY@{FREQUENCY}}}\mbox{\Hypertarget{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a5eda5b27a7b7899af74ef9d220b87ac4}\label{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a5eda5b27a7b7899af74ef9d220b87ac4}} 
+FREQUENCY&frequency in Hz \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{COUNTER\_RISING@{COUNTER\_RISING}!i\_GPIO@{i\_GPIO}}\index{i\_GPIO@{i\_GPIO}!COUNTER\_RISING@{COUNTER\_RISING}}}\mbox{\Hypertarget{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a40a5eec9a8e17157bf2c6ff0514a2326}\label{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a40a5eec9a8e17157bf2c6ff0514a2326}} 
+COUNTER\+\_\+\+RISING&counts rising edges \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{COUNTER\_FALLING@{COUNTER\_FALLING}!i\_GPIO@{i\_GPIO}}\index{i\_GPIO@{i\_GPIO}!COUNTER\_FALLING@{COUNTER\_FALLING}}}\mbox{\Hypertarget{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a4f155e2682550de2fe68061d2bbc803e}\label{classi___g_p_i_o_a85b82fde6e6f5282b799836f201a4406a4f155e2682550de2fe68061d2bbc803e}} 
+COUNTER\+\_\+\+FALLING&counts falling edges \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996}\label{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996}} 
+\index{i\_GPIO@{i\_GPIO}!OPTIONS@{OPTIONS}}
+\index{OPTIONS@{OPTIONS}!i\_GPIO@{i\_GPIO}}
+\doxysubsubsection{\texorpdfstring{OPTIONS}{OPTIONS}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996}{i\+\_\+\+GPIO\+::\+OPTIONS}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEBOUNCE\_TIME@{DEBOUNCE\_TIME}!i\_GPIO@{i\_GPIO}}\index{i\_GPIO@{i\_GPIO}!DEBOUNCE\_TIME@{DEBOUNCE\_TIME}}}\mbox{\Hypertarget{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996ab083d5f0935af3b97e7f18226361721d}\label{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996ab083d5f0935af3b97e7f18226361721d}} 
+DEBOUNCE\+\_\+\+TIME&debounce duration in ms \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MODE@{MODE}!i\_GPIO@{i\_GPIO}}\index{i\_GPIO@{i\_GPIO}!MODE@{MODE}}}\mbox{\Hypertarget{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996ad7df2bc1a945800f971f98f068882be6}\label{classi___g_p_i_o_aa62142583e32ac3b05b47ec8c0c83996ad7df2bc1a945800f971f98f068882be6}} 
+MODE&set the gpio mode \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classi___g_p_i_o_a1c5664a6488075e6df82fb875d5e31b2}\label{classi___g_p_i_o_a1c5664a6488075e6df82fb875d5e31b2}} 
+\index{i\_GPIO@{i\_GPIO}!i\_GPIO@{i\_GPIO}}
+\index{i\_GPIO@{i\_GPIO}!i\_GPIO@{i\_GPIO}}
+\doxysubsubsection{\texorpdfstring{i\_GPIO()}{i\_GPIO()}}
+{\footnotesize\ttfamily i\+\_\+\+GPIO\+::i\+\_\+\+GPIO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+get the GPIO plugin status (is\+Initialized) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classi___g_p_i_o_a8c450a632f4a6dd61dc7edea533054f4}\label{classi___g_p_i_o_a8c450a632f4a6dd61dc7edea533054f4}} 
+\index{i\_GPIO@{i\_GPIO}!checkStatus@{checkStatus}}
+\index{checkStatus@{checkStatus}!i\_GPIO@{i\_GPIO}}
+\doxysubsubsection{\texorpdfstring{checkStatus()}{checkStatus()}}
+{\footnotesize\ttfamily bool i\+\_\+\+GPIO\+::check\+Status (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+check the status of the device returns true if initalized 
+
+check if device is initialized and/or if sensor is in operation
+
+\begin{DoxyReturn}{Returns}
+true if so 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a252db5bb06c5081dd1f7f3106fa2ec08}{Plugin}}.
+
+\mbox{\Hypertarget{classi___g_p_i_o_ab21492da939ddac04c4ff93a6d70aece}\label{classi___g_p_i_o_ab21492da939ddac04c4ff93a6d70aece}} 
+\index{i\_GPIO@{i\_GPIO}!get@{get}}
+\index{get@{get}!i\_GPIO@{i\_GPIO}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily float i\+\_\+\+GPIO\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\begin{quote}
+set plugin option \end{quote}
+
+
+read/update current value
+
+get value
+
+\begin{DoxyReturn}{Returns}
+(float) current value 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a7c254a322b7d3be69533939b7dd50c2a}{Plugin}}.
+
+\mbox{\Hypertarget{classi___g_p_i_o_a4c051081f75ba148c1c908389ec79c83}\label{classi___g_p_i_o_a4c051081f75ba148c1c908389ec79c83}} 
+\index{i\_GPIO@{i\_GPIO}!id@{id}}
+\index{id@{id}!i\_GPIO@{i\_GPIO}}
+\doxysubsubsection{\texorpdfstring{id()}{id()}}
+{\footnotesize\ttfamily const char $\ast$ i\+\_\+\+GPIO\+::id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+get the id string of the plugin 
+
+\begin{DoxyReturn}{Returns}
+id string (const char$\ast$) 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aa8d8a1aacbb9a1e6cb37b1acf0cb1e57}{Plugin}}.
+
+\mbox{\Hypertarget{classi___g_p_i_o_a53abe3554efb510dfb29143fc01bc40e}\label{classi___g_p_i_o_a53abe3554efb510dfb29143fc01bc40e}} 
+\index{i\_GPIO@{i\_GPIO}!init@{init}}
+\index{init@{init}!i\_GPIO@{i\_GPIO}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily bool i\+\_\+\+GPIO\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$}]{homie\+Property,  }\item[{uint8\+\_\+t}]{gpio }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+initialize property plugin 
+
+init GPIO plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em homie\+Property} & pointer to property definition \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(boolean) -\/ true=success 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_afe1cd95bcc80eb0a37e4072a65689925}{Plugin}}.
+
+\mbox{\Hypertarget{classi___g_p_i_o_a62b43ec983337174c5aa88e2aee4ea41}\label{classi___g_p_i_o_a62b43ec983337174c5aa88e2aee4ea41}} 
+\index{i\_GPIO@{i\_GPIO}!setOption@{setOption}}
+\index{setOption@{setOption}!i\_GPIO@{i\_GPIO}}
+\doxysubsubsection{\texorpdfstring{setOption()}{setOption()}}
+{\footnotesize\ttfamily bool i\+\_\+\+GPIO\+::set\+Option (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{option,  }\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set a plugin option 
+
+
+\begin{DoxyParams}{Parameters}
+{\em option} & (uint16\+\_\+t) option Id \\
+\hline
+{\em value} & (int) option value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(boolean) true if option set successfull 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aa31b78849344b0340795e9df40d9301b}{Plugin}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/i\+\_\+\+GPIO/i\+\_\+gpio.\+h\item 
+lib/i\+\_\+\+GPIO/i\+\_\+gpio.\+cpp\end{DoxyCompactItemize}

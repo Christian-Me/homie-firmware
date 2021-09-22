@@ -88,8 +88,8 @@ $(document).ready(function(){initNavTree('homie__device_8hpp_source.html',''); i
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// #include &quot;datatypes.h&quot;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;homie_node.hpp&quot;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;homie_node.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;plugins.h&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="struct_node_vector.html">    5</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_node_vector.html">NodeVector</a> {</div>
 <div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="struct_node_vector_1_1_node_item.html">    6</a></span>&#160;  <span class="keyword">struct </span><a class="code" href="struct_node_vector_1_1_node_item.html">NodeItem</a> {</div>
@@ -116,48 +116,63 @@ $(document).ready(function(){initNavTree('homie__device_8hpp_source.html',''); i
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordflow">return</span> homieNode;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  };</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* getById(<span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keywordtype">id</span>)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    NodeItem* seek = first;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">while</span> (seek != NULL) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;      <span class="keywordflow">if</span> (strcmp(seek-&gt;node-&gt;getId(),<span class="keywordtype">id</span>) == 0) {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordflow">return</span> seek-&gt;node;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      seek=seek-&gt;next;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  }</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* get(uint8_t index)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    NodeItem* seek = first;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordflow">if</span> (seek==NULL || index&gt;length-1) <span class="keywordflow">return</span> NULL;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt;index; i++) { </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      seek=seek-&gt;next;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">return</span> seek-&gt;node;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;};</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_my_homie_device.html">   50</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_my_homie_device.html">MyHomieDevice</a> {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">const</span> <a class="code" href="struct_homie_device_def.html">HomieDeviceDef</a>* deviceDef = NULL;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="struct_node_vector.html">NodeVector</a> nodes;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> _nextEvent = 0;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> init(<span class="keyword">const</span> <a class="code" href="struct_homie_device_def.html">HomieDeviceDef</a> *homieDevice);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* addNode(uint8_t pluginId, <span class="keyword">const</span> <a class="code" href="struct_homie_node_def.html">HomieNodeDef</a> *homieNode);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* getNode(uint8_t index) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* getNode(<span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    uint8_t length();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">const</span> <a class="code" href="struct_homie_device_def.html">HomieDeviceDef</a>* getDef();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">bool</span> setValue(<span class="keyword">const</span> <span class="keywordtype">char</span>* nodeId, <span class="keyword">const</span> <span class="keywordtype">char</span>* propertyId, <span class="keywordtype">float</span> value) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">bool</span> setFactor(<span class="keyword">const</span> <span class="keywordtype">char</span>* nodeId, <span class="keyword">const</span> <span class="keywordtype">char</span>* propertyId, <span class="keywordtype">float</span> value) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* createHomieNode(uint8_t pluginId, <span class="keyword">const</span> <a class="code" href="struct_homie_node_def.html">HomieNodeDef</a>* nodeDef);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> loop();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">extern</span> <a class="code" href="class_my_homie_device.html">MyHomieDevice</a> myDevice;</div>
-<div class="ttc" id="aclass_my_homie_device_html"><div class="ttname"><a href="class_my_homie_device.html">MyHomieDevice</a></div><div class="ttdef"><b>Definition:</b> homie_device.hpp:50</div></div>
-<div class="ttc" id="aclass_my_homie_node_html"><div class="ttname"><a href="class_my_homie_node.html">MyHomieNode</a></div><div class="ttdef"><b>Definition:</b> homie_node.hpp:64</div></div>
-<div class="ttc" id="astruct_homie_device_def_html"><div class="ttname"><a href="struct_homie_device_def.html">HomieDeviceDef</a></div><div class="ttdef"><b>Definition:</b> datatypes.h:127</div></div>
-<div class="ttc" id="astruct_homie_node_def_html"><div class="ttname"><a href="struct_homie_node_def.html">HomieNodeDef</a></div><div class="ttdef"><b>Definition:</b> datatypes.h:118</div></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  NodeItem* getFirst()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordflow">return</span> first;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  NodeItem* getNext(NodeItem* item)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">return</span> item-&gt;next;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* getById(<span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keywordtype">id</span>)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    NodeItem* seek = first;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">while</span> (seek != NULL) {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      <span class="keywordflow">if</span> (strcmp(seek-&gt;node-&gt;getId(),<span class="keywordtype">id</span>) == 0) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordflow">return</span> seek-&gt;node;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      seek=seek-&gt;next;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    myLog.printf(LOG_ALERT,F(<span class="stringliteral">&quot;Node %s unknown! Returning NULL!&quot;</span>),<span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* get(uint8_t index)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    NodeItem* seek = first;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">if</span> (seek==NULL || index&gt;length-1) <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i&lt;index; i++) { </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      seek=seek-&gt;next;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">return</span> seek-&gt;node;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_my_homie_device.html">   57</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_my_homie_device.html">MyHomieDevice</a> {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="struct_homie_device_def.html">HomieDeviceDef</a> deviceDef = {<span class="stringliteral">&quot;&quot;</span>,<span class="stringliteral">&quot;&quot;</span>};</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="struct_node_vector.html">NodeVector</a> nodes;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> _nextEvent = 0;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">int</span> _nodeLoopCounter = -1; <span class="comment">// inactive</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">int</span> _pluginLoopCounter = 0;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> _timebase = 0;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> _nextNodeEvent = 0;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> init(<a class="code" href="struct_homie_device_def.html">HomieDeviceDef</a> homieDevice);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* addNode(<a class="code" href="struct_homie_node_def.html">HomieNodeDef</a> nodeDef,uint8_t pluginId = VIRTUAL_ID, uint8_t gpio = 0);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* getNode(uint8_t index) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="class_my_homie_node.html">MyHomieNode</a>* getNode(<span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keywordtype">id</span>) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    uint8_t length();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">const</span> <a class="code" href="struct_homie_device_def.html">HomieDeviceDef</a> getDef();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_my_homie_device.html#a1585b4072311c785c2f1f2c9c3b4db19">setOption</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* nodeId, <span class="keyword">const</span> <span class="keywordtype">char</span>* propertyId, uint16_t option, <span class="keywordtype">int</span> value) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_my_homie_device.html#af69eaeb2dea8c0a6307f85565a810a47">setFilter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* nodeId, <span class="keyword">const</span> <span class="keywordtype">char</span>* propertyId, floatValueFilter filter) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_my_homie_device.html#af69eaeb2dea8c0a6307f85565a810a47">setFilter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* nodeId, <span class="keyword">const</span> <span class="keywordtype">char</span>* propertyId, intValueFilter filter) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">bool</span> setValue(<span class="keyword">const</span> <span class="keywordtype">char</span>* nodeId, <span class="keyword">const</span> <span class="keywordtype">char</span>* propertyId, <span class="keywordtype">float</span> value) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">bool</span> setFactor(<span class="keyword">const</span> <span class="keywordtype">char</span>* nodeId, <span class="keyword">const</span> <span class="keywordtype">char</span>* propertyId, <span class="keywordtype">float</span> value) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> loop();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">extern</span> <a class="code" href="class_my_homie_device.html">MyHomieDevice</a> myDevice;</div>
+<div class="ttc" id="aclass_my_homie_device_html"><div class="ttname"><a href="class_my_homie_device.html">MyHomieDevice</a></div><div class="ttdef"><b>Definition:</b> homie_device.hpp:57</div></div>
+<div class="ttc" id="aclass_my_homie_device_html_a1585b4072311c785c2f1f2c9c3b4db19"><div class="ttname"><a href="class_my_homie_device.html#a1585b4072311c785c2f1f2c9c3b4db19">MyHomieDevice::setOption</a></div><div class="ttdeci">bool setOption(const char *nodeId, const char *propertyId, uint16_t option, int value) const</div><div class="ttdoc">set option of one or many properties. Will exits on first error!</div><div class="ttdef"><b>Definition:</b> homie_device.cpp:45</div></div>
+<div class="ttc" id="aclass_my_homie_device_html_af69eaeb2dea8c0a6307f85565a810a47"><div class="ttname"><a href="class_my_homie_device.html#af69eaeb2dea8c0a6307f85565a810a47">MyHomieDevice::setFilter</a></div><div class="ttdeci">bool setFilter(const char *nodeId, const char *propertyId, floatValueFilter filter) const</div><div class="ttdoc">set option of one or many properties. Will exits on first error!</div><div class="ttdef"><b>Definition:</b> homie_device.cpp:67</div></div>
+<div class="ttc" id="aclass_my_homie_node_html"><div class="ttname"><a href="class_my_homie_node.html">MyHomieNode</a></div><div class="ttdef"><b>Definition:</b> homie_node.hpp:67</div></div>
+<div class="ttc" id="astruct_homie_device_def_html"><div class="ttname"><a href="struct_homie_device_def.html">HomieDeviceDef</a></div><div class="ttdoc">homie device configuration</div><div class="ttdef"><b>Definition:</b> datatypes.h:103</div></div>
+<div class="ttc" id="astruct_homie_node_def_html"><div class="ttname"><a href="struct_homie_node_def.html">HomieNodeDef</a></div><div class="ttdoc">homie node configuration</div><div class="ttdef"><b>Definition:</b> datatypes.h:95</div></div>
 <div class="ttc" id="astruct_node_vector_1_1_node_item_html"><div class="ttname"><a href="struct_node_vector_1_1_node_item.html">NodeVector::NodeItem</a></div><div class="ttdef"><b>Definition:</b> homie_device.hpp:6</div></div>
 <div class="ttc" id="astruct_node_vector_html"><div class="ttname"><a href="struct_node_vector.html">NodeVector</a></div><div class="ttdef"><b>Definition:</b> homie_device.hpp:5</div></div>
 </div><!-- fragment --></div><!-- contents -->

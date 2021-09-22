@@ -1,15 +1,18 @@
 var searchData=
 [
-  ['s_5fads1115_105',['s_ADS1115',['../classs___a_d_s1115.html',1,'s_ADS1115'],['../classs___a_d_s1115.html#a74a56b423a19d2d638a7e5dd2d217102',1,'s_ADS1115::s_ADS1115()']]],
-  ['s_5fbh1750_106',['s_BH1750',['../classs___b_h1750.html',1,'s_BH1750'],['../classs___b_h1750.html#a590a3294ab906192899c67226f9fddd6',1,'s_BH1750::s_BH1750()']]],
-  ['s_5fbme280_107',['s_BME280',['../classs___b_m_e280.html',1,'s_BME280'],['../classs___b_m_e280.html#a21a2aca6bfd94b6938918c9d5f881eed',1,'s_BME280::s_BME280()']]],
-  ['s_5fbme680_108',['s_BME680',['../classs___b_m_e680.html',1,'s_BME680'],['../classs___b_m_e680.html#a724617593ef6d089cb4d80e1ddf8ed49',1,'s_BME680::s_BME680()']]],
-  ['s_5fdummy_109',['s_DUMMY',['../classs___d_u_m_m_y.html',1,'s_DUMMY'],['../classs___d_u_m_m_y.html#a23e26f325c0150d83a98c49a9d183dc7',1,'s_DUMMY::s_DUMMY()']]],
-  ['s_5fhdc1080_110',['s_HDC1080',['../classs___h_d_c1080.html',1,'s_HDC1080'],['../classs___h_d_c1080.html#ab394d7be350f363c3805ea90108744d6',1,'s_HDC1080::s_HDC1080()']]],
-  ['set_111',['set',['../classa___p_w_mdimmer.html#a131704568b71ae662f2756f342f5aab3',1,'a_PWMdimmer::set()'],['../class_plugin.html#ad71012e7e737b8df1ba157166874b22c',1,'Plugin::set(uint8_t channel, float value)'],['../class_plugin.html#aa86a57f1f6958b8d69efa6f7e4ac479b',1,'Plugin::set(uint8_t channel, const String &amp;value)'],['../class_plugin.html#aee5d454554f8eafe5a00117f2dbc356d',1,'Plugin::set(uint8_t channel, PropertyData *data)'],['../classs___d_u_m_m_y.html#a648966d0da0876e10b6492d76ab823dd',1,'s_DUMMY::set(uint8_t channel, float value)'],['../classs___d_u_m_m_y.html#a9736dee4c7f4ed59552579b774e04181',1,'s_DUMMY::set(uint8_t channel, const String &amp;value)'],['../classs___d_u_m_m_y.html#a2bc389b4c8170ba8dcce615c804fd408',1,'s_DUMMY::set(uint8_t channel, PropertyData *data)']]],
-  ['setgain_112',['setGain',['../class_adafruit___a_d_s1015.html#a399441eace686975ff22937cbe45cc50',1,'Adafruit_ADS1015']]],
-  ['setoption_113',['setOption',['../classa___p_w_mdimmer.html#aefe066a34be261c8909dd72d851669aa',1,'a_PWMdimmer::setOption(uint16_t option, int value)'],['../classa___p_w_mdimmer.html#acaad8eac27c536608df906f69554d632',1,'a_PWMdimmer::setOption(uint16_t option, uint8_t channel, float value)'],['../class_plugin.html#aa31b78849344b0340795e9df40d9301b',1,'Plugin::setOption(uint16_t option, int value)'],['../class_plugin.html#a993485eba589376949e989abb063584a',1,'Plugin::setOption(uint16_t option, bool value)'],['../class_plugin.html#aa27d2ca16c9dd2bec93a27b1e9c19975',1,'Plugin::setOption(uint16_t option, float value)'],['../class_plugin.html#a274cd9e6919550d60cb76a62d2302b23',1,'Plugin::setOption(uint16_t option, uint8_t channel, float value)'],['../classs___b_m_e280.html#a4fe2ba87921cd3584f5578386941f38a',1,'s_BME280::setOption(uint16_t option, int value)'],['../classs___b_m_e280.html#a495c65187786e238d0bce81c5114f4c8',1,'s_BME280::setOption(uint16_t option, float value)'],['../classs___d_u_m_m_y.html#a69581af8302d84a9db98f0f91447e5f3',1,'s_DUMMY::setOption(uint16_t option, bool value)'],['../classs___d_u_m_m_y.html#a7ae5337f6651611cd0b3ddd23f214cc0',1,'s_DUMMY::setOption(uint16_t option, int value)'],['../classs___h_d_c1080.html#a0069c705b1f49d0cf87bbf0ec913b502',1,'s_HDC1080::setOption(uint16_t option, bool value)'],['../classs___h_d_c1080.html#a3a0d4989cb2ce3317bf8a9b948e39a61',1,'s_HDC1080::setOption(uint16_t option, int value)']]],
-  ['setscaler_114',['setScaler',['../classs___b_m_e680.html#abc833650a7d13dbbd5f29d54f00c17a9',1,'s_BME680']]],
-  ['showvalue_115',['showValue',['../classm__neopixel.html#ae51830c7ea46a34475e452e8d683bdc5',1,'m_neopixel']]],
-  ['startcomparator_5fsingleended_116',['startComparator_SingleEnded',['../class_adafruit___a_d_s1015.html#aecd30775d943ea9d9cff0e3485926596',1,'Adafruit_ADS1015']]]
+  ['packedcolor_123',['packedColor',['../unionpacked_color.html',1,'']]],
+  ['plugin_124',['Plugin',['../class_plugin.html',1,'']]],
+  ['pluginloop_125',['pluginLoop',['../class_my_homie_node.html#a21e05cd7b17b1fb5dcfae1def67f9420',1,'MyHomieNode']]],
+  ['property_126',['property',['../struct_sequence_step.html#a88ff975255f3f31261bf9d8a327973ea',1,'SequenceStep']]],
+  ['propertydata_127',['PropertyData',['../struct_property_data.html',1,'']]],
+  ['propertyitem_128',['PropertyItem',['../struct_property_vector_1_1_property_item.html',1,'PropertyVector']]],
+  ['propertyvector_129',['PropertyVector',['../struct_property_vector.html',1,'']]],
+  ['pwm_5fcommands_130',['PWM_Commands',['../classa___p_w_mdimmer.html#a8a85c6812062b1a7d957e5c72d1bda43',1,'a_PWMdimmer']]],
+  ['pwm_5ffade_5fdelay_131',['PWM_FADE_DELAY',['../classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590aa1acb55bab1ab4358d6215a2a216546e',1,'a_PWMdimmer']]],
+  ['pwm_5ffade_5fduration_5fms_132',['PWM_FADE_DURATION_MS',['../classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590ac675a6dba333cc887a50e7b2ba76d866',1,'a_PWMdimmer']]],
+  ['pwm_5ffade_5fduration_5fs_133',['PWM_FADE_DURATION_S',['../classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590a5f517ac646629af1bc45988530bc1d54',1,'a_PWMdimmer']]],
+  ['pwm_5ffrequency_134',['PWM_FREQUENCY',['../classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590a5c2d026cf59992913397d5d95f70b45f',1,'a_PWMdimmer']]],
+  ['pwm_5fmaximum_135',['PWM_MAXIMUM',['../classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590a54d705f5073f0ad0e4e0d516e0986c76',1,'a_PWMdimmer']]],
+  ['pwm_5fminimum_136',['PWM_MINIMUM',['../classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590ac1213c291dcaf8cc8381bbbacc6e7470',1,'a_PWMdimmer']]],
+  ['pwm_5foptions_137',['PWM_Options',['../classa___p_w_mdimmer.html#a9db09900c88f09c495a29f998beeb590',1,'a_PWMdimmer']]]
 ];

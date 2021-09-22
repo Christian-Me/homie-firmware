@@ -6,9 +6,12 @@
 #include "datatypes.h"
 #include <plugins.h>
 #include <a_gpio.h>
+#include <s_BH1750.h>
+#include <s_HDC1080.h>
 #include <calc_functions.h>   // usefull measurement conversions and calculations
 #include <utils.h>
 #include <sequencer.h>
+
 
 // basic configuration
 
@@ -36,17 +39,19 @@ controller for my indoor plant greenhouse
 #define PIN_BUTTON 1     // no pushbutton
 
 SequenceStep humidifierOn[] = {
-                                {"CONTROL","humiPower",0,100},
-                                {"CONTROL","humiPower",1,100},
-                                {"CONTROL","humiButton",0,50},
-                                {"CONTROL","humiButton",1,0}
+                                {"CONTROL","humiPower",0,10},     // switch humidifier off (reset)
+                                {"CONTROL","humiButton",1,2000},  // pull button line high 2sec cooldown
+                                {"CONTROL","humiPower",1,2000},   // switch humidifier on and wait 2sec to boot
+                                {"CONTROL","humiButton",0,100},   // press button 100ms
+                                {"CONTROL","humiButton",1,0}      // release button
                               };
 SequenceStep humidifierPulse[] = {
-                                {"CONTROL","humiPower",0,100},
-                                {"CONTROL","humiPower",1,100},
-                                {"CONTROL","humiButton",0,50},
-                                {"CONTROL","humiButton",1,50},
-                                {"CONTROL","humiButton",0,50},
+                                {"CONTROL","humiPower",0,10},
+                                {"CONTROL","humiButton",1,2000},
+                                {"CONTROL","humiPower",1,2000},
+                                {"CONTROL","humiButton",0,100},   // first button press
+                                {"CONTROL","humiButton",1,200},   // wait 200 ms
+                                {"CONTROL","humiButton",0,100},   // second button press
                                 {"CONTROL","humiButton",1,0}
                               };
 SequenceStep singleLongPulse[] = {
@@ -65,19 +70,6 @@ SequenceStep doubleLongPulse[] = {
 Sequencer sequencer;
 
 // callbacks
-bool fan1InputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
-    float _value = value.toFloat();
-    myLog.printf(LOG_INFO,F(" Fan1 received %s = %.2f"), value.c_str(), _value);
-    homieNode->setValue("fan1",_value);
-    return true;
-};
-
-bool fan2InputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
-    float _value = value.toFloat();
-    myLog.printf(LOG_INFO,F(" Fan2 received %s = %.2f"), value.c_str(), _value);
-    homieNode->setValue("fan2",_value);
-    return true;
-};
 
 // use the build in calibration factor to implement a switch without altering the set values
 bool fansInputHandler(const HomieRange& range, const String& value, MyHomieNode* homieNode, MyHomieProperty* homieProperty) {
@@ -126,6 +118,7 @@ bool humidifierInputHandler(const HomieRange& range, const String& value, MyHomi
     case 1: // on
       if (!sequencer.sequenceRunning()) {
         if (!switchLight) {
+          myLog.print(LOG_INFO,F("Starting humidifier on sequence"));
           sequencer.startSequence(humidifierOn,&humidifierCallback,&doneCallback);
         } else {
           if (lightState==0) {
@@ -193,29 +186,29 @@ bool deviceSetup(void) {
     myDevice.init({"GREENHOUSE-02","Greenhouse 2"});
 
     // PWM Fan speed control
-    myDevice.addNode(VIRTUAL_ID, {"FAN","2ch fan control", "PWM control", 0})
+    myDevice.addNode({"FAN","2ch fan control", "PWM control"})
       ->addProperty({"fan1","lower fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,600,6000,0},PWM_ID,15)    // 0.1 fade step, delay per step, unused, GPIO
       ->addProperty({"fan2","upper fan", "%", DATATYPE_FLOAT, RETAINED, "0:100",SETTABLE,0.1,600,6000,0},PWM_ID,13);  // 0.1 fade step, delay per step, unused, GPIO&PWMactuatorNode);
     
-    myDevice.getNode("FAN")->registerInputHandler("fan1", fan1InputHandler); // alternative way to register handlers
+    // myDevice.getNode("FAN")->registerInputHandler("fan1", fan1InputHandler); // alternative way to register handlers
     // myDevice.getNode("FAN")->registerInputHandler("fan2",fan2InputHandler); // not used because default handler does the basic task sending received values unaltered to plugin
 
     //BH1750 ambient light sensor
-    myDevice.addNode(BH1750_ID, {"BH1750","BH1750 Light Sensor", "enviornment", 0})
-      ->addProperty({"illumination","Light Amount", "lx", DATATYPE_FLOAT, RETAINED, "0:65528", NON_SETTABLE,5,30,6000,0});
+    myDevice.addNode({"BH1750","BH1750 Light Sensor", "enviornment"}, BH1750_ID , 0)
+      ->addProperty({"illumination","Light Amount", "lx", DATATYPE_FLOAT, RETAINED, "0:65528", NON_SETTABLE,5,30,6000,0}, s_BH1750::CHANNEL_ILLUMINATION);
     
     //HT1080 temperature, humidity sensor
-    myDevice.addNode(HDC1080_ID, {"HDC1080","TI HDC1080", "enviornment", 0})                                                         // io 0 = autodetect I2C Address
-      ->addProperty({"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0})            // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
-      ->addProperty({"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,0})                       // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
+    myDevice.addNode({"HDC1080","TI HDC1080", "enviornment"}, HDC1080_ID, 0)                                                         // io 0 = autodetect I2C Address
+      ->addProperty({"temperature","Temperature", "°C", DATATYPE_FLOAT, RETAINED, "-40:85",NON_SETTABLE,0.1,30,6000,0},s_HDC1080::CHANNEL_TEMPERATURE) // sample every 30seconds. Send if value change by 0.1 or 10 minutes pass. No oversampling
+      ->addProperty({"humidity","Humidity","%", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,1,30,6000,0},s_HDC1080::CHANNEL_HUMIDITY)               // sample every 30seconds. Send if value change by 1 or 10 minutes pass. 5x oversampling
       ->addProperty({"absoluteHumidity","Absolute Humidity","g/m³", DATATYPE_FLOAT, RETAINED, "0:1500",NON_SETTABLE,10,30,6000,0})  // readHandler will calculate and update this value
-      ->addProperty({"drewPoint","Drew Point","°C", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,0.5,30,6000,0})                   // readHandler will calculate and update this value&HDC1080sensorNode)
+      ->addProperty({"drewPoint","Drew Point","°C", DATATYPE_FLOAT, RETAINED, "0:100",NON_SETTABLE,0.5,30,6000,0})                  // readHandler will calculate and update this value&HDC1080sensorNode)
     
       ->registerReadHandler("absoluteHumidity", readAbsoluteHumidity)   // do absolute humidity calculation (Yes, they can be reused as long as the property ids are the same)
       ->registerReadHandler("drewPoint", readDrewPoint);                // do drew point calculation
 
     //device controls
-    myDevice.addNode(VIRTUAL_ID, {"CONTROL","main Controls", "virtual device", 0})
+    myDevice.addNode({"CONTROL","main Controls", "virtual device"})
       ->addProperty({"fans","Fan switch", "", DATATYPE_BOOLEAN, RETAINED, "0:1",SETTABLE,0.1,600,6000,0}) // 0.1 fade step, delay per step, unused, GPIO&virtualDevice)
       ->registerInputHandler("fans", fansInputHandler)
       ->addProperty({"humiPower","Humidifier Power", "", DATATYPE_INTEGER, RETAINED, "",SETTABLE,1,600,6000,0},aGPIO_ID,12)   // D6

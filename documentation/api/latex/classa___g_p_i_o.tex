@@ -1,0 +1,240 @@
+\hypertarget{classa___g_p_i_o}{}\doxysection{a\+\_\+\+GPIO Class Reference}
+\label{classa___g_p_i_o}\index{a\_GPIO@{a\_GPIO}}
+
+
+write a value to channel  
+
+
+Inheritance diagram for a\+\_\+\+GPIO\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classa___g_p_i_o}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{classa___g_p_i_o_a793e66cbb971379c71393742e166fe47}{OPTIONS}} \{ \mbox{\hyperlink{classa___g_p_i_o_a793e66cbb971379c71393742e166fe47a4a6562e34b9873bbe9d02313675f3183}{GPIO\+\_\+\+DURATION}} = 1
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \mbox{\hyperlink{classa___g_p_i_o_aea53c2e7817c8da79d9f44631be14705}{id}} ()
+\begin{DoxyCompactList}\small\item\em get the id string of the plugin \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classa___g_p_i_o_a4988ae038266370ea98b561350275726}{a\+\_\+\+GPIO}} ()
+\begin{DoxyCompactList}\small\item\em get the GPIO plugin status (is\+Initialized) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___g_p_i_o_a0829f3ad79fa805b58cf30519d83d482}{init}} (\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property, uint8\+\_\+t gpio)
+\begin{DoxyCompactList}\small\item\em initialize property plugin \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___g_p_i_o_a8eef66dc72fae030d02493a8b379c4a9}{check\+Status}} (void)
+\begin{DoxyCompactList}\small\item\em check the status of the device returns true if initalized \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___g_p_i_o_a8e5648e46cabbc04a4d94e14be39e93b}{set\+Option}} (uint16\+\_\+t option, int value)
+\begin{DoxyCompactList}\small\item\em set a plugin option \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classa___g_p_i_o_a7954a95eee4582758b9fe863a652d9be}{get}} ()
+\begin{DoxyCompactList}\small\item\em \begin{quote}
+set plugin option \end{quote}
+\end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classa___g_p_i_o_a3846bef50ad0472b1aa361c0086a600e}\label{classa___g_p_i_o_a3846bef50ad0472b1aa361c0086a600e}} 
+void \mbox{\hyperlink{classa___g_p_i_o_a3846bef50ad0472b1aa361c0086a600e}{loop}} ()
+\begin{DoxyCompactList}\small\item\em main loop \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classa___g_p_i_o_afca0c7e862bcadae6844f8447ba92e03}\label{classa___g_p_i_o_afca0c7e862bcadae6844f8447ba92e03}} 
+bool \mbox{\hyperlink{classa___g_p_i_o_afca0c7e862bcadae6844f8447ba92e03}{set}} (\mbox{\hyperlink{struct_property_data}{Property\+Data}} $\ast$data)
+\begin{DoxyCompactList}\small\item\em set value for channel (complete data set) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classa___g_p_i_o_a27692fc52d89e2194897f1226b2e1979}{set}} (int data)
+\begin{DoxyCompactList}\small\item\em set value property (integer) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+write a value to channel 
+
+loop function of the a\+GIO plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & integer value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(boolean) true = achnkoleged new value
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em data} & pointer to \mbox{\hyperlink{struct_property_data}{Property\+Data}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(boolean) true = achnkoleged new value
+\end{DoxyReturn}
+The a\+GPIO \mbox{\hyperlink{class_plugin}{Plugin}} comes with it\textquotesingle{}s own loop and timer to handle pulse state changes. 
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classa___g_p_i_o_a793e66cbb971379c71393742e166fe47}\label{classa___g_p_i_o_a793e66cbb971379c71393742e166fe47}} 
+\index{a\_GPIO@{a\_GPIO}!OPTIONS@{OPTIONS}}
+\index{OPTIONS@{OPTIONS}!a\_GPIO@{a\_GPIO}}
+\doxysubsubsection{\texorpdfstring{OPTIONS}{OPTIONS}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{classa___g_p_i_o_a793e66cbb971379c71393742e166fe47}{a\+\_\+\+GPIO\+::\+OPTIONS}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GPIO\_DURATION@{GPIO\_DURATION}!a\_GPIO@{a\_GPIO}}\index{a\_GPIO@{a\_GPIO}!GPIO\_DURATION@{GPIO\_DURATION}}}\mbox{\Hypertarget{classa___g_p_i_o_a793e66cbb971379c71393742e166fe47a4a6562e34b9873bbe9d02313675f3183}\label{classa___g_p_i_o_a793e66cbb971379c71393742e166fe47a4a6562e34b9873bbe9d02313675f3183}} 
+GPIO\+\_\+\+DURATION&duration in ms to hold the given state and the invert again \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classa___g_p_i_o_a4988ae038266370ea98b561350275726}\label{classa___g_p_i_o_a4988ae038266370ea98b561350275726}} 
+\index{a\_GPIO@{a\_GPIO}!a\_GPIO@{a\_GPIO}}
+\index{a\_GPIO@{a\_GPIO}!a\_GPIO@{a\_GPIO}}
+\doxysubsubsection{\texorpdfstring{a\_GPIO()}{a\_GPIO()}}
+{\footnotesize\ttfamily a\+\_\+\+GPIO\+::a\+\_\+\+GPIO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+get the GPIO plugin status (is\+Initialized) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classa___g_p_i_o_a8eef66dc72fae030d02493a8b379c4a9}\label{classa___g_p_i_o_a8eef66dc72fae030d02493a8b379c4a9}} 
+\index{a\_GPIO@{a\_GPIO}!checkStatus@{checkStatus}}
+\index{checkStatus@{checkStatus}!a\_GPIO@{a\_GPIO}}
+\doxysubsubsection{\texorpdfstring{checkStatus()}{checkStatus()}}
+{\footnotesize\ttfamily bool a\+\_\+\+GPIO\+::check\+Status (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+check the status of the device returns true if initalized 
+
+check if device is initialized and/or if sensor is in operation
+
+\begin{DoxyReturn}{Returns}
+true if so 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a252db5bb06c5081dd1f7f3106fa2ec08}{Plugin}}.
+
+\mbox{\Hypertarget{classa___g_p_i_o_a7954a95eee4582758b9fe863a652d9be}\label{classa___g_p_i_o_a7954a95eee4582758b9fe863a652d9be}} 
+\index{a\_GPIO@{a\_GPIO}!get@{get}}
+\index{get@{get}!a\_GPIO@{a\_GPIO}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily float a\+\_\+\+GPIO\+::get (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\begin{quote}
+set plugin option \end{quote}
+
+
+read/update current value
+
+get value
+
+\begin{DoxyReturn}{Returns}
+(float) current value 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_a7c254a322b7d3be69533939b7dd50c2a}{Plugin}}.
+
+\mbox{\Hypertarget{classa___g_p_i_o_aea53c2e7817c8da79d9f44631be14705}\label{classa___g_p_i_o_aea53c2e7817c8da79d9f44631be14705}} 
+\index{a\_GPIO@{a\_GPIO}!id@{id}}
+\index{id@{id}!a\_GPIO@{a\_GPIO}}
+\doxysubsubsection{\texorpdfstring{id()}{id()}}
+{\footnotesize\ttfamily const char $\ast$ a\+\_\+\+GPIO\+::id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+get the id string of the plugin 
+
+\begin{DoxyReturn}{Returns}
+id string (const char$\ast$) 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aa8d8a1aacbb9a1e6cb37b1acf0cb1e57}{Plugin}}.
+
+\mbox{\Hypertarget{classa___g_p_i_o_a0829f3ad79fa805b58cf30519d83d482}\label{classa___g_p_i_o_a0829f3ad79fa805b58cf30519d83d482}} 
+\index{a\_GPIO@{a\_GPIO}!init@{init}}
+\index{init@{init}!a\_GPIO@{a\_GPIO}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily bool a\+\_\+\+GPIO\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$}]{homie\+Property,  }\item[{uint8\+\_\+t}]{gpio }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+initialize property plugin 
+
+init GPIO plugin
+
+
+\begin{DoxyParams}{Parameters}
+{\em homie\+Property} & pointer to property definition \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(boolean) -\/ true=success 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_afe1cd95bcc80eb0a37e4072a65689925}{Plugin}}.
+
+\mbox{\Hypertarget{classa___g_p_i_o_a27692fc52d89e2194897f1226b2e1979}\label{classa___g_p_i_o_a27692fc52d89e2194897f1226b2e1979}} 
+\index{a\_GPIO@{a\_GPIO}!set@{set}}
+\index{set@{set}!a\_GPIO@{a\_GPIO}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily bool a\+\_\+\+GPIO\+::set (\begin{DoxyParamCaption}\item[{int}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set value property (integer) 
+
+set a integer value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & (int) integer number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(bool) true on success 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aaf3e2decfaa3752da6957adf04c04aeb}{Plugin}}.
+
+\mbox{\Hypertarget{classa___g_p_i_o_a8e5648e46cabbc04a4d94e14be39e93b}\label{classa___g_p_i_o_a8e5648e46cabbc04a4d94e14be39e93b}} 
+\index{a\_GPIO@{a\_GPIO}!setOption@{setOption}}
+\index{setOption@{setOption}!a\_GPIO@{a\_GPIO}}
+\doxysubsubsection{\texorpdfstring{setOption()}{setOption()}}
+{\footnotesize\ttfamily bool a\+\_\+\+GPIO\+::set\+Option (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{option,  }\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+set a plugin option 
+
+
+\begin{DoxyParams}{Parameters}
+{\em option} & (uint16\+\_\+t) option Id \\
+\hline
+{\em value} & (int) option value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+(boolean) true if option set successfull 
+\end{DoxyReturn}
+
+
+Reimplemented from \mbox{\hyperlink{class_plugin_aa31b78849344b0340795e9df40d9301b}{Plugin}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/a\+\_\+\+GPIO/a\+\_\+gpio.\+h\item 
+lib/a\+\_\+\+GPIO/a\+\_\+gpio.\+cpp\end{DoxyCompactItemize}

@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['hdc1080_5foptions_73',['HDC1080_Options',['../classs___h_d_c1080.html#a3e829e64bbeb35abde3966ce64365942',1,'s_HDC1080']]],
-  ['homie_2dfirmware_74',['homie-firmware',['../md_readme.html',1,'']]],
-  ['homiedevicedef_75',['HomieDeviceDef',['../struct_homie_device_def.html',1,'']]],
-  ['homienodedef_76',['HomieNodeDef',['../struct_homie_node_def.html',1,'']]],
-  ['homiepropertydef_77',['HomiePropertyDef',['../struct_homie_property_def.html',1,'']]],
-  ['homiepropertydef2_78',['HomiePropertyDef2',['../struct_homie_property_def2.html',1,'']]]
+  ['get_81',['get',['../classa___g_p_i_o.html#a7954a95eee4582758b9fe863a652d9be',1,'a_GPIO::get()'],['../classa___p_w_mdimmer.html#a2e516af44cfaae683bfc55e5c5bcd955',1,'a_PWMdimmer::get()'],['../classi___g_p_i_o.html#ab21492da939ddac04c4ff93a6d70aece',1,'i_GPIO::get()'],['../class_plugin.html#a7c254a322b7d3be69533939b7dd50c2a',1,'Plugin::get()'],['../class_plugin.html#a1cb7d31edd08a8d90d6dfc9df8b7de45',1,'Plugin::get(uint8_t channel)'],['../classs___d_u_m_m_y.html#ae72203fe3303660e0aed658bbb56cc0b',1,'s_DUMMY::get()'],['../classs___h_d_c1080.html#aad5e55d585b37fac1ba3d68d5e817d52',1,'s_HDC1080::get()']]],
+  ['getgain_82',['getGain',['../class_adafruit___a_d_s1015.html#a6232d089aaa82226bc34623fdf92237c',1,'Adafruit_ADS1015']]],
+  ['getlastconversionresults_83',['getLastConversionResults',['../class_adafruit___a_d_s1015.html#ad8f36d80847020778425107f6451a8c2',1,'Adafruit_ADS1015']]],
+  ['getnextevent_84',['getNextEvent',['../class_my_homie_node.html#a0ad820be6800b19f241fc3622cfc38d6',1,'MyHomieNode']]],
+  ['gpio_5fduration_85',['GPIO_DURATION',['../classa___g_p_i_o.html#a793e66cbb971379c71393742e166fe47a4a6562e34b9873bbe9d02313675f3183',1,'a_GPIO']]]
 ];

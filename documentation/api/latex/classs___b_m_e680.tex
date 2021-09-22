@@ -1,0 +1,89 @@
+\hypertarget{classs___b_m_e680}{}\doxysection{s\+\_\+\+BME680 Class Reference}
+\label{classs___b_m_e680}\index{s\_BME680@{s\_BME680}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classs___b_m_e680_a724617593ef6d089cb4d80e1ddf8ed49}{s\+\_\+\+BME680}} (uint8\+\_\+t)
+\begin{DoxyCompactList}\small\item\em BME680 environmental sensor. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___b_m_e680_a55bb3e07c12375e5e7fe65fd76cb9fc4}\label{classs___b_m_e680_a55bb3e07c12375e5e7fe65fd76cb9fc4}} 
+bool {\bfseries check\+Sensor\+Status} (void)
+\item 
+\mbox{\Hypertarget{classs___b_m_e680_a49eb8a09f2e23d775d7cb666543eab98}\label{classs___b_m_e680_a49eb8a09f2e23d775d7cb666543eab98}} 
+bool {\bfseries available} (void)
+\item 
+\mbox{\Hypertarget{classs___b_m_e680_a66453e7099b4945f1737ecf48ea519cc}\label{classs___b_m_e680_a66453e7099b4945f1737ecf48ea519cc}} 
+bool {\bfseries read} (bool force)
+\item 
+bool \mbox{\hyperlink{classs___b_m_e680_a424d5d525accc9c08c8c345e9c6289c1}{init}} ()
+\begin{DoxyCompactList}\small\item\em init BME680 environmental sensor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classs___b_m_e680_abc833650a7d13dbbd5f29d54f00c17a9}{set\+Scaler}} (uint8\+\_\+t sensor, float scale)
+\begin{DoxyCompactList}\small\item\em set scale factor in case of a voltage devider or calibration \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classs___b_m_e680_ab615ac43578e3e93751a2207c9c39051}\label{classs___b_m_e680_ab615ac43578e3e93751a2207c9c39051}} 
+void {\bfseries loop} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classs___b_m_e680_a724617593ef6d089cb4d80e1ddf8ed49}\label{classs___b_m_e680_a724617593ef6d089cb4d80e1ddf8ed49}} 
+\index{s\_BME680@{s\_BME680}!s\_BME680@{s\_BME680}}
+\index{s\_BME680@{s\_BME680}!s\_BME680@{s\_BME680}}
+\doxysubsubsection{\texorpdfstring{s\_BME680()}{s\_BME680()}}
+{\footnotesize\ttfamily s\+\_\+\+BME680\+::s\+\_\+\+BME680 (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{index = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+BME680 environmental sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index of sensors ADS1115 connected (1..2) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+result String -\/ empty string is index is out of range 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classs___b_m_e680_a424d5d525accc9c08c8c345e9c6289c1}\label{classs___b_m_e680_a424d5d525accc9c08c8c345e9c6289c1}} 
+\index{s\_BME680@{s\_BME680}!init@{init}}
+\index{init@{init}!s\_BME680@{s\_BME680}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily bool s\+\_\+\+BME680\+::init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+init BME680 environmental sensor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min\+Sample\+Rate} & sample Rate milli seconds to read data (0=default) \\
+\hline
+{\em max\+Sample\+Rate} & sample Rate seconds to update Data 0=only send updates (0=default) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+result boolean -\/ true=success 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classs___b_m_e680_abc833650a7d13dbbd5f29d54f00c17a9}\label{classs___b_m_e680_abc833650a7d13dbbd5f29d54f00c17a9}} 
+\index{s\_BME680@{s\_BME680}!setScaler@{setScaler}}
+\index{setScaler@{setScaler}!s\_BME680@{s\_BME680}}
+\doxysubsubsection{\texorpdfstring{setScaler()}{setScaler()}}
+{\footnotesize\ttfamily void s\+\_\+\+BME680\+::set\+Scaler (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{sensor,  }\item[{float}]{scale }\end{DoxyParamCaption})}
+
+
+
+set scale factor in case of a voltage devider or calibration 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensor} & number of ADC (1..4) \\
+\hline
+{\em scale} & scaleing Factor \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib\+\_\+4\+MB/s\+\_\+bme680/s\+\_\+bme680.\+h\end{DoxyCompactItemize}

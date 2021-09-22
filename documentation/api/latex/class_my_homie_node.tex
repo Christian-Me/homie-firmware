@@ -1,0 +1,253 @@
+\hypertarget{class_my_homie_node}{}\doxysection{My\+Homie\+Node Class Reference}
+\label{class_my_homie_node}\index{MyHomieNode@{MyHomieNode}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a575a7047b6182d28704b011dd3ca4f7c}\label{class_my_homie_node_a575a7047b6182d28704b011dd3ca4f7c}} 
+{\bfseries My\+Homie\+Node} (\mbox{\hyperlink{struct_homie_node_def}{Homie\+Node\+Def}} def, uint8\+\_\+t plugin\+Id=0, uint8\+\_\+t gpio=0)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a2e10339688fc286150051115f41e863e}\label{class_my_homie_node_a2e10339688fc286150051115f41e863e}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries set\+Plugin\+Option} (uint16\+\_\+t option, int value)
+\item 
+bool \mbox{\hyperlink{class_my_homie_node_ad0b09e75d7ea9578bef3b648795029b6}{set\+Option}} (const char $\ast$property\+Id, uint16\+\_\+t option, int value) const
+\begin{DoxyCompactList}\small\item\em set option of one or many properties. Will exits on first error! \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_my_homie_node_aabf470292fa64c712088170f7a9b9680}{set\+Filter}} (const char $\ast$property\+Id, float\+Value\+Filter filter) const
+\begin{DoxyCompactList}\small\item\em set option of one or many properties. Will exits on first error! \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_my_homie_node_a93a80cf425df6b4f964b55b101a3d99a}{set\+Filter}} (const char $\ast$property\+Id, int\+Value\+Filter filter) const
+\begin{DoxyCompactList}\small\item\em set filter callback of one or many properties. Will exits on first error! \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_my_homie_node_a94dc47d75e284d588bb57d2cda2b749e}\label{class_my_homie_node_a94dc47d75e284d588bb57d2cda2b749e}} 
+void {\bfseries set\+Pulgin\+Id} (uint8\+\_\+t id)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a8b6e18b50ce05e638d338f6fa46b453b}\label{class_my_homie_node_a8b6e18b50ce05e638d338f6fa46b453b}} 
+bool {\bfseries plugin\+Init} (uint8\+\_\+t plugin\+Id, uint8\+\_\+t gpio)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a0230891579604d3bfca6f1d535725a3b}\label{class_my_homie_node_a0230891579604d3bfca6f1d535725a3b}} 
+void {\bfseries set\+Custom\+Sample\+Rate} (uint16\+\_\+t rate)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_ae25155e68c99151c3f77f2f20a7a7f62}\label{class_my_homie_node_ae25155e68c99151c3f77f2f20a7a7f62}} 
+const char $\ast$ {\bfseries get\+Id} () const
+\item 
+bool \mbox{\hyperlink{class_my_homie_node_adf78c56aef6fd543cd0099c7d574c573}{is\+Target}} (const char $\ast$id)
+\begin{DoxyCompactList}\small\item\em check if node has matches a specific id \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_my_homie_node_a2cd81d4fdb34368e2397b0d350f54542}\label{class_my_homie_node_a2cd81d4fdb34368e2397b0d350f54542}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries add\+Property} (\mbox{\hyperlink{struct_homie_property_def}{Homie\+Property\+Def}} homie\+Property, uint8\+\_\+t channel=0)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a3a036a88b7e18cfdf5e34ff7b65ec43c}\label{class_my_homie_node_a3a036a88b7e18cfdf5e34ff7b65ec43c}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries add\+Property} (\mbox{\hyperlink{struct_homie_property_def}{Homie\+Property\+Def}} homie\+Property, uint8\+\_\+t plugin\+Id, uint8\+\_\+t gpio, float default\+Value=0)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a41fb445e28f0d0df03517f5670b17f6d}\label{class_my_homie_node_a41fb445e28f0d0df03517f5670b17f6d}} 
+bool {\bfseries input\+Handler} (const Homie\+Range \&range, const String \&value, \mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$homie\+Node, \mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_ad8e5ed01384a874706e9be5b8ee620dd}\label{class_my_homie_node_ad8e5ed01384a874706e9be5b8ee620dd}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries register\+Input\+Handler} (Input\+Handler input\+Handler)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a4306a89cf6e4e9f28561235b4c9d3fbd}\label{class_my_homie_node_a4306a89cf6e4e9f28561235b4c9d3fbd}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries register\+Input\+Handler} (const char $\ast$id, Input\+Handler input\+Handler)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a9f5452a2f56e3206e36e2403bf0e0f0d}\label{class_my_homie_node_a9f5452a2f56e3206e36e2403bf0e0f0d}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries register\+Read\+Handler} (const char $\ast$id, Read\+Handler read\+Handler)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a980359ac43948b952bbe2b297df2649f}\label{class_my_homie_node_a980359ac43948b952bbe2b297df2649f}} 
+\mbox{\hyperlink{class_my_homie_node}{My\+Homie\+Node}} $\ast$ {\bfseries hide\+Log\+Level} (const char $\ast$id, uint8\+\_\+t log\+Mask)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_af6d5826109140df542e72fa7aa395e95}\label{class_my_homie_node_af6d5826109140df542e72fa7aa395e95}} 
+\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$ {\bfseries get\+Property} (int index) const
+\item 
+\mbox{\Hypertarget{class_my_homie_node_ade7f555d6bbd5996f5639b7b054359e6}\label{class_my_homie_node_ade7f555d6bbd5996f5639b7b054359e6}} 
+\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$ {\bfseries get\+Property} (const char $\ast$id) const
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a85d93ebc9a224526ec2ba88c499a9561}\label{class_my_homie_node_a85d93ebc9a224526ec2ba88c499a9561}} 
+\mbox{\hyperlink{class_plugin}{Plugin}} $\ast$ {\bfseries get\+Property\+Plugin} (const char $\ast$id) const
+\item 
+\mbox{\Hypertarget{class_my_homie_node_adef22c44a686421885c692ec8439177b}\label{class_my_homie_node_adef22c44a686421885c692ec8439177b}} 
+uint8\+\_\+t {\bfseries length} () const
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a2d3faaf4b15cfe300c909e35fc398789}\label{class_my_homie_node_a2d3faaf4b15cfe300c909e35fc398789}} 
+\mbox{\hyperlink{struct_homie_node_def}{Homie\+Node\+Def}} {\bfseries get\+Def} ()
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a3936c6d92776812949cc389605cf8704}\label{class_my_homie_node_a3936c6d92776812949cc389605cf8704}} 
+bool {\bfseries ready\+To\+Sample} (unsigned long timebase)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_aaffdfc1b04462dcff550ba2d8d66536d}\label{class_my_homie_node_aaffdfc1b04462dcff550ba2d8d66536d}} 
+bool {\bfseries set\+Value} (const char $\ast$id, float value)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_aefcc62d78b0e6b729bb8c3c8dd3a5ae3}\label{class_my_homie_node_aefcc62d78b0e6b729bb8c3c8dd3a5ae3}} 
+bool {\bfseries set\+Value} (const char $\ast$id, bool value)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a828a0e3f4dc4dcb704dead62b1ea4756}\label{class_my_homie_node_a828a0e3f4dc4dcb704dead62b1ea4756}} 
+bool {\bfseries set\+Factor} (const char $\ast$id, float value)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a60470385f2055d29bdb73841fd3c6dc0}\label{class_my_homie_node_a60470385f2055d29bdb73841fd3c6dc0}} 
+bool {\bfseries send\+Value} (\mbox{\hyperlink{class_my_homie_property}{My\+Homie\+Property}} $\ast$homie\+Property)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a89db45e964c042836385449b7d0c3a25}\label{class_my_homie_node_a89db45e964c042836385449b7d0c3a25}} 
+bool {\bfseries send\+Value} (int index)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a3d90acbe655aa3c14762b2c098cc17cc}\label{class_my_homie_node_a3d90acbe655aa3c14762b2c098cc17cc}} 
+bool {\bfseries send\+Value} (const char $\ast$id)
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a28cf71d7a86a04488c41a360613c239b}\label{class_my_homie_node_a28cf71d7a86a04488c41a360613c239b}} 
+bool {\bfseries send\+Value} (const char $\ast$id, float value)
+\item 
+unsigned long \mbox{\hyperlink{class_my_homie_node_a0ad820be6800b19f241fc3622cfc38d6}{get\+Next\+Event}} (unsigned long timebase)
+\begin{DoxyCompactList}\small\item\em determine the next event of all properties of this node \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{class_my_homie_node_ae2fa168fcb3d0234479ac02c4f4c6f18}{loop}} (unsigned long timebase)
+\begin{DoxyCompactList}\small\item\em main node loop\+: read / sample / send \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_my_homie_node_a21e05cd7b17b1fb5dcfae1def67f9420}{plugin\+Loop}} ()
+\begin{DoxyCompactList}\small\item\em plugin loop\+: go through all properties plugins and call their loop function \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_my_homie_node_a94a951c72c8a7e63a2f9c9f64adfe575}\label{class_my_homie_node_a94a951c72c8a7e63a2f9c9f64adfe575}} 
+\mbox{\hyperlink{class_plugin}{Plugin}} $\ast$ {\bfseries plugin} = NULL
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_my_homie_node_a0ad820be6800b19f241fc3622cfc38d6}\label{class_my_homie_node_a0ad820be6800b19f241fc3622cfc38d6}} 
+\index{MyHomieNode@{MyHomieNode}!getNextEvent@{getNextEvent}}
+\index{getNextEvent@{getNextEvent}!MyHomieNode@{MyHomieNode}}
+\doxysubsubsection{\texorpdfstring{getNextEvent()}{getNextEvent()}}
+{\footnotesize\ttfamily unsigned long My\+Homie\+Node\+::get\+Next\+Event (\begin{DoxyParamCaption}\item[{unsigned long}]{timebase }\end{DoxyParamCaption})}
+
+
+
+determine the next event of all properties of this node 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timebase} & timebase to calculate relative time (duration) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+next event in seconds and 0 if no event should be scheduled 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_my_homie_node_adf78c56aef6fd543cd0099c7d574c573}\label{class_my_homie_node_adf78c56aef6fd543cd0099c7d574c573}} 
+\index{MyHomieNode@{MyHomieNode}!isTarget@{isTarget}}
+\index{isTarget@{isTarget}!MyHomieNode@{MyHomieNode}}
+\doxysubsubsection{\texorpdfstring{isTarget()}{isTarget()}}
+{\footnotesize\ttfamily bool My\+Homie\+Node\+::is\+Target (\begin{DoxyParamCaption}\item[{const char $\ast$}]{id }\end{DoxyParamCaption})}
+
+
+
+check if node has matches a specific id 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & (const char$\ast$) id to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if property has this id 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_my_homie_node_ae2fa168fcb3d0234479ac02c4f4c6f18}\label{class_my_homie_node_ae2fa168fcb3d0234479ac02c4f4c6f18}} 
+\index{MyHomieNode@{MyHomieNode}!loop@{loop}}
+\index{loop@{loop}!MyHomieNode@{MyHomieNode}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily unsigned long My\+Homie\+Node\+::loop (\begin{DoxyParamCaption}\item[{unsigned long}]{timebase }\end{DoxyParamCaption})}
+
+
+
+main node loop\+: read / sample / send 
+
+
+\begin{DoxyItemize}
+\item if sample timer triggers take initiate read
+\begin{DoxyItemize}
+\item then read all values
+\item if send timer triggers send sample 
+\begin{DoxyParams}{Parameters}
+{\em timebase} & timebase to calculate relative time (duration) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+next event in seconds and ULONG\+\_\+\+MAX if no event should be scheduled 
+\end{DoxyReturn}
+
+\end{DoxyItemize}
+\end{DoxyItemize}\mbox{\Hypertarget{class_my_homie_node_a21e05cd7b17b1fb5dcfae1def67f9420}\label{class_my_homie_node_a21e05cd7b17b1fb5dcfae1def67f9420}} 
+\index{MyHomieNode@{MyHomieNode}!pluginLoop@{pluginLoop}}
+\index{pluginLoop@{pluginLoop}!MyHomieNode@{MyHomieNode}}
+\doxysubsubsection{\texorpdfstring{pluginLoop()}{pluginLoop()}}
+{\footnotesize\ttfamily void My\+Homie\+Node\+::plugin\+Loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+plugin loop\+: go through all properties plugins and call their loop function 
+
+
+\begin{DoxyParams}{Parameters}
+{\em void} & nothing \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nothing 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_my_homie_node_aabf470292fa64c712088170f7a9b9680}\label{class_my_homie_node_aabf470292fa64c712088170f7a9b9680}} 
+\index{MyHomieNode@{MyHomieNode}!setFilter@{setFilter}}
+\index{setFilter@{setFilter}!MyHomieNode@{MyHomieNode}}
+\doxysubsubsection{\texorpdfstring{setFilter()}{setFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool My\+Homie\+Node\+::set\+Filter (\begin{DoxyParamCaption}\item[{const char $\ast$}]{property\+Id,  }\item[{float\+Value\+Filter}]{filter }\end{DoxyParamCaption}) const}
+
+
+
+set option of one or many properties. Will exits on first error! 
+
+
+\begin{DoxyParams}{Parameters}
+{\em property\+Id} & (string) the property\+Id, wildcards ($\ast$,?,.) allowed. \\
+\hline
+{\em filter} & (float\+Value\+Filter) filter callback function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successfull 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_my_homie_node_a93a80cf425df6b4f964b55b101a3d99a}\label{class_my_homie_node_a93a80cf425df6b4f964b55b101a3d99a}} 
+\index{MyHomieNode@{MyHomieNode}!setFilter@{setFilter}}
+\index{setFilter@{setFilter}!MyHomieNode@{MyHomieNode}}
+\doxysubsubsection{\texorpdfstring{setFilter()}{setFilter()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool My\+Homie\+Node\+::set\+Filter (\begin{DoxyParamCaption}\item[{const char $\ast$}]{property\+Id,  }\item[{int\+Value\+Filter}]{filter }\end{DoxyParamCaption}) const}
+
+
+
+set filter callback of one or many properties. Will exits on first error! 
+
+
+\begin{DoxyParams}{Parameters}
+{\em property\+Id} & (string) the property\+Id, wildcards ($\ast$,?,.) allowed. \\
+\hline
+{\em filter} & (int\+Value\+Filter) filter callback function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successfull 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_my_homie_node_ad0b09e75d7ea9578bef3b648795029b6}\label{class_my_homie_node_ad0b09e75d7ea9578bef3b648795029b6}} 
+\index{MyHomieNode@{MyHomieNode}!setOption@{setOption}}
+\index{setOption@{setOption}!MyHomieNode@{MyHomieNode}}
+\doxysubsubsection{\texorpdfstring{setOption()}{setOption()}}
+{\footnotesize\ttfamily bool My\+Homie\+Node\+::set\+Option (\begin{DoxyParamCaption}\item[{const char $\ast$}]{property\+Id,  }\item[{uint16\+\_\+t}]{option,  }\item[{int}]{value }\end{DoxyParamCaption}) const}
+
+
+
+set option of one or many properties. Will exits on first error! 
+
+
+\begin{DoxyParams}{Parameters}
+{\em property\+Id} & (string) the property\+Id, wildcards ($\ast$,?,.) allowed. \\
+\hline
+{\em option} & (uint18\+\_\+t) option id \\
+\hline
+{\em value} & (integer) value to be set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successfull 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/c\+\_\+\+Homie/homie\+\_\+node.\+hpp\item 
+lib/c\+\_\+\+Homie/homie\+\_\+node.\+cpp\end{DoxyCompactItemize}

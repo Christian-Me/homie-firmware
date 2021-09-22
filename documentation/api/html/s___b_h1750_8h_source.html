@@ -87,44 +87,44 @@ $(document).ready(function(){initNavTree('s___b_h1750_8h_source.html',''); initR
 <div class="title">s_BH1750.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef S_BH1750_H__</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define S_BH1750_H__</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;BH1750.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;plugins.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define MAX_BH1750_DATAPOINTS 1</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">const</span> uint8_t BH1750_ADDR[] = {0x23,0x5C,0}; <span class="comment">// must end with a 0 value!</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classs___b_h1750.html">   14</a></span>&#160;<span class="keyword">class </span><a class="code" href="classs___b_h1750.html">s_BH1750</a> : <span class="keyword">public</span> <a class="code" href="class_plugin.html">Plugin</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keywordtype">bool</span> _isInitialized = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_my_homie_node.html">MyHomieNode</a> *_homieNode = NULL;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">const</span> uint8_t _maxChannels = MAX_BH1750_DATAPOINTS;</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifdef S_BH1750 </span><span class="comment">// don&#39;t compile if not defined in platformio.ini</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#ifndef S_BH1750_H__</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#define S_BH1750_H__</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#define BH1750_DEBUG</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;Arduino.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;BH1750.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;plugins.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">const</span> uint8_t BH1750_ADDR[] = {0x23,0x5C,0}; <span class="comment">// must end with a 0 value!</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">class </span>s_BH1750 : <span class="keyword">public</span> <a class="code" href="class_plugin.html">Plugin</a> {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">bool</span> _isInitialized = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_my_homie_node.html">MyHomieNode</a> *_homieNode = NULL;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">int</span> _address = 0;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    BH1750 *_sensor = <span class="keyword">nullptr</span>; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">float</span> _lastSample[MAX_BH1750_DATAPOINTS];</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    uint8_t _maxDatapoints = MAX_BH1750_DATAPOINTS;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classs___b_h1750.html#ab2f496c191de2ade6fb1ff1a743a5656">id</a> ();                        <span class="comment">/*&gt; returns the id string */</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="classs___b_h1750.html#a590a3294ab906192899c67226f9fddd6">s_BH1750</a>(<span class="keywordtype">int</span> port);                       <span class="comment">/*&gt; constructor port= I2C address or port=0 autodetect */</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classs___b_h1750.html#aa4eb72a691d0ea2253550b54d2f152c0">init</a>(<a class="code" href="class_my_homie_node.html">MyHomieNode</a>* homieNode);        <span class="comment">/*&gt; initialize the device */</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classs___b_h1750.html#aa91a6dee8083e3fb2d05c94f1f99e759">checkStatus</a>(<span class="keywordtype">void</span>);                   <span class="comment">/*&gt; check the status of the device */</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classs___b_h1750.html#a579617c57812f06c4b45dd530378312b">read</a>();                              <span class="comment">/*&gt; read values from device and write to property database*/</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">float</span> <a class="code" href="classs___b_h1750.html#ad3626511b32e7c90d00a2c99f9287c67">get</a>(uint8_t channel);               <span class="comment">/*&gt; read value from one device channel or from database */</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_my_homie_node_html"><div class="ttname"><a href="class_my_homie_node.html">MyHomieNode</a></div><div class="ttdef"><b>Definition:</b> homie_node.hpp:64</div></div>
-<div class="ttc" id="aclass_plugin_html"><div class="ttname"><a href="class_plugin.html">Plugin</a></div><div class="ttdoc">parent plugin object</div><div class="ttdef"><b>Definition:</b> plugins.h:11</div></div>
-<div class="ttc" id="aclasss___b_h1750_html"><div class="ttname"><a href="classs___b_h1750.html">s_BH1750</a></div><div class="ttdoc">BME280 enviornment sensor.</div><div class="ttdef"><b>Definition:</b> s_BH1750.h:14</div></div>
-<div class="ttc" id="aclasss___b_h1750_html_a579617c57812f06c4b45dd530378312b"><div class="ttname"><a href="classs___b_h1750.html#a579617c57812f06c4b45dd530378312b">s_BH1750::read</a></div><div class="ttdeci">bool read()</div><div class="ttdoc">read the senor value(s)</div><div class="ttdef"><b>Definition:</b> s_BH1750.cpp:57</div></div>
-<div class="ttc" id="aclasss___b_h1750_html_a590a3294ab906192899c67226f9fddd6"><div class="ttname"><a href="classs___b_h1750.html#a590a3294ab906192899c67226f9fddd6">s_BH1750::s_BH1750</a></div><div class="ttdeci">s_BH1750(int port)</div><div class="ttdoc">BH1750 enviornment sensor constructor.</div><div class="ttdef"><b>Definition:</b> s_BH1750.cpp:21</div></div>
-<div class="ttc" id="aclasss___b_h1750_html_aa4eb72a691d0ea2253550b54d2f152c0"><div class="ttname"><a href="classs___b_h1750.html#aa4eb72a691d0ea2253550b54d2f152c0">s_BH1750::init</a></div><div class="ttdeci">bool init(MyHomieNode *homieNode)</div><div class="ttdoc">init BH1750 enviornment sensor</div><div class="ttdef"><b>Definition:</b> s_BH1750.cpp:31</div></div>
-<div class="ttc" id="aclasss___b_h1750_html_aa91a6dee8083e3fb2d05c94f1f99e759"><div class="ttname"><a href="classs___b_h1750.html#aa91a6dee8083e3fb2d05c94f1f99e759">s_BH1750::checkStatus</a></div><div class="ttdeci">bool checkStatus(void)</div><div class="ttdoc">check if device is initialized</div><div class="ttdef"><b>Definition:</b> s_BH1750.cpp:91</div></div>
-<div class="ttc" id="aclasss___b_h1750_html_ab2f496c191de2ade6fb1ff1a743a5656"><div class="ttname"><a href="classs___b_h1750.html#ab2f496c191de2ade6fb1ff1a743a5656">s_BH1750::id</a></div><div class="ttdeci">const char * id()</div><div class="ttdoc">BH1750 get id string.</div><div class="ttdef"><b>Definition:</b> s_BH1750.cpp:13</div></div>
-<div class="ttc" id="aclasss___b_h1750_html_ad3626511b32e7c90d00a2c99f9287c67"><div class="ttname"><a href="classs___b_h1750.html#ad3626511b32e7c90d00a2c99f9287c67">s_BH1750::get</a></div><div class="ttdeci">float get(uint8_t channel)</div><div class="ttdoc">read current value</div><div class="ttdef"><b>Definition:</b> s_BH1750.cpp:76</div></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    BH1750 *_sensor = <span class="keyword">nullptr</span>;                </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">enum</span> BH1750_Channels {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;      CHANNEL_ILLUMINATION = 1,</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    };</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="class_plugin.html#aa8d8a1aacbb9a1e6cb37b1acf0cb1e57">id</a> ();                        <span class="comment">/*&gt; returns the id string */</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    s_BH1750(<span class="keywordtype">int</span> port);                       <span class="comment">/*&gt; constructor port= I2C address or port=0 autodetect */</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_plugin.html#a7546d32024624aa1041429faca3cb145">init</a>(<a class="code" href="class_my_homie_node.html">MyHomieNode</a>* homieNode);        <span class="comment">/*&gt; initialize the device */</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_plugin.html#a252db5bb06c5081dd1f7f3106fa2ec08">checkStatus</a>();                       <span class="comment">/*&gt; check the status of the device */</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_plugin.html#a59b4067bb360e6349e170244a8fae557">read</a>();                              <span class="comment">/*&gt; read values from device and write to property database*/</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_plugin.html#a7c254a322b7d3be69533939b7dd50c2a">get</a>(uint8_t channel);               <span class="comment">/*&gt; read value from one device channel or from database */</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;};</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclass_my_homie_node_html"><div class="ttname"><a href="class_my_homie_node.html">MyHomieNode</a></div><div class="ttdef"><b>Definition:</b> homie_node.hpp:67</div></div>
+<div class="ttc" id="aclass_plugin_html"><div class="ttname"><a href="class_plugin.html">Plugin</a></div><div class="ttdoc">parent plugin object</div><div class="ttdef"><b>Definition:</b> plugins.h:13</div></div>
+<div class="ttc" id="aclass_plugin_html_a252db5bb06c5081dd1f7f3106fa2ec08"><div class="ttname"><a href="class_plugin.html#a252db5bb06c5081dd1f7f3106fa2ec08">Plugin::checkStatus</a></div><div class="ttdeci">virtual bool checkStatus(void)</div><div class="ttdoc">check the status of the device returns true if initalized</div><div class="ttdef"><b>Definition:</b> plugins.cpp:60</div></div>
+<div class="ttc" id="aclass_plugin_html_a59b4067bb360e6349e170244a8fae557"><div class="ttname"><a href="class_plugin.html#a59b4067bb360e6349e170244a8fae557">Plugin::read</a></div><div class="ttdeci">virtual bool read()</div><div class="ttdoc">read values from device</div><div class="ttdef"><b>Definition:</b> plugins.cpp:74</div></div>
+<div class="ttc" id="aclass_plugin_html_a7546d32024624aa1041429faca3cb145"><div class="ttname"><a href="class_plugin.html#a7546d32024624aa1041429faca3cb145">Plugin::init</a></div><div class="ttdeci">virtual bool init(MyHomieNode *homieNode)</div><div class="ttdoc">initialize node plugin</div><div class="ttdef"><b>Definition:</b> plugins.cpp:12</div></div>
+<div class="ttc" id="aclass_plugin_html_a7c254a322b7d3be69533939b7dd50c2a"><div class="ttname"><a href="class_plugin.html#a7c254a322b7d3be69533939b7dd50c2a">Plugin::get</a></div><div class="ttdeci">virtual float get()</div><div class="ttdoc">get value</div><div class="ttdef"><b>Definition:</b> plugins.cpp:79</div></div>
+<div class="ttc" id="aclass_plugin_html_aa8d8a1aacbb9a1e6cb37b1acf0cb1e57"><div class="ttname"><a href="class_plugin.html#aa8d8a1aacbb9a1e6cb37b1acf0cb1e57">Plugin::id</a></div><div class="ttdeci">virtual const char * id()</div><div class="ttdoc">returns the id string</div><div class="ttdef"><b>Definition:</b> plugins.cpp:4</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
